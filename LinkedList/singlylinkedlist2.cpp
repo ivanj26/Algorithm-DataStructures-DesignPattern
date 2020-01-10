@@ -62,6 +62,23 @@ class SinglyLinkedList2 {
       }
     }
 
+    T front() {
+      if (head == nullptr) {
+        throw "An empty list";
+      }
+      return head->getData();
+    }
+
+    void pop() {
+      if (head == nullptr) return;
+
+      SinglyNode<T>* temp = head;
+      SinglyNode<T>* next = temp->getNext();
+      delete temp;
+
+      head = next;
+    }
+
     friend ostream& operator<<(ostream& os, SinglyLinkedList2<T>& l) {
       SinglyNode<T>* temp = l.getHead();
 
@@ -81,9 +98,16 @@ class SinglyLinkedList2 {
 int main(int argc, char const *argv[])
 {
   SinglyLinkedList2<int> list;
-  list.push_back(2);
+  
+  try {
+    list.push_back(2);
+    list.push_back(5);
+    list.pop();
 
-  cout << list;
+    cout << list;
+  } catch (const char* msg) {
+    cout << msg;
+  }
 
   return 0;
 }

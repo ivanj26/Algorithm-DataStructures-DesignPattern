@@ -31,7 +31,7 @@ class SinglyLinkedList {
     }
 
     friend ostream& operator<<(ostream& os, SinglyLinkedList& l){
-      SinglyNode<T>* temp = l.getHead();
+      SinglyNode<T>* temp = l.front();
 
       while (temp != nullptr) {
         os << temp->getData() << endl;
@@ -44,7 +44,7 @@ class SinglyLinkedList {
     /**
      * LinkedList operation
      * */     
-    SinglyNode<T>* getHead() { return head; }
+    SinglyNode<T>* front() { return head; }
 
     void push(T t) {
       SinglyNode<T>* temp = head;
