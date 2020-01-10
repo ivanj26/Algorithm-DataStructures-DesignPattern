@@ -7,6 +7,7 @@
 #include <cassert>
 #include <vector>
 #include <set>
+#include <stack>
 
 using namespace std;
 
@@ -225,21 +226,46 @@ class SinglyLinkedList {
 
       return false;
     }
+
+    // check if list is palindrome.
+    // Method 1: using stack
+    bool isPalindrome() {
+      if (head == nullptr) return true;
+
+      SinglyNode<T>* temp = head;
+      stack<T> s;
+
+      while (temp != nullptr) {
+        s.push(temp->getData());
+        temp = temp->getNext();
+      }
+
+      temp = head;
+
+      while (temp != nullptr) {
+        T val = s.top();
+        s.pop();
+        if (val != temp->getData()) return false; 
+
+        temp = temp->getNext();
+      }
+
+      return true;
+    }
 };
 
 int main(int argc, char const *argv[])
 {
   SinglyLinkedList<float> list;
 
-  list.push(new SinglyNode<float>(1.0));
-  list.push(new SinglyNode<float>(2.0));
-  list.push(new SinglyNode<float>(3.0));
+  // Insert data to linkedlist
+  for (int i = 0; i <= 2; i++)
+  {
+    list.push(i % 2);
+  }
 
-  //Insert data to linkedlist
-  // for (int i = 0; i < 20; i++)
-  // {
-  //   list.push(i);
-  // }
+  cout << list;
+  cout << list.isPalindrome();
 
   //Print list
   // cout << list;
