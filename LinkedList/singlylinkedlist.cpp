@@ -268,6 +268,56 @@ class SinglyLinkedList {
       SinglyNode<T> *temp = head;
       return isPalindromeUtil(&temp, head);
     }
+
+    /**
+     * Remove duplicates in linkedlist using two loops
+     * Complexity: O(n^2)
+     **/
+    void removeDuplicates() {
+      SinglyNode<T>* temp1 = head;
+      SinglyNode<T>* temp2;
+
+      while (temp1 != nullptr && temp2 != nullptr) {
+        temp2 = temp1;
+        while (temp2->getNext() != nullptr) {
+          /* if duplicate then delete it */
+          if (temp1->getData() == temp2->getNext()->getData()) {
+            SinglyNode<T>* dup = temp2->getNext();
+
+            temp2->setNext(temp2->getNext()->getNext());
+
+            delete dup;
+          } else {
+            temp2 = temp2->getNext();
+          }
+        }
+
+        temp1 = temp1->getNext();
+      }
+    }
+
+    /**
+     * Remove duplicates in linkedlist with hash
+     * Complexity = O(n)
+     **/
+    void removeDuplicates2() {
+      set<T> s;
+
+      SinglyNode<T>* curr = head;
+      SinglyNode<T>* prev = nullptr;
+
+      while (curr != nullptr)
+      {
+        if (s.find(curr->getData()) != s.end) { //if found
+          prev->setNext(curr->getNext())
+          delete curr;
+        } else { //if not found
+          s.insert(curr->getData());
+          prev = curr;
+        }
+        curr = prev->getNext();
+      }
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -280,7 +330,7 @@ int main(int argc, char const *argv[])
     list.push(i % 2);
   }
 
-  cout << (list.isPalindrome2() ? "Palindrome" : "No") << endl;
+  list.removeDuplicates();
   cout << list;
 
   //Print list
