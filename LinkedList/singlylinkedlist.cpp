@@ -265,7 +265,8 @@ class SinglyLinkedList {
     }
 
     bool isPalindrome2() {
-      return isPalindromeUtil(&head, head);
+      SinglyNode<T> *temp = head;
+      return isPalindromeUtil(&temp, head);
     }
 };
 
@@ -280,6 +281,7 @@ int main(int argc, char const *argv[])
   }
 
   cout << (list.isPalindrome2() ? "Palindrome" : "No") << endl;
+  cout << list;
 
   //Print list
   // cout << list;
