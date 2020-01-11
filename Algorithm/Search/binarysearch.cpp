@@ -13,7 +13,6 @@ int binarySearch(int* arr, int start, int end, int x) {
     int idx_mid = start + (end - start) / 2;
     int mid = arr[idx_mid];
 
-    cout << mid << endl;
     if (mid == x) return idx_mid;
     else if (mid > x) {
       return binarySearch(arr, start, idx_mid - 1, x);
