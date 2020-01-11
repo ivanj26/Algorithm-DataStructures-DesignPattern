@@ -15,6 +15,17 @@ template <class T>
 class SinglyLinkedList {
   private:
     SinglyNode<T>* head;
+    bool isPalindromeUtil(SinglyNode<T>** left, SinglyNode<T>* right) {
+      if (right == nullptr) return true;
+
+      bool isp = isPalindromeUtil(left, right->getNext());
+      if (false == isp) return false;
+
+      bool isp1 = (right->getData() == (*left)->getData());
+      (*left) = (*left)->getNext();
+
+      return isp1;
+    }
   public:
     SinglyLinkedList() {
       head = nullptr;
@@ -252,6 +263,10 @@ class SinglyLinkedList {
 
       return true;
     }
+
+    bool isPalindrome2() {
+      return isPalindromeUtil(&head, head);
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -259,13 +274,12 @@ int main(int argc, char const *argv[])
   SinglyLinkedList<float> list;
 
   // Insert data to linkedlist
-  for (int i = 0; i <= 2; i++)
+  for (int i = 0; i <= 4; i++)
   {
     list.push(i % 2);
   }
 
-  cout << list;
-  cout << list.isPalindrome();
+  cout << (list.isPalindrome2() ? "Palindrome" : "No") << endl;
 
   //Print list
   // cout << list;
@@ -274,7 +288,6 @@ int main(int argc, char const *argv[])
   //Search occurences
   // vector<int> indices = list.searchOccurrences(0);
   // for (int i = 0; i < indices.size(); i++)
-  // {
   //   cout << indices.at(i) << endl;
   // }
 
