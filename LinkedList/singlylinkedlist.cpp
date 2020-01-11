@@ -308,8 +308,8 @@ class SinglyLinkedList {
 
       while (curr != nullptr)
       {
-        if (s.find(curr->getData()) != s.end) { //if found
-          prev->setNext(curr->getNext())
+        if (s.find(curr->getData()) != s.end()) { //if found
+          prev->setNext(curr->getNext());
           delete curr;
         } else { //if not found
           s.insert(curr->getData());
@@ -330,7 +330,7 @@ int main(int argc, char const *argv[])
     list.push(i % 2);
   }
 
-  list.removeDuplicates();
+  list.removeDuplicates2();
   cout << list;
 
   //Print list
