@@ -238,8 +238,12 @@ class SinglyLinkedList {
       return false;
     }
 
-    // check if list is palindrome.
-    // Method 1: using stack
+    /**
+     * Check if list is palindrome.
+     * Method 1: using stack
+     * Complexity: O(n)
+     **/ 
+    
     bool isPalindrome() {
       if (head == nullptr) return true;
 
@@ -264,6 +268,10 @@ class SinglyLinkedList {
       return true;
     }
 
+    /**
+     * Method 2: using recursive
+     * Complexity: O(n)
+     **/ 
     bool isPalindrome2() {
       SinglyNode<T> *temp = head;
       return isPalindromeUtil(&temp, head);
@@ -318,6 +326,25 @@ class SinglyLinkedList {
         curr = prev->getNext();
       }
     }
+
+    /**
+     * Reverse linkedlist by using 3 pointers
+     * Complexity: O(n)
+     **/
+    void reverse() {
+      SinglyNode<T> *curr = head;
+      SinglyNode<T> *prev, *next = nullptr;
+
+      while (curr != nullptr) {
+        next = curr->getNext();
+        curr->setNext(prev);
+
+        prev = curr;
+        curr = next;
+      }
+
+      head = prev;
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -325,12 +352,16 @@ int main(int argc, char const *argv[])
   SinglyLinkedList<float> list;
 
   // Insert data to linkedlist
-  for (int i = 0; i <= 4; i++)
+  for (int i = 0; i <= 10; i++)
   {
-    list.push(i % 2);
+    list.push(i);
   }
 
-  list.removeDuplicates2();
+  cout << list;
+
+  list.reverse();
+  cout << endl;
+
   cout << list;
 
   //Print list
