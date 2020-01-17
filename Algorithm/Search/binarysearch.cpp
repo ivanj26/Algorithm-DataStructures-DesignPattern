@@ -2,7 +2,8 @@
 using namespace std;
 
 /**
- * Binary search -> mencari elemen dengan membandingkan elemen dengan elemen tengah pada array
+ * Binary search -> only works for sorted array
+                    mencari elemen dengan membandingkan elemen dengan elemen tengah pada array
  *                  1. Jika x > elemen_tengah, cari elemen di bagian kanan array
  *                  2. Jika x < elemen tengah, cari elemen di bagian kiri array
  *                  3. Jika x == elemen tengah, return index
