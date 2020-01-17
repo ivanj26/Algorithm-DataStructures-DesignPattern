@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int swap(int *x, int *y) {
+void swap(int *x, int *y) {
     int temp = *x;
     *x = *y;
     *y = temp;
@@ -11,7 +11,7 @@ int swap(int *x, int *y) {
  * Selection Sort -> Cari yang paling minimum lalu ditukar
  *                   Complexity: O(n^2)
  **/
-int selectionSort(int* arr, int size) {
+void selectionSort(int* arr, int size) {
     for (int i = 0; i < size; i++)
     {
         int min = i;
