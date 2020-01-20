@@ -47,4 +47,7 @@ class DirectedGraph {
         
         template <class DirectedGraph>
         friend class BFSAlgorithm;
+
+        template <class DirectedGraph>
+        friend class DFSAlgorithm;
 };
