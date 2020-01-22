@@ -133,6 +133,27 @@ class Tree {
             cout << endl;
         }
 
+        //Print by using BFS Algorithm style
+        void levelOrder() {
+            queue<Tree<T>*> q;
+            q.push(this);
+
+            while (!q.empty()) {
+                Tree<T>* t = q.front();
+                q.pop();
+
+                cout << t->getValue() << " ";
+
+                if (t->left) {
+                    q.push(t->left);
+                }
+
+                if (t->right) {
+                    q.push(t->right);
+                }
+            }
+        }
+
         int height() {
             return heightUtil(this);
         }
@@ -149,7 +170,9 @@ int main(int argc, const char** argv) {
     tree.insert(4);
 
     // tree.printPreOrder();
-    tree.printPostOrder();
-    cout << tree.height();
+    // tree.printPostOrder();
+    tree.levelOrder();
+
+    // cout << tree.height();
     return 0;
 }
