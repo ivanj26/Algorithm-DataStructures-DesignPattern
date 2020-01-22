@@ -21,6 +21,34 @@ class Tree {
             printInOrderUtil(tree->right);
             cout << ")";
         }
+
+        void printPreOrderUtil(Tree<T>* tree) {
+            if (!tree) return;
+
+            cout << tree->getValue() << " ";
+
+            cout << "(";
+            printPreOrderUtil(tree->getLeft());
+            cout << ")";
+
+            cout << " (";
+            printPreOrderUtil(tree->getRight());
+            cout << ")";
+        }
+
+        void printPostOrderUtil(Tree<T>* tree) {
+            if (!tree) return;
+
+            cout << "(";
+            printPostOrderUtil(tree->getLeft());
+            cout << ") ";
+
+            cout << "(";
+            printPostOrderUtil(tree->getRight());
+            cout << ") ";
+
+            cout << tree->getValue();
+        }
     public:
         Tree(T value) {
             this->value = value;
@@ -83,6 +111,16 @@ class Tree {
             cout << endl;
         }
 
+        void printPreOrder() {
+            printPreOrderUtil(this);
+            cout << endl;
+        }
+
+        void printPostOrder() {
+            printPostOrderUtil(this);
+            cout << endl;
+        }
+
         void search(T value) {
             //Do search algo
         }
@@ -94,6 +132,7 @@ int main(int argc, const char** argv) {
     tree.insert(2);
     tree.insert(4);
 
-    tree.printInOrder();
+    // tree.printPreOrder();
+    tree.printPostOrder();
     return 0;
 }
