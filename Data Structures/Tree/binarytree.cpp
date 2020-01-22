@@ -8,6 +8,7 @@ class Tree {
         Tree<T> *left, *right;
         T value;
 
+        //Left - Root - Right
         void printInOrderUtil(Tree<T>* tree) {
             if (!tree) return;
 
@@ -22,6 +23,7 @@ class Tree {
             cout << ")";
         }
 
+        //Root - Left - Right
         void printPreOrderUtil(Tree<T>* tree) {
             if (!tree) return;
 
@@ -36,6 +38,7 @@ class Tree {
             cout << ")";
         }
 
+        //Left - Right - Root
         void printPostOrderUtil(Tree<T>* tree) {
             if (!tree) return;
 
@@ -48,6 +51,15 @@ class Tree {
             cout << ") ";
 
             cout << tree->getValue();
+        }
+
+        int heightUtil(Tree<T>* root){
+            if (!root) return -1;
+
+            int left = 1 + heightUtil(root->left);
+            int right = 1 + heightUtil(root->right);
+
+            return left > right ? left : right;
         }
     public:
         Tree(T value) {
@@ -121,6 +133,10 @@ class Tree {
             cout << endl;
         }
 
+        int height() {
+            return heightUtil(this);
+        }
+
         void search(T value) {
             //Do search algo
         }
@@ -134,5 +150,6 @@ int main(int argc, const char** argv) {
 
     // tree.printPreOrder();
     tree.printPostOrder();
+    cout << tree.height();
     return 0;
 }
