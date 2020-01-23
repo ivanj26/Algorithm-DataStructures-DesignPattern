@@ -61,6 +61,21 @@ class Tree {
 
             return left > right ? left : right;
         }
+
+        bool isSymmetricUtil(Tree<T>* left, Tree<T>* right) {
+            //if left has no children and right ones too
+            if (left && right) {
+                if (!left->left && !left->right && !right->left && !right->right) {
+                    if (left->value == right->value) return true;
+                    else return false;
+                }   
+            }
+            else if (!left || !right) return false;
+            else return true;
+            
+            return isSymmetricUtil(left->right, right->left) && isSymmetricUtil(left->left, right->right);
+        }
+        
     public:
         Tree(T value) {
             this->value = value;
@@ -156,6 +171,17 @@ class Tree {
 
         int height() {
             return heightUtil(this);
+        }
+
+        bool isSymmetric() {
+            if (this->getLeft && this->getRight) {
+                bool isSymmetric = isSymmetricUtil(this->getLeft, this->getRight);
+                
+                return isSymmetric;
+            } else if (!this->getLeft || !this->getRight)
+                return false;
+            else
+                return true;
         }
 
         void search(T value) {
