@@ -1,4 +1,5 @@
 #include <queue>
+#include <vector>
 #include <iostream>
 using namespace std;
 
@@ -146,6 +147,60 @@ class Tree {
         void printPostOrder() {
             printPostOrderUtil(this);
             cout << endl;
+        }
+
+        vector<T> largestValuesInTreeRows(Tree<T> * t) {
+            vector<T> vec;
+            queue<Tree<T>*> q;
+            
+            if (!t) return vec;
+            q.push(t);
+            
+            while (!q.empty()) {
+                Tree<T>* tr = q.front();
+                Tree<T>* tr2 = nullptr;
+                q.pop();
+                
+                Tree<T>* left = tr->left;
+                Tree<T>* right = tr->right;
+                
+                if (q.empty()) {
+                    vec.push_back(tr->value);
+                    
+                    if (left) q.push(left);
+                    if (right) q.push(right);
+                } else {
+                    //vector to save subtree in same depth
+                    vector<Tree<T>*> vec2;
+                    
+                    //push tree with same depth
+                    while (!q.empty()) {
+                        vec2.push_back(q.front());
+                        q.pop();
+                    }
+                    
+                    if (left) q.push(left);
+                    if (right) q.push(right);
+                    
+                    //get maximum in same depth
+                    int max = tr->value;
+                    for (auto i : vec2) {
+                        Tree<T>* temp = i;
+                        left = temp->left;
+                        right = temp->right;
+                        
+                        int val = temp->value;
+                        if (max < val) max = val;
+                        
+                        if (left) q.push(left);
+                        if (right) q.push(right);
+                    }
+                    
+                    vec.push_back(max);
+                }
+            }
+            
+            return vec;
         }
 
         //Print by using BFS Algorithm style
