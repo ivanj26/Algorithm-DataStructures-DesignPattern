@@ -26,6 +26,14 @@ class SinglyLinkedList {
 
       return isp1;
     }
+
+    SinglyNode<T>* removeKFromList(SinglyNode<T>* head, T k) {
+      if (head == nullptr) return head;
+
+      head->setNext(removeKFromList(head->getNext(), k));
+      if (head->getData() == k) return head->getNext();
+      else return head;
+    }
   public:
     SinglyLinkedList() {
       head = nullptr;
@@ -345,6 +353,13 @@ class SinglyLinkedList {
 
       head = prev;
     }
+
+    /**
+     * Remove K from list
+     **/
+    void removeKFromList(T k) {
+      this->head = removeKFromList(head, k);
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -354,14 +369,13 @@ int main(int argc, char const *argv[])
   // Insert data to linkedlist
   for (int i = 0; i <= 10; i++)
   {
-    list.push(i);
+    list.push(i % 2);
   }
 
   cout << list;
+  list.removeKFromList(0); //remove zero from list
 
-  list.reverse();
   cout << endl;
-
   cout << list;
 
   //Print list
