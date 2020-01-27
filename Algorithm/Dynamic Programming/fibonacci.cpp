@@ -54,6 +54,24 @@ int fib3(int n) {
     return z;
 }
 
+/**
+ * Based on fibonacci algorithm with a little configuration inside
+ **/
+
+int climbingStairs(int n) {
+    int f[n+2];
+    f[0] = 0;
+    f[1] = 1;
+
+    for (int i = 2; i <= n; i++)
+    {
+        f[i] = f[i-1] + f[i-2];
+        if (i == 2) f[i]++;
+    }
+
+    return f[n];
+}
+
 int main(int argc, const char** argv) {
     int n = 9;
     cout << "Fib of 9: " << fib1(n) << endl;
