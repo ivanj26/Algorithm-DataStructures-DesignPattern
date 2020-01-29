@@ -90,7 +90,6 @@ V HashMap<K, V, F>::get(K key) const throw() {
 
     if (entry == nullptr) {
         throw std::invalid_argument("Element with specified key is not found");
-        return nullptr;
     }
 
     return entry->getValue();
