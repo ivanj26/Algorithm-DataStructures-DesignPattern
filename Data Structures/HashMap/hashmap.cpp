@@ -32,7 +32,7 @@ void HashMap<K, V, F>::put(K key, V value) {
     HashNode<K, V> *entry = table[hashValue];
     HashNode<K, V> *prev = nullptr;
 
-    //if bucket is available then iterate the entry until reach the tail
+    //if bucket is available then iterate the entry 
     while (entry != nullptr && entry->getKey() != key) {
         prev = entry;
         entry = entry->getNext();
