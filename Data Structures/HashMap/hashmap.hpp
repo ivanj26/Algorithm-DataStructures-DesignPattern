@@ -1,5 +1,8 @@
 #include "keyhash.hpp"
 #include "hashnode.hpp"
+#include <vector>
+
+using namespace std;
 
 #define DEFAULT_TABLE_SIZE 20
 
@@ -15,4 +18,5 @@ class HashMap {
         void put(K key, V val);
         void remove(K key) const throw();
         V get(K key) const throw();
+        vector<K> keys() const;
 };

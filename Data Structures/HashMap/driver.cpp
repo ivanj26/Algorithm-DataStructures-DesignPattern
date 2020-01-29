@@ -14,9 +14,19 @@ int main(int argc, const char** argv) {
     map.put(1, "Test");
     map.put(3, "Hello world!");
     map.put(5, "Hello dlrow!");
+    map.put(6, "Hello dlrow!");
+    map.put(7, "Hello dlrow!");
+    map.put(8, "Hello dlrow!");
+
 
     std::string val = map.get(3);
+    map.remove(3);
+
     std::cout << val << std::endl;
+
+    for (int key : map.keys()) {
+        std::cout << key << std::endl;
+    }
 
     return 0;
 }

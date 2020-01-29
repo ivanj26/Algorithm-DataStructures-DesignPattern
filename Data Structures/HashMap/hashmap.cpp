@@ -12,7 +12,7 @@ HashMap<K, V, F>::HashMap() {
 template <typename K, typename V, typename F>
 HashMap<K, V, F>::~HashMap() {
     //destroy the bucket 1 by 1
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         HashNode<K, V> *entry = table[i];
         while (entry != nullptr) {
             HashNode<K, V> *prev = entry;
@@ -94,4 +94,20 @@ V HashMap<K, V, F>::get(K key) const throw() {
     }
 
     return entry->getValue();
+}
+
+template <typename K, typename V, typename F>
+vector<K> HashMap<K, V, F>::keys() const {
+    vector<K> keys;
+
+    for (size_t i = 0; i < size; i++) {
+        HashNode<K, V> *entry = table[i];
+
+        while (entry != nullptr) {
+            keys.push_back(entry->getKey());
+            entry = entry->getNext();
+        }
+    }
+
+    return keys;
 }
