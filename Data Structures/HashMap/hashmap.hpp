@@ -19,4 +19,7 @@ class HashMap {
         void remove(K key) const throw();
         V get(K key) const throw();
         vector<K> keys() const;
+
+        //overloading operator[] to access element
+        V operator[](const K& k) const throw();
 };

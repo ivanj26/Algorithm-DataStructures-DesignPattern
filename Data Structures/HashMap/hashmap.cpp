@@ -111,3 +111,8 @@ vector<K> HashMap<K, V, F>::keys() const {
 
     return keys;
 }
+
+template<typename K, typename V, typename F>
+V HashMap<K, V, F>::operator[](const K &key) const throw() {
+    return this->get(key);
+}
