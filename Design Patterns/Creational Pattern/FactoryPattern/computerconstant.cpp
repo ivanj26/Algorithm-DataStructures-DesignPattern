@@ -1,0 +1,5 @@
+enum ComputerConstant
+{
+    LAPTOP,
+    DESKTOP,
+};
