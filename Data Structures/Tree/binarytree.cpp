@@ -250,9 +250,9 @@ int main(int argc, const char** argv) {
     tree.insert(2);
     tree.insert(4);
 
-    // tree.printPreOrder();
+    tree.printPreOrder();
     // tree.printPostOrder();
-    tree.levelOrder();
+    // tree.levelOrder();
 
     // cout << tree.height();
     return 0;
