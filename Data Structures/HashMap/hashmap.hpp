@@ -6,7 +6,7 @@ using namespace std;
 
 #define DEFAULT_TABLE_SIZE 20
 
-template <typename K, typename V, typename F = KeyHash<K, DEFAULT_TABLE_SIZE>>
+template <typename K, typename V, typename F>
 class HashMap {
     private:
         HashNode<K, V> **table;

@@ -1,5 +1,8 @@
 #include "./hashmap.hpp"
+#include <iostream>
 #include <stdexcept>
+
+using namespace std;
 
 template <typename K, typename V, typename F>
 HashMap<K, V, F>::HashMap() {
@@ -28,7 +31,8 @@ HashMap<K, V, F>::~HashMap() {
 
 template <typename K, typename V, typename F>
 void HashMap<K, V, F>::put(K key, V value) {
-    unsigned long hashValue = function(key); 
+    unsigned long hashValue = function(key);
+    cout << hashValue << endl;
     HashNode<K, V> *entry = table[hashValue];
     HashNode<K, V> *prev = nullptr;
 
