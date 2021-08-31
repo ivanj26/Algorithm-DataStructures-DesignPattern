@@ -1,42 +1,40 @@
-#include "./hashmap.hpp"
 #include <iostream>
 #include <stdexcept>
 
-using namespace std;
+#include "hashmap.hpp"
 
 template <typename K, typename V, typename F>
 HashMap<K, V, F>::HashMap() {
     size = function.size;
 
-    //allocate entry with size in KeyHash struct
     table = new HashNode<K, V> *[size]();
 }
 
 template <typename K, typename V, typename F>
 HashMap<K, V, F>::~HashMap() {
-    //destroy the bucket 1 by 1
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         HashNode<K, V> *entry = table[i];
+        HashNode<K, V> *temp = nullptr;
+
         while (entry != nullptr) {
-            HashNode<K, V> *prev = entry;
+            temp = entry;
             entry = entry->getNext();
 
-            delete prev;
+            delete temp;
         }
     }
-
-    //destroy the table
+    
     delete[] table;
 }
 
 template <typename K, typename V, typename F>
 void HashMap<K, V, F>::put(K key, V value) {
     unsigned long hashValue = function(key);
-    cout << hashValue << endl;
+
     HashNode<K, V> *entry = table[hashValue];
     HashNode<K, V> *prev = nullptr;
 
-    //if bucket is available then iterate the entry 
     while (entry != nullptr && entry->getKey() != key) {
         prev = entry;
         entry = entry->getNext();
@@ -45,38 +43,39 @@ void HashMap<K, V, F>::put(K key, V value) {
     if (entry == nullptr) {
         entry = new HashNode<K, V>(key, value);
 
-        //check prev
         if (prev != nullptr) {
             prev->setNext(entry);
         } else {
-            //insert as first entry in bucket
+            // set as first entry
             table[hashValue] = entry;
         }
     } else {
-        //just update the value
+        // update value
         entry->setValue(value);
     }
 }
 
 template <typename K, typename V, typename F>
-void HashMap<K, V, F>::remove(K key) const throw() {
+void HashMap<K, V, F>::remove(K key) throw() {
     unsigned long hashValue = function(key);
+
     HashNode<K, V> *entry = table[hashValue];
     HashNode<K, V> *prev = nullptr;
 
-    while (entry != nullptr && key != entry->getKey()) {
+    while (entry != nullptr && entry->getKey() != key) {
         prev = entry;
         entry = entry->getNext();
     }
 
-    //key is not found
     if (entry == nullptr) {
-        throw std::invalid_argument("Element with specified key is not found!");
+        throw std::invalid_argument("Element with specified key is not found");
     } else {
-        if (prev == nullptr) {
-            table[hashValue] = entry->getNext();
+        if (prev != nullptr) {
+            HashNode<K, V> *next = entry->getNext();
+            prev->setNext(next);
         } else {
-            prev->setNext(entry->getNext());
+            table[hashValue] = entry->getNext();
+            delete prev;
         }
 
         delete entry;
@@ -86,22 +85,22 @@ void HashMap<K, V, F>::remove(K key) const throw() {
 template <typename K, typename V, typename F>
 V HashMap<K, V, F>::get(K key) const throw() {
     unsigned long hashValue = function(key);
-    HashNode<K, V> *entry = table[hashValue];
 
+    HashNode<K, V> *entry = table[hashValue];
     while (entry != nullptr && entry->getKey() != key) {
         entry = entry->getNext();
     }
 
     if (entry == nullptr) {
-        throw std::invalid_argument("Element with specified key is not found");
+        throw std::invalid_argument("Element with specified key is not found!");
     }
 
     return entry->getValue();
 }
 
 template <typename K, typename V, typename F>
-vector<K> HashMap<K, V, F>::keys() const {
-    vector<K> keys;
+std::vector<K> HashMap<K, V, F>::keys() const {
+    std::vector<K> keys;
 
     for (size_t i = 0; i < size; i++) {
         HashNode<K, V> *entry = table[i];
@@ -115,7 +114,32 @@ vector<K> HashMap<K, V, F>::keys() const {
     return keys;
 }
 
-template<typename K, typename V, typename F>
-V HashMap<K, V, F>::operator[](const K &key) const throw() {
-    return this->get(key);
+template<class K, class V, class F>
+V HashMap<K, V, F>::operator[](K k) const throw() {
+    return this->get(k);
+}
+
+template <typename K, size_t TABLE_SIZE = 10>
+struct KeyHashFunc {
+    size_t size = TABLE_SIZE;
+    unsigned long operator() (const K& key) const {
+        return static_cast<unsigned long>(key) % size;
+    }
+};
+
+int main(int argc, char const *argv[])
+{
+    HashMap< int, std::string, KeyHashFunc<int, 20> > map;
+    map.put(1, "Hello");
+    map.put(2, "World!");
+
+    map.remove(3);
+
+    std::vector<int> keys = map.keys();
+    for (int i = 0; i < keys.size(); i++)
+    {
+        std::cout << keys[i] << " " << map[keys[i]] << std::endl;
+    }
+
+    return 0;
 }

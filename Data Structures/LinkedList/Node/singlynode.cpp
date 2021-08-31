@@ -13,9 +13,14 @@ class SinglyNode {
     T data;
     SinglyNode<T> *next;
   public:
-    SinglyNode(T _data) : data(_data) {}
+    SinglyNode(T _data) : data(_data), next(nullptr) {
+    }
 
     T getData() { return data; }
+    void setData(T data) {
+        this->data = data;
+    }
+
     SinglyNode<T>* getNext() {
       return next;
     }

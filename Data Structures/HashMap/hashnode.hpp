@@ -1,38 +1,35 @@
-template<typename K, typename V>
+template <typename K, typename V>
 class HashNode {
     private:
-        K _key;
-        V _value;
-        HashNode<K, V>* _next;
-
-        HashNode(const HashNode&);
-        HashNode& operator=(const HashNode&);
+        K key;
+        V value;
+        HashNode<K, V> *next;
     public:
-        HashNode(const K &key, const V &value) : _value(value), _key(key)
+        HashNode(K _key, V _value) : key(_key), value(_value)
         {
-        }
-        
-        K getKey() const {
-            return _key;
-        }
-
-        V getValue() const {
-            return _value;
         }
 
         HashNode<K, V>* getNext() const {
-            return _next;
+            return next;
         }
 
-        void setKey(const K &key) {
-            _key = key;
+        void setNext(HashNode<K, V>* node) {
+            this->next = node;
         }
 
-        void setValue(const V &value) {
-            _value = value;
+        void setKey(K k) {
+            this->key = k;
         }
 
-        void setNext(HashNode *next) {
-            _next = next;
+        void setValue(V v) {
+            this->value = v;
+        }
+
+        K getKey() const {
+            return this->key;
+        }
+
+        V getValue() const {
+            return this->value;
         }
 };

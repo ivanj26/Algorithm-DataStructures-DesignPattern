@@ -10,33 +10,31 @@ using namespace std;
  * Complexity: O(log n)
  **/ 
 int binarySearch(int* arr, int start, int end, int x) {
-  if (end >= start) {
-    int idx_mid = start + (end - start) / 2;
-    int mid = arr[idx_mid];
+    if (end >= start) {
+        int idxMid = start + ((end - start) / 2);
+        int mid = arr[idxMid];
 
-    if (mid == x) return idx_mid;
-    else if (mid > x) {
-      return binarySearch(arr, start, idx_mid - 1, x);
-    } else {
-      return binarySearch(arr, idx_mid + 1, end, x);
+        if (mid == x) return idxMid;
+        if (x > mid) return binarySearch(arr, idxMid + 1, end, x);
+        if (x < mid) return binarySearch(arr, start, idxMid - 1, x);
     }
-  }
 
-  return -1;
+    return -1;
 }
 
 int main(int argc, char const *argv[])
 {
-  const int size = 100;
-  int* arr = new int[size];
+    const int size = 100;
+    int* arr = new int[size];
 
-  for (int i = 0; i < size; i++)
-  {
-    arr[i] = i * 10;
-  }
+    for (int i = 0; i < size; i++)
+    {
+        arr[i] = i * 10;
+    }
 
-  cout << (binarySearch(arr, 0, size-1, 70) >= 0? "Found" : "Not Found");
+    cout << sizeof(arr) << endl;
+    cout << (binarySearch(arr, 0, size - 1, 100) >= 0? "Found" : "Not Found");
 
-  delete[] arr;
-  return 0;
+    delete[] arr;
+    return 0;
 }

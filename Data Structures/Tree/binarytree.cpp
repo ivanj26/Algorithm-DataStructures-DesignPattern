@@ -14,13 +14,15 @@ class Tree {
             if (!tree) return;
 
             cout << "(";
-            printInOrderUtil(tree->left);
+            printInOrderUtil(tree->getLeft());
+            cout << ")";
+
+            cout << " (";
+            cout << tree->getValue();
             cout << ") ";
 
-            cout << tree->getValue() << " ";
-
             cout << "(";
-            printInOrderUtil(tree->right);
+            printInOrderUtil(tree->getRight());
             cout << ")";
         }
 
@@ -69,12 +71,12 @@ class Tree {
                 if (!left->left && !left->right && !right->left && !right->right) {
                     if (left->value == right->value) return true;
                     else return false;
-                }   
+                } else {
+                    return isSymmetricUtil(left->right, right->left) && isSymmetricUtil(left->left, right->right);
+                }
             }
-            else if (!left || !right) return false;
-            else return true;
-            
-            return isSymmetricUtil(left->right, right->left) && isSymmetricUtil(left->left, right->right);
+            else if (!left && !right) return true;
+            else return false;
         }
         
     public:
@@ -105,30 +107,28 @@ class Tree {
         }
 
         void insert(T newVal) {
-            queue<Tree<T>*> q;
-            q.push(this);
+            queue<Tree<T> *> queue;
 
-            while (!q.empty()) {
-                Tree<T>* t = q.front();
-                q.pop();
+            queue.push(this);
 
-                if (t->getValue() < newVal) {
-                    Tree<T>* right = t->getRight();
-                    
+            while (!queue.empty()) {
+                Tree<T> *tree = queue.front();
+                T value = tree->getValue();
+                queue.pop();
+
+                if (value < newVal) {
+                    Tree<T> *right = tree->getRight();
                     if (right) {
-                        q.push(right);
+                        queue.push(right);
                     } else {
-                        t->setRight(new Tree(newVal));
-                        break;
+                        tree->setRight(new Tree<T> (newVal));
                     }
                 } else {
-                    Tree<T>* left = t->getLeft();
-
+                    Tree<T> *left = tree->getLeft();
                     if (left) {
-                        q.push(left);
+                        queue.push(left);
                     } else {
-                        t->setLeft(new Tree(newVal));
-                        break;
+                        tree->setLeft(new Tree<T> (newVal));
                     }
                 }
             }
@@ -229,18 +229,32 @@ class Tree {
         }
 
         bool isSymmetric() {
-            if (this->getLeft && this->getRight) {
-                bool isSymmetric = isSymmetricUtil(this->getLeft, this->getRight);
+            if (this->getLeft() && this->getRight()) {
+                bool isSymmetric = isSymmetricUtil(this->getLeft(), this->getRight());
                 
                 return isSymmetric;
-            } else if (!this->getLeft || !this->getRight)
-                return false;
-            else
+            } else if (!this->getLeft() && !this->getRight())
                 return true;
+            else
+                return false;
         }
 
         void search(T value) {
             //Do search algo
+        }
+
+        static bool isBSTree(Tree<T> *tree, int max = INT_MAX, int min = INT_MIN) {
+            if (tree == nullptr) return true;
+
+            if ((min != INT_MIN && tree->getValue() <= min) || (max != INT_MAX && max < tree->getValue())) {
+                return false;
+            }
+
+            if (isBSTree(tree->getLeft(), tree->getValue(), INT_MIN) && isBSTree(tree->getRight(), INT_MAX, tree->getValue())) {
+                return true;
+            }
+
+            return false;
         }
 };
 
@@ -250,10 +264,10 @@ int main(int argc, const char** argv) {
     tree.insert(2);
     tree.insert(4);
 
-    tree.printPreOrder();
+    tree.printInOrder();
     // tree.printPostOrder();
     // tree.levelOrder();
+    cout << "Is Symetric? " << tree.isSymmetric()  << endl;
 
-    // cout << tree.height();
     return 0;
 }

@@ -20,7 +20,7 @@ int fib1(int n) {
  * Space           : O(n)
 **/
 int fib2(int n) {
-    int f[n+2];
+    int f[n+1];
 
     f[0] = 0;
     f[1] = 1;
@@ -59,7 +59,7 @@ int fib3(int n) {
  **/
 
 int climbingStairs(int n) {
-    int f[n+2];
+    int f[n+1];
     f[0] = 0;
     f[1] = 1;
 
