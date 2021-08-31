@@ -3,37 +3,46 @@
 #include <sstream>
 #include "eventlistener.hpp"
 
-class EventManager {
-    private:
-        std::unordered_map<EventListener::Type, EventListener> listeners;
-    public:
-        void addListener(EventListener listener) {
-            listeners.insert({
-                listener.getType(),
-                listener,
-            });
-        }
+class EventManager
+{
+	private:
+		std::unordered_map<EventListener::Type, EventListener> listeners;
 
-        void removeListener(EventListener listener) {
-            listeners.erase(listener.getType());
-        }
+	public:
+		void addListener(EventListener listener)
+		{
+			listeners.insert({
+				listener.getType(),
+				listener,
+			});
+		}
 
-        void notify(EventListener::Type type) {
-            try {
-                std::unordered_map<EventListener::Type, EventListener>::iterator it = listeners.find(type);
+		void removeListener(EventListener listener)
+		{
+			listeners.erase(listener.getType());
+		}
 
-                if (it == listeners.end()) {
-                    const std::string typeStr = EventListener::typeToString(type);
-                    std::stringstream ss;
+		void notify(EventListener::Type type)
+		{
+			try
+			{
+				std::unordered_map<EventListener::Type, EventListener>::iterator it = listeners.find(type);
 
-                    ss << typeStr << "Listener is not implemented yet";
-                    throw ss.str();
-                }
+				if (it == listeners.end())
+				{
+					const std::string typeStr = EventListener::typeToString(type);
+					std::stringstream ss;
 
-                EventListener listener = listeners.at(type);
-                listener.update();
-            } catch (const std::string msg) {
-                std::cout << msg << std::endl;
-            }
-        }
+					ss << typeStr << "Listener is not implemented yet";
+					throw ss.str();
+				}
+
+				EventListener listener = listeners.at(type);
+				listener.update();
+			}
+			catch (const std::string msg)
+			{
+				std::cout << msg << std::endl;
+			}
+		}
 };

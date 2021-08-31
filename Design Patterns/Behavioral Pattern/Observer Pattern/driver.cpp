@@ -4,32 +4,35 @@
 
 using namespace std;
 
-void printSomething() {
-    cout << "Clicked!" << endl;
+void printSomething()
+{
+	cout << "Clicked!" << endl;
 }
 
-void printSomething2() {
-    cout << "LongClick triggered!" << endl;
+void printSomething2()
+{
+	cout << "LongClick triggered!" << endl;
 }
 
-int main(int argc, const char** argv) {
-    Button button;
-    SingleClickListener singleClickListener;
-    LongClickListener longClickListener;
+int main(int argc, const char **argv)
+{
+	Button button;
+	SingleClickListener singleClickListener;
+	LongClickListener longClickListener;
 
-    singleClickListener.onClick(printSomething);
-    longClickListener.onLongClick(printSomething2);
-    
-    //Add listener to EventManager
-    button.events.addListener(singleClickListener);
-    button.events.addListener(longClickListener);
+	singleClickListener.onClick(printSomething);
+	longClickListener.onLongClick(printSomething2);
 
-    button.performClick(); //performing click
+	//Add listener to EventManager
+	button.events.addListener(singleClickListener);
+	button.events.addListener(longClickListener);
 
-    button.events.removeListener(singleClickListener);
+	button.performClick(); //performing click
 
-    button.performClick();
-    button.performLongClick();
-    
-    return 0;
+	button.events.removeListener(singleClickListener);
+
+	button.performClick();
+	button.performLongClick();
+
+	return 0;
 }

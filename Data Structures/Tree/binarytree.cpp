@@ -4,270 +4,337 @@
 using namespace std;
 
 template <class T>
-class Tree {
-    private:
-        Tree<T> *left, *right;
-        T value;
+class Tree
+{
+	private:
+		Tree<T> *left, *right;
+		T value;
 
-        //Left - Root - Right
-        void printInOrderUtil(Tree<T>* tree) {
-            if (!tree) return;
+		//Left - Root - Right
+		void printInOrderUtil(Tree<T> *tree)
+		{
+			if (!tree)
+				return;
 
-            cout << "(";
-            printInOrderUtil(tree->getLeft());
-            cout << ")";
+			cout << "(";
+			printInOrderUtil(tree->getLeft());
+			cout << ")";
 
-            cout << " (";
-            cout << tree->getValue();
-            cout << ") ";
+			cout << " (";
+			cout << tree->getValue();
+			cout << ") ";
 
-            cout << "(";
-            printInOrderUtil(tree->getRight());
-            cout << ")";
-        }
+			cout << "(";
+			printInOrderUtil(tree->getRight());
+			cout << ")";
+		}
 
-        //Root - Left - Right
-        void printPreOrderUtil(Tree<T>* tree) {
-            if (!tree) return;
+		//Root - Left - Right
+		void printPreOrderUtil(Tree<T> *tree)
+		{
+			if (!tree)
+				return;
 
-            cout << tree->getValue() << " ";
+			cout << tree->getValue() << " ";
 
-            cout << "(";
-            printPreOrderUtil(tree->getLeft());
-            cout << ")";
+			cout << "(";
+			printPreOrderUtil(tree->getLeft());
+			cout << ")";
 
-            cout << " (";
-            printPreOrderUtil(tree->getRight());
-            cout << ")";
-        }
+			cout << " (";
+			printPreOrderUtil(tree->getRight());
+			cout << ")";
+		}
 
-        //Left - Right - Root
-        void printPostOrderUtil(Tree<T>* tree) {
-            if (!tree) return;
+		//Left - Right - Root
+		void printPostOrderUtil(Tree<T> *tree)
+		{
+			if (!tree)
+				return;
 
-            cout << "(";
-            printPostOrderUtil(tree->getLeft());
-            cout << ") ";
+			cout << "(";
+			printPostOrderUtil(tree->getLeft());
+			cout << ") ";
 
-            cout << "(";
-            printPostOrderUtil(tree->getRight());
-            cout << ") ";
+			cout << "(";
+			printPostOrderUtil(tree->getRight());
+			cout << ") ";
 
-            cout << tree->getValue();
-        }
+			cout << tree->getValue();
+		}
 
-        int heightUtil(Tree<T>* root){
-            if (!root) return -1;
+		int heightUtil(Tree<T> *root)
+		{
+			if (!root)
+				return -1;
 
-            int left = 1 + heightUtil(root->left);
-            int right = 1 + heightUtil(root->right);
+			int left = 1 + heightUtil(root->left);
+			int right = 1 + heightUtil(root->right);
 
-            return left > right ? left : right;
-        }
+			return left > right ? left : right;
+		}
 
-        bool isSymmetricUtil(Tree<T>* left, Tree<T>* right) {
-            //if left has no children and right ones too
-            if (left && right) {
-                if (!left->left && !left->right && !right->left && !right->right) {
-                    if (left->value == right->value) return true;
-                    else return false;
-                } else {
-                    return isSymmetricUtil(left->right, right->left) && isSymmetricUtil(left->left, right->right);
-                }
-            }
-            else if (!left && !right) return true;
-            else return false;
-        }
-        
-    public:
-        Tree(T value) {
-            this->value = value;
-            this->left = nullptr;
-            this->right = nullptr;
-        }
+		bool isSymmetricUtil(Tree<T> *left, Tree<T> *right)
+		{
+			//if left has no children and right ones too
+			if (left && right)
+			{
+				if (!left->left && !left->right && !right->left && !right->right)
+				{
+					if (left->value == right->value)
+						return true;
+					else
+						return false;
+				}
+				else
+				{
+					return isSymmetricUtil(left->right, right->left) && isSymmetricUtil(left->left, right->right);
+				}
+			}
+			else if (!left && !right)
+				return true;
+			else
+				return false;
+		}
 
-        Tree<T>* getLeft() const {
-            return this->left;
-        }
+	public:
+		Tree(T value)
+		{
+			this->value = value;
+			this->left = nullptr;
+			this->right = nullptr;
+		}
 
-        Tree<T>* getRight() const {
-            return this->right;
-        }
+		Tree<T> *getLeft() const
+		{
+			return this->left;
+		}
 
-        void setRight(Tree<T>* tree) {
-            this->right = tree;
-        }
+		Tree<T> *getRight() const
+		{
+			return this->right;
+		}
 
-        void setLeft(Tree<T>* tree) {
-            this->left = tree;
-        }
+		void setRight(Tree<T> *tree)
+		{
+			this->right = tree;
+		}
 
-        T getValue() {
-            return this->value;
-        }
+		void setLeft(Tree<T> *tree)
+		{
+			this->left = tree;
+		}
 
-        void insert(T newVal) {
-            queue<Tree<T> *> queue;
+		T getValue()
+		{
+			return this->value;
+		}
 
-            queue.push(this);
+		void insert(T newVal)
+		{
+			queue<Tree<T> *> queue;
 
-            while (!queue.empty()) {
-                Tree<T> *tree = queue.front();
-                T value = tree->getValue();
-                queue.pop();
+			queue.push(this);
 
-                if (value < newVal) {
-                    Tree<T> *right = tree->getRight();
-                    if (right) {
-                        queue.push(right);
-                    } else {
-                        tree->setRight(new Tree<T> (newVal));
-                    }
-                } else {
-                    Tree<T> *left = tree->getLeft();
-                    if (left) {
-                        queue.push(left);
-                    } else {
-                        tree->setLeft(new Tree<T> (newVal));
-                    }
-                }
-            }
-        }
+			while (!queue.empty())
+			{
+				Tree<T> *tree = queue.front();
+				T value = tree->getValue();
+				queue.pop();
 
-        void printInOrder() {
-            printInOrderUtil(this);
-            cout << endl;
-        }
+				if (value < newVal)
+				{
+					Tree<T> *right = tree->getRight();
+					if (right)
+					{
+						queue.push(right);
+					}
+					else
+					{
+						tree->setRight(new Tree<T>(newVal));
+					}
+				}
+				else
+				{
+					Tree<T> *left = tree->getLeft();
+					if (left)
+					{
+						queue.push(left);
+					}
+					else
+					{
+						tree->setLeft(new Tree<T>(newVal));
+					}
+				}
+			}
+		}
 
-        void printPreOrder() {
-            printPreOrderUtil(this);
-            cout << endl;
-        }
+		void printInOrder()
+		{
+			printInOrderUtil(this);
+			cout << endl;
+		}
 
-        void printPostOrder() {
-            printPostOrderUtil(this);
-            cout << endl;
-        }
+		void printPreOrder()
+		{
+			printPreOrderUtil(this);
+			cout << endl;
+		}
 
-        vector<T> largestValuesInTreeRows(Tree<T> * t) {
-            vector<T> vec;
-            queue<Tree<T>*> q;
-            
-            if (!t) return vec;
-            q.push(t);
-            
-            while (!q.empty()) {
-                Tree<T>* tr = q.front();
-                Tree<T>* tr2 = nullptr;
-                q.pop();
-                
-                Tree<T>* left = tr->left;
-                Tree<T>* right = tr->right;
-                
-                if (q.empty()) {
-                    vec.push_back(tr->value);
-                    
-                    if (left) q.push(left);
-                    if (right) q.push(right);
-                } else {
-                    //vector to save subtree in same depth
-                    vector<Tree<T>*> vec2;
-                    
-                    //push tree with same depth
-                    while (!q.empty()) {
-                        vec2.push_back(q.front());
-                        q.pop();
-                    }
-                    
-                    if (left) q.push(left);
-                    if (right) q.push(right);
-                    
-                    //get maximum in same depth
-                    int max = tr->value;
-                    for (auto i : vec2) {
-                        Tree<T>* temp = i;
-                        left = temp->left;
-                        right = temp->right;
-                        
-                        int val = temp->value;
-                        if (max < val) max = val;
-                        
-                        if (left) q.push(left);
-                        if (right) q.push(right);
-                    }
-                    
-                    vec.push_back(max);
-                }
-            }
-            
-            return vec;
-        }
+		void printPostOrder()
+		{
+			printPostOrderUtil(this);
+			cout << endl;
+		}
 
-        //Print by using BFS Algorithm style
-        void levelOrder() {
-            queue<Tree<T>*> q;
-            q.push(this);
+		vector<T> largestValuesInTreeRows(Tree<T> *t)
+		{
+			vector<T> vec;
+			queue<Tree<T> *> q;
 
-            while (!q.empty()) {
-                Tree<T>* t = q.front();
-                q.pop();
+			if (!t)
+				return vec;
+			q.push(t);
 
-                cout << t->getValue() << " ";
+			while (!q.empty())
+			{
+				Tree<T> *tr = q.front();
+				Tree<T> *tr2 = nullptr;
+				q.pop();
 
-                if (t->left) {
-                    q.push(t->left);
-                }
+				Tree<T> *left = tr->left;
+				Tree<T> *right = tr->right;
 
-                if (t->right) {
-                    q.push(t->right);
-                }
-            }
-        }
+				if (q.empty())
+				{
+					vec.push_back(tr->value);
 
-        int height() {
-            return heightUtil(this);
-        }
+					if (left)
+						q.push(left);
+					if (right)
+						q.push(right);
+				}
+				else
+				{
+					//vector to save subtree in same depth
+					vector<Tree<T> *> vec2;
 
-        bool isSymmetric() {
-            if (this->getLeft() && this->getRight()) {
-                bool isSymmetric = isSymmetricUtil(this->getLeft(), this->getRight());
-                
-                return isSymmetric;
-            } else if (!this->getLeft() && !this->getRight())
-                return true;
-            else
-                return false;
-        }
+					//push tree with same depth
+					while (!q.empty())
+					{
+						vec2.push_back(q.front());
+						q.pop();
+					}
 
-        void search(T value) {
-            //Do search algo
-        }
+					if (left)
+						q.push(left);
+					if (right)
+						q.push(right);
 
-        static bool isBSTree(Tree<T> *tree, int max = INT_MAX, int min = INT_MIN) {
-            if (tree == nullptr) return true;
+					//get maximum in same depth
+					int max = tr->value;
+					for (auto i : vec2)
+					{
+						Tree<T> *temp = i;
+						left = temp->left;
+						right = temp->right;
 
-            if ((min != INT_MIN && tree->getValue() <= min) || (max != INT_MAX && max < tree->getValue())) {
-                return false;
-            }
+						int val = temp->value;
+						if (max < val)
+							max = val;
 
-            if (isBSTree(tree->getLeft(), tree->getValue(), INT_MIN) && isBSTree(tree->getRight(), INT_MAX, tree->getValue())) {
-                return true;
-            }
+						if (left)
+							q.push(left);
+						if (right)
+							q.push(right);
+					}
 
-            return false;
-        }
+					vec.push_back(max);
+				}
+			}
+
+			return vec;
+		}
+
+		//Print by using BFS Algorithm style
+		void levelOrder()
+		{
+			queue<Tree<T> *> q;
+			q.push(this);
+
+			while (!q.empty())
+			{
+				Tree<T> *t = q.front();
+				q.pop();
+
+				cout << t->getValue() << " ";
+
+				if (t->left)
+				{
+					q.push(t->left);
+				}
+
+				if (t->right)
+				{
+					q.push(t->right);
+				}
+			}
+		}
+
+		int height()
+		{
+			return heightUtil(this);
+		}
+
+		bool isSymmetric()
+		{
+			if (this->getLeft() && this->getRight())
+			{
+				bool isSymmetric = isSymmetricUtil(this->getLeft(), this->getRight());
+
+				return isSymmetric;
+			}
+			else if (!this->getLeft() && !this->getRight())
+				return true;
+			else
+				return false;
+		}
+
+		void search(T value)
+		{
+			//Do search algo
+		}
+
+		static bool isBSTree(Tree<T> *tree, int max = INT_MAX, int min = INT_MIN)
+		{
+			if (tree == nullptr)
+				return true;
+
+			if ((min != INT_MIN && tree->getValue() <= min) || (max != INT_MAX && max < tree->getValue()))
+			{
+				return false;
+			}
+
+			if (isBSTree(tree->getLeft(), tree->getValue(), INT_MIN) && isBSTree(tree->getRight(), INT_MAX, tree->getValue()))
+			{
+				return true;
+			}
+
+			return false;
+		}
 };
 
-int main(int argc, const char** argv) {
-    Tree<int> tree(3);
-    tree.insert(1);
-    tree.insert(2);
-    tree.insert(4);
+int main(int argc, const char **argv)
+{
+	Tree<int> tree(3);
+	tree.insert(1);
+	tree.insert(2);
+	tree.insert(4);
 
-    tree.printInOrder();
-    // tree.printPostOrder();
-    // tree.levelOrder();
-    cout << "Is Symetric? " << tree.isSymmetric()  << endl;
+	tree.printInOrder();
+	// tree.printPostOrder();
+	// tree.levelOrder();
+	cout << "Is Symetric? " << tree.isSymmetric() << endl;
 
-    return 0;
+	return 0;
 }

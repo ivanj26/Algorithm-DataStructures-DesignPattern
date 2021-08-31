@@ -5,49 +5,55 @@
 using namespace std;
 
 template <class T>
-class DirectedGraph {
-    private:
-        int nbOfNodes;
-        vector<T> *adjNodes;
-    public:
-        DirectedGraph(long nbOfNodes) {
-            this->nbOfNodes = nbOfNodes;
-            adjNodes = new vector<T>[nbOfNodes];
-        }
+class DirectedGraph
+{
+	private:
+		int nbOfNodes;
+		vector<T> *adjNodes;
 
-        DirectedGraph() {}
+	public:
+		DirectedGraph(long nbOfNodes)
+		{
+			this->nbOfNodes = nbOfNodes;
+			adjNodes = new vector<T>[nbOfNodes];
+		}
 
-        ~DirectedGraph() {
-            delete[] adjNodes;
-        }
+		DirectedGraph() {}
 
-        void addAdjNodes(long from, long to) {
-            adjNodes[from].push_back(to);
-        }
+		~DirectedGraph()
+		{
+			delete[] adjNodes;
+		}
 
-        void removeAdjNodes(long from, long to) {
-            adjNodes[from].erase(
-                std::remove(adjNodes[from].begin(), adjNodes[from].end(), to),
-                adjNodes[from].end()
-            );
-        }
+		void addAdjNodes(long from, long to)
+		{
+			adjNodes[from].push_back(to);
+		}
 
-        void print() {
-            for (int i = 0; i < nbOfNodes; i++)
-            {
-                cout << i;
-                for (auto x: adjNodes[i])
-                {
-                    cout << " -> " << x;
-                }
+		void removeAdjNodes(long from, long to)
+		{
+			adjNodes[from].erase(
+				std::remove(adjNodes[from].begin(), adjNodes[from].end(), to),
+				adjNodes[from].end());
+		}
 
-                cout << endl;
-            }
-        }
-        
-        template <class DirectedGraph>
-        friend class BFSAlgorithm;
+		void print()
+		{
+			for (int i = 0; i < nbOfNodes; i++)
+			{
+				cout << i;
+				for (auto x : adjNodes[i])
+				{
+					cout << " -> " << x;
+				}
 
-        template <class DirectedGraph>
-        friend class DFSAlgorithm;
+				cout << endl;
+			}
+		}
+
+		template <class DirectedGraph>
+		friend class BFSAlgorithm;
+
+		template <class DirectedGraph>
+		friend class DFSAlgorithm;
 };

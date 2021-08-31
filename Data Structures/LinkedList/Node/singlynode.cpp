@@ -8,25 +8,31 @@
 using namespace std;
 
 template <class T>
-class SinglyNode {
-  private:
-    T data;
-    SinglyNode<T> *next;
-  public:
-    SinglyNode(T _data) : data(_data), next(nullptr) {
-    }
+class SinglyNode
+{
+	private:
+		T data;
+		SinglyNode<T> *next;
 
-    T getData() { return data; }
-    void setData(T data) {
-        this->data = data;
-    }
+	public:
+		SinglyNode(T _data) : data(_data), next(nullptr)
+		{
+		}
 
-    SinglyNode<T>* getNext() {
-      return next;
-    }
-    void setNext(T _next) {
-      next = new SinglyNode(_next);
-    }
+		T getData() { return data; }
+		void setData(T data)
+		{
+			this->data = data;
+		}
 
-    void setNext(SinglyNode<T> *_next) { next = _next; }
+		SinglyNode<T> *getNext()
+		{
+			return next;
+		}
+		void setNext(T _next)
+		{
+			next = new SinglyNode(_next);
+		}
+
+		void setNext(SinglyNode<T> *_next) { next = _next; }
 };

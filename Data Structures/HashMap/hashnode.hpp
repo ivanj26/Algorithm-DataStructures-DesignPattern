@@ -1,35 +1,43 @@
 template <typename K, typename V>
-class HashNode {
-    private:
-        K key;
-        V value;
-        HashNode<K, V> *next;
-    public:
-        HashNode(K _key, V _value) : key(_key), value(_value)
-        {
-        }
+class HashNode
+{
+	private:
+		K key;
+		V value;
+		HashNode<K, V> *next;
 
-        HashNode<K, V>* getNext() const {
-            return next;
-        }
+	public:
+		HashNode(K _key, V _value) : key(_key), value(_value)
+		{
+		}
 
-        void setNext(HashNode<K, V>* node) {
-            this->next = node;
-        }
+		HashNode<K, V> *getNext() const
+		{
+			return next;
+		}
 
-        void setKey(K k) {
-            this->key = k;
-        }
+		void setNext(HashNode<K, V> *node)
+		{
+			this->next = node;
+		}
 
-        void setValue(V v) {
-            this->value = v;
-        }
+		void setKey(K k)
+		{
+			this->key = k;
+		}
 
-        K getKey() const {
-            return this->key;
-        }
+		void setValue(V v)
+		{
+			this->value = v;
+		}
 
-        V getValue() const {
-            return this->value;
-        }
+		K getKey() const
+		{
+			return this->key;
+		}
+
+		V getValue() const
+		{
+			return this->value;
+		}
 };

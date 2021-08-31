@@ -1,5 +1,5 @@
 enum ComputerConstant
 {
-    LAPTOP,
-    DESKTOP,
+	LAPTOP,
+	DESKTOP,
 };

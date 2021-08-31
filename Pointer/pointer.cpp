@@ -3,10 +3,10 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  int x = 13;
-  int *px;
+	int x = 13;
+	int *px;
 
-  cout << px << endl;
+	cout << px << endl;
 
-  return 0;
+	return 0;
 }

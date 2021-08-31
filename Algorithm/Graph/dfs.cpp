@@ -7,82 +7,93 @@
 using namespace std;
 
 template <class T>
-class DFSAlgorithm {
-    private:
-        DirectedGraph<T> g;
-        void dfsUtil(vector<T>* nodes, bool* visited, T s) {
-            visited[(long) s] = true;
-            cout << s << " ";
+class DFSAlgorithm
+{
+private:
+	DirectedGraph<T> g;
+	void dfsUtil(vector<T> *nodes, bool *visited, T s)
+	{
+		visited[(long)s] = true;
+		cout << s << " ";
 
-            for (auto i = nodes[s].begin(); i != nodes[s].end(); i++)
-            {
-                if (!visited[(long) *i]) {
-                    dfsUtil(nodes, visited, *i);
-                }
-            }
-        }
-    public:
-        DFSAlgorithm(const DirectedGraph<T>& g){
-            this->g = g;
-        }
+		for (auto i = nodes[s].begin(); i != nodes[s].end(); i++)
+		{
+			if (!visited[(long)*i])
+			{
+				dfsUtil(nodes, visited, *i);
+			}
+		}
+	}
 
-        //Iterative depth first search -> using stack
-        void doFromNode(T s) {
-            long size = g.nbOfNodes;
-            vector<T> *vec = g.adjNodes;
+public:
+	DFSAlgorithm(const DirectedGraph<T> &g)
+	{
+		this->g = g;
+	}
 
-            bool *visited = new bool[size];
-            for (long i = 0; i < size; i++)
-            {
-                visited[i] = false;
-            }
+	//Iterative depth first search -> using stack
+	void doFromNode(T s)
+	{
+		long size = g.nbOfNodes;
+		vector<T> *vec = g.adjNodes;
 
-            stack<T> st;
-            st.push(s);
+		bool *visited = new bool[size];
+		for (long i = 0; i < size; i++)
+		{
+			visited[i] = false;
+		}
 
-            while (!st.empty()) {
-                T out = st.top();
-                cout << out << " ";
+		stack<T> st;
+		st.push(s);
 
-                st.pop();
-                visited[(long) out] = true;
+		while (!st.empty())
+		{
+			T out = st.top();
+			cout << out << " ";
 
-                for (auto i : vec[(long) out]) {
-                    if (!visited[(long) i]) {
-                        st.push(i);
-                    }
-                }
-            }
+			st.pop();
+			visited[(long)out] = true;
 
-            cout << endl;
-            delete[] visited;
-        }
+			for (auto i : vec[(long)out])
+			{
+				if (!visited[(long)i])
+				{
+					st.push(i);
+				}
+			}
+		}
 
-        //Recursive method
-        void doFromNode2(T s) {
-            long size = g.nbOfNodes;
-            vector<T> *nodes = g.adjNodes;
+		cout << endl;
+		delete[] visited;
+	}
 
-            bool *visited = new bool[size];
-            for (long i = 0; i < size; i++)
-            {
-                visited[i] = false;
-            }
+	//Recursive method
+	void doFromNode2(T s)
+	{
+		long size = g.nbOfNodes;
+		vector<T> *nodes = g.adjNodes;
 
-            dfsUtil(nodes, visited, s);
-        }
+		bool *visited = new bool[size];
+		for (long i = 0; i < size; i++)
+		{
+			visited[i] = false;
+		}
+
+		dfsUtil(nodes, visited, s);
+	}
 };
 
-int main(int argc, const char** argv) {
-    DirectedGraph<int> g(5);
-    g.addAdjNodes(1, 0);
-    g.addAdjNodes(0, 3);
-    g.addAdjNodes(0, 2);
-    g.addAdjNodes(2, 1);
-    g.addAdjNodes(1, 4);
+int main(int argc, const char **argv)
+{
+	DirectedGraph<int> g(5);
+	g.addAdjNodes(1, 0);
+	g.addAdjNodes(0, 3);
+	g.addAdjNodes(0, 2);
+	g.addAdjNodes(2, 1);
+	g.addAdjNodes(1, 4);
 
-    DFSAlgorithm<int> dfs(g);
-    dfs.doFromNode2(0);
+	DFSAlgorithm<int> dfs(g);
+	dfs.doFromNode2(0);
 
-    return 0;
+	return 0;
 }

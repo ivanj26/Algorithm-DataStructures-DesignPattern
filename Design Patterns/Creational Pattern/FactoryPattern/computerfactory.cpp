@@ -3,18 +3,20 @@
 #include "desktop.cpp"
 #include "computerconstant.cpp"
 
-class ComputerFactory {
-    public:
-        static Computer* create(ComputerConstant type) {
-            switch (type)
-            {
-                case LAPTOP:
-                    return new Laptop();
+class ComputerFactory
+{
+	public:
+		static Computer *create(ComputerConstant type)
+		{
+			switch (type)
+			{
+			case LAPTOP:
+				return new Laptop();
 
-                case DESKTOP:
-                    return new Desktop();
-            }
+			case DESKTOP:
+				return new Desktop();
+			}
 
-            return nullptr;
-        }
+			return nullptr;
+		}
 };

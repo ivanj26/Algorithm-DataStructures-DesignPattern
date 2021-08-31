@@ -12,22 +12,26 @@
 using namespace std;
 
 template <class T>
-class SinglyLinkedList {
+class SinglyLinkedList
+{
 	private:
-		SinglyNode<T>* head;
+		SinglyNode<T> *head;
 
 		/**
-		 * @brief Utility for isPalindrome() to get palindrome of linkedlist by using recursive strategy.
-		 * 
-		 * @param left 
-		 * @param right 
-		 * @return bool 
-		 */
-		bool isPalindromeUtil(SinglyNode<T>** left, SinglyNode<T>* right) {
-			if (right == nullptr) return true;
+			 * @brief Utility for isPalindrome() to get palindrome of linkedlist by using recursive strategy.
+			 * 
+			 * @param left 
+			 * @param right 
+			 * @return bool 
+			 */
+		bool isPalindromeUtil(SinglyNode<T> **left, SinglyNode<T> *right)
+		{
+			if (right == nullptr)
+				return true;
 
 			bool isp = this->isPalindromeUtil(left, right->getNext());
-			if (isp == false) return false;
+			if (isp == false)
+				return false;
 
 			bool isp2 = (*left)->getData() == right->getData();
 			(*left) = (*left)->getNext();
@@ -36,45 +40,56 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Utility for removeKFromList().
-		 * 
-		 * @param head 
-		 * @param k 
-		 * @return SinglyNode<T>* 
-		 */
-		SinglyNode<T>* removeKFromList(SinglyNode<T>* head, T k) {
-			if (head == nullptr) {
+			 * @brief Utility for removeKFromList().
+			 * 
+			 * @param head 
+			 * @param k 
+			 * @return SinglyNode<T>* 
+			 */
+		SinglyNode<T> *removeKFromList(SinglyNode<T> *head, T k)
+		{
+			if (head == nullptr)
+			{
 				return head;
 			}
 
 			head->setNext(this->removeKFromList(head->getNext(), k));
-			if (head->getData() == k) {
+			if (head->getData() == k)
+			{
 				SinglyNode<T> *temp = head;
 				delete temp;
 
 				return head->getNext();
-			} else {
+			}
+			else
+			{
 				return head;
 			}
 		}
 
 		/**
-		 * @brief Utility for subtractOne().
-		 * 
-		 * @param node 
-		 * @return int 
-		 */
-		int subtractOneUtil(SinglyNode<T>* node) {
-			if (node == nullptr) {
-					return -1;
+			 * @brief Utility for subtractOne().
+			 * 
+			 * @param node 
+			 * @return int 
+			 */
+		int subtractOneUtil(SinglyNode<T> *node)
+		{
+			if (node == nullptr)
+			{
+				return -1;
 			}
 
 			int borrow = subtractOneUtil(node->getNext());
-			if (borrow == -1) {
-				if (node->getData() == 0) {
+			if (borrow == -1)
+			{
+				if (node->getData() == 0)
+				{
 					node->setData(9);
 					return -1;
-				} else {
+				}
+				else
+				{
 					T subtracted = node->getData() - 1;
 					node->setData(subtracted);
 					return 0;
@@ -85,26 +100,33 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Utility to help move even numbers to the end of list.
-		 * 
-		 * @param odd 
-		 * @param even 
-		 * @param i 
-		 * @return SinglyNode<T>* 
-		 */
-		SinglyNode<T>* oddEvenRecv(SinglyNode<T>* odd, SinglyNode<T> **even, int i = 0) {
-			if (odd == nullptr) {
+			 * @brief Utility to help move even numbers to the end of list.
+			 * 
+			 * @param odd 
+			 * @param even 
+			 * @param i 
+			 * @return SinglyNode<T>* 
+			 */
+		SinglyNode<T> *oddEvenRecv(SinglyNode<T> *odd, SinglyNode<T> **even, int i = 0)
+		{
+			if (odd == nullptr)
+			{
 				return odd;
 			}
 
 			odd->setNext(this->oddEvenRecv(odd->getNext(), even, ++i));
-			if (i % 2 == 0) {
-				if ((*even) == nullptr) {
+			if (i % 2 == 0)
+			{
+				if ((*even) == nullptr)
+				{
 					(*even) = new SinglyNode<T>(odd->getData());
 					(*even)->setNext(nullptr);
-				} else {
-					SinglyNode<T>* temp = *even;
-					while (temp->getNext()) {
+				}
+				else
+				{
+					SinglyNode<T> *temp = *even;
+					while (temp->getNext())
+					{
 						temp = temp->getNext();
 					}
 
@@ -118,67 +140,75 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Utility function to help rotate linkedlist.
-		 * 
-		 * @param curr 
-		 * @param end 
-		 * @return SinglyNode<T>* 
-		 */
-		SinglyNode<T>* rotate(SinglyNode<T>* curr, SinglyNode<T> **end) {
-			if (curr->getNext() == nullptr) {
+			 * @brief Utility function to help rotate linkedlist.
+			 * 
+			 * @param curr 
+			 * @param end 
+			 * @return SinglyNode<T>* 
+			 */
+		SinglyNode<T> *rotate(SinglyNode<T> *curr, SinglyNode<T> **end)
+		{
+			if (curr->getNext() == nullptr)
+			{
 				*end = curr;
 				return nullptr;
 			}
-			
+
 			curr->setNext(rotate(curr->getNext(), end));
 			return curr;
 		}
+
 	public:
 		/**
-		 * @brief Construct a new Singly Linked List object.
-		 * 
-		 */
-		SinglyLinkedList() {
+			 * @brief Construct a new Singly Linked List object.
+			 * 
+			 */
+		SinglyLinkedList()
+		{
 			head = nullptr;
 		}
 
 		/**
-		 * @brief Copy construct a Singly Linked List object
-		 * 
-		 * @param list 
-		 */
-		SinglyLinkedList(const SinglyLinkedList<T>& list) {
+			 * @brief Copy construct a Singly Linked List object
+			 * 
+			 * @param list 
+			 */
+		SinglyLinkedList(const SinglyLinkedList<T> &list)
+		{
 			head = list.head;
 		}
 
 		/**
-		 * @brief Construct a new Singly Linked List object
-		 * 
-		 * @param _head 
-		 */
-		SinglyLinkedList(SinglyNode<T>* _head): head(_head) {}
+			 * @brief Construct a new Singly Linked List object
+			 * 
+			 * @param _head 
+			 */
+		SinglyLinkedList(SinglyNode<T> *_head) : head(_head) {}
 
 		/**
-		 * @brief Replace left hand pointer with right hand pointer.
-		 * 
-		 * @param l 
-		 * @return SinglyLinkedList& 
-		 */
-		SinglyLinkedList& operator=(const SinglyLinkedList<T> &l) {
+			 * @brief Replace left hand pointer with right hand pointer.
+			 * 
+			 * @param l 
+			 * @return SinglyLinkedList& 
+			 */
+		SinglyLinkedList &operator=(const SinglyLinkedList<T> &l)
+		{
 			swap(*this, l);
 
 			return *this;
 		}
-		
-		/**
-		 * @brief Destroy the Singly Linked List object
-		 * @return void
-		 */
-		~SinglyLinkedList() {
-			SinglyNode<T>* curr = head;
 
-			while (curr != nullptr) {
-				SinglyNode<T>* next = curr->getNext();
+		/**
+			 * @brief Destroy the Singly Linked List object
+			 * @return void
+			 */
+		~SinglyLinkedList()
+		{
+			SinglyNode<T> *curr = head;
+
+			while (curr != nullptr)
+			{
+				SinglyNode<T> *next = curr->getNext();
 
 				delete curr;
 				curr = next;
@@ -186,65 +216,77 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Print the linkedlist using operator <<.
-		 * 
-		 * @param os 
-		 * @param l 
-		 * @return ostream& 
-		 */
-		friend ostream& operator<<(ostream& os, SinglyLinkedList& l){
-			SinglyNode<T>* temp = l.front();
+			 * @brief Print the linkedlist using operator <<.
+			 * 
+			 * @param os 
+			 * @param l 
+			 * @return ostream& 
+			 */
+		friend ostream &operator<<(ostream &os, SinglyLinkedList &l)
+		{
+			SinglyNode<T> *temp = l.front();
 
-			while (temp != nullptr) {
+			while (temp != nullptr)
+			{
 				os << temp->getData() << endl;
 				temp = temp->getNext();
 			}
 
-			return os; 
+			return os;
 		}
 
 		/************************
-		/* Linkedlist operation
-		/************************
+			/* Linkedlist operation
+			/************************
+
+			/**
+			 * @brief Get head of SinglyLinkedList.
+			 * @return SinglyNode<T>*
+			 */
+		SinglyNode<T> *front() { return head; }
 
 		/**
-		 * @brief Get head of SinglyLinkedList.
-		 * @return SinglyNode<T>*
-		 */
-		SinglyNode<T>* front() { return head; }
+			 * @brief Push new element into tail of SinglyLinkedList.
+			 * @param t 
+			 * @return void
+			 */
+		void push(T t)
+		{
+			SinglyNode<T> *temp = head;
 
-		/**
-		 * @brief Push new element into tail of SinglyLinkedList.
-		 * @param t 
-		 * @return void
-		 */
-		void push(T t) {
-			SinglyNode<T>* temp = head;
-
-			if (temp == nullptr) {
+			if (temp == nullptr)
+			{
 				head = new SinglyNode<T>(t);
-			} else {
-				while (temp->getNext() != nullptr) {
-						temp = temp->getNext();
+			}
+			else
+			{
+				while (temp->getNext() != nullptr)
+				{
+					temp = temp->getNext();
 				}
 
-				temp->setNext(new SinglyNode<T> (t));
+				temp->setNext(new SinglyNode<T>(t));
 			}
 		}
 
 		/**
-		 * @brief Push new element into tail of SinglyLinkedList.
-		 * 
-		 * @param node 
-		 * @return void
-		 */
-		void push(SinglyNode<T>* node) {
-			SinglyNode<T>* temp = head;
+			 * @brief Push new element into tail of SinglyLinkedList.
+			 * 
+			 * @param node 
+			 * @return void
+			 */
+		void push(SinglyNode<T> *node)
+		{
+			SinglyNode<T> *temp = head;
 
-			if (temp == nullptr) {
+			if (temp == nullptr)
+			{
 				head = node;
-			} else {
-				while (temp->getNext() != nullptr) {
+			}
+			else
+			{
+				while (temp->getNext() != nullptr)
+				{
 					temp = temp->getNext();
 				}
 
@@ -253,60 +295,73 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Delete element in SinglyLinkedList at a given index.
-		 * 
-		 * @param idx
-		 * @return void
-		 */
-		void deleteAt(long idx) {
+			 * @brief Delete element in SinglyLinkedList at a given index.
+			 * 
+			 * @param idx
+			 * @return void
+			 */
+		void deleteAt(long idx)
+		{
 			// - check if index is correct or not
 			assert(idx >= 0);
 
-			if (head == nullptr) return;
-			
-			if (idx > 0) {
+			if (head == nullptr)
+				return;
+
+			if (idx > 0)
+			{
 				long i = 0;
 				SinglyNode<T> *prev = nullptr;
 				SinglyNode<T> *curr = head;
 				SinglyNode<T> *next = curr->getNext();
 
-				while (i < idx && curr) {
+				while (i < idx && curr)
+				{
 					prev = curr;
 					curr = next;
 
-					if (next == nullptr) {
+					if (next == nullptr)
+					{
 						cout << "Index out of bound!" << endl;
 						return;
-					} else {
+					}
+					else
+					{
 						next = next->getNext();
 					}
 
 					i++;
 				}
-		
-				if (prev != nullptr) {
+
+				if (prev != nullptr)
+				{
 					prev->setNext(next);
 				}
 
 				delete curr;
-			} else {
+			}
+			else
+			{
 				head = next;
 			}
 		}
 
 		/**
-		 * @brief Get length of SinglyLinkedList.
-		 * 
-		 * @return long 
-		 */
-		long count() {
-			if (head == nullptr) {
+			 * @brief Get length of SinglyLinkedList.
+			 * 
+			 * @return long 
+			 */
+		long count()
+		{
+			if (head == nullptr)
+			{
 				return 0;
 			}
 
-			SinglyNode<T>* temp = head;
+			SinglyNode<T> *temp = head;
 			long c = 0;
-			while (temp) {
+			while (temp)
+			{
 				temp = temp->getNext();
 				c++;
 			}
@@ -315,17 +370,20 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Get first occurence from a given value in SinglyLinkedList.
-		 * 
-		 * @param value 
-		 * @return long 
-		 */
-		long search(T value) {
-			SinglyNode<T>* temp = head;
+			 * @brief Get first occurence from a given value in SinglyLinkedList.
+			 * 
+			 * @param value 
+			 * @return long 
+			 */
+		long search(T value)
+		{
+			SinglyNode<T> *temp = head;
 
 			long idx = 0;
-			while (temp != nullptr) {
-				if (temp->getData() == value) {
+			while (temp != nullptr)
+			{
+				if (temp->getData() == value)
+				{
 					return idx;
 				}
 
@@ -337,18 +395,21 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Get all occurences from a given value in SingleLinkedList.
-		 * 
-		 * @param value 
-		 * @return vector<int> 
-		 */
-		vector<int> searchOccurrences(T value) {
+			 * @brief Get all occurences from a given value in SingleLinkedList.
+			 * 
+			 * @param value 
+			 * @return vector<int> 
+			 */
+		vector<int> searchOccurrences(T value)
+		{
 			vector<int> vec;
-			SinglyNode<T>* temp = head;
+			SinglyNode<T> *temp = head;
 			long i = 0;
 
-			while (temp != nullptr) {
-				if (temp->getData() == value) {
+			while (temp != nullptr)
+			{
+				if (temp->getData() == value)
+				{
 					vec.push_back(i);
 				}
 
@@ -360,20 +421,23 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Get element at a given index.
-		 * 
-		 * @param idx 
-		 * @return T 
-		 */
-		T at(long idx) {
+			 * @brief Get element at a given index.
+			 * 
+			 * @param idx 
+			 * @return T 
+			 */
+		T at(long idx)
+		{
 			// - check if index is correct or not
 			assert(idx >= 0);
 
-			SinglyNode<T>* temp = head;
+			SinglyNode<T> *temp = head;
 			long i = 0;
 
-			while (temp != nullptr) {
-				if (idx == i) return temp->getData();
+			while (temp != nullptr)
+			{
+				if (idx == i)
+					return temp->getData();
 				temp = temp->getNext();
 				i++;
 			}
@@ -382,19 +446,22 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Get nth element from last node.
-		 * @return T
-		 */
-		T getNthFromEnd(int n) {
+			 * @brief Get nth element from last node.
+			 * @return T
+			 */
+		T getNthFromEnd(int n)
+		{
 			int start = 1;
 			SinglyNode<T> *fast = head;
 			SinglyNode<T> *slow = head;
 
-			while (fast->getNext()) {
+			while (fast->getNext())
+			{
 				fast = fast->getNext();
 				start++;
 
-				if (start > n) {
+				if (start > n)
+				{
 					slow = slow->getNext();
 				}
 			}
@@ -402,38 +469,42 @@ class SinglyLinkedList {
 			return slow->getData();
 		}
 
-
 		/**
-		 * @brief Print "sub" linkedlist from a given index.
-		 * 
-		 * @param idx 
-		 * @return void
-		 */
-		void printNthToLast(long idx) {
+			 * @brief Print "sub" linkedlist from a given index.
+			 * 
+			 * @param idx 
+			 * @return void
+			 */
+		void printNthToLast(long idx)
+		{
 			assert(idx >= 0);
 
 			long i = 0;
-			SinglyNode<T>* temp = head;
+			SinglyNode<T> *temp = head;
 
-			while (temp != nullptr && i < idx) {
+			while (temp != nullptr && i < idx)
+			{
 				temp = temp->getNext();
 				i++;
 			}
 
-			while (temp != nullptr) {
+			while (temp != nullptr)
+			{
 				cout << temp->getData() << endl;
 				temp = temp->getNext();
 			}
 		}
 
 		/**
-		 * @brief Print all elements in linkedlist.
-		 * 
-		 * @return void
-		 */
-		void print() {
-			SinglyNode<T>* temp = head;
-			while (temp) {
+			 * @brief Print all elements in linkedlist.
+			 * 
+			 * @return void
+			 */
+		void print()
+		{
+			SinglyNode<T> *temp = head;
+			while (temp)
+			{
 				cout << temp->getData() << endl;
 
 				temp = temp->getNext();
@@ -441,20 +512,22 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief 
-		 * 
-		 * @param from 
-		 * @param to 
-		 * @return SinglyLinkedList<T> 
-		 */
-		SinglyLinkedList<T> sub(long from, long to) {
+			 * @brief 
+			 * 
+			 * @param from 
+			 * @param to 
+			 * @return SinglyLinkedList<T> 
+			 */
+		SinglyLinkedList<T> sub(long from, long to)
+		{
 			// - check if given indices are correct
 			assert(from <= to && from >= 0 && to >= 0);
 
 			long i = 0;
-			SinglyNode<T>* temp = head;
+			SinglyNode<T> *temp = head;
 
-			while (i < from && temp != nullptr) {
+			while (i < from && temp != nullptr)
+			{
 				temp = temp->getNext();
 				i++;
 			}
@@ -462,27 +535,32 @@ class SinglyLinkedList {
 			SinglyLinkedList<T> list;
 			for (long j = from; j <= to; j++)
 			{
-				if (temp != nullptr) {
+				if (temp != nullptr)
+				{
 					list.push(temp->getData());
 					temp = temp->getNext();
 				}
-				else return list;
+				else
+					return list;
 			}
 
 			return list;
 		}
 
 		/**
-		 * @brief Return true if linkedlist has a cycle.
-		 * 
-		 * @return bool 
-		 */
-		bool isCyclic() {
-			set<SinglyNode<T>*> s;
+			 * @brief Return true if linkedlist has a cycle.
+			 * 
+			 * @return bool 
+			 */
+		bool isCyclic()
+		{
+			set<SinglyNode<T> *> s;
 
-			SinglyNode<T>* temp = head;
-			while (temp != nullptr) {
-				if (s.find(temp) != s.end()) return true;
+			SinglyNode<T> *temp = head;
+			while (temp != nullptr)
+			{
+				if (s.find(temp) != s.end())
+					return true;
 				s.insert(temp);
 
 				temp = temp->getNext();
@@ -492,27 +570,32 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Check if linkedlist is a palindrome list.
-		 * 
-		 * @return bool
-		 */
-		bool isPalindrome() {
-			if (head == nullptr) return true;
+			 * @brief Check if linkedlist is a palindrome list.
+			 * 
+			 * @return bool
+			 */
+		bool isPalindrome()
+		{
+			if (head == nullptr)
+				return true;
 
 			stack<T> s;
 			SinglyNode<T> *temp = head;
-			while (temp != nullptr) {
+			while (temp != nullptr)
+			{
 				s.push(temp->getData());
 				temp = temp->getNext();
 			}
 
 			temp = head;
 
-			while (!s.empty()) {
+			while (!s.empty())
+			{
 				T top = s.top();
 				s.pop();
 
-				if (top != temp->getData()) return false;
+				if (top != temp->getData())
+					return false;
 				temp = temp->getNext();
 			}
 
@@ -520,34 +603,41 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Check if linkedlist is a palindrome list using recursive. (Without stack)
-		 * 
-		 * @return bool
-		 */
-		bool isPalindrome2() {
-			SinglyNode<T>* temp = head;
+			 * @brief Check if linkedlist is a palindrome list using recursive. (Without stack)
+			 * 
+			 * @return bool
+			 */
+		bool isPalindrome2()
+		{
+			SinglyNode<T> *temp = head;
 			return this->isPalindromeUtil(&temp, head);
 		}
 
 		/**
-		 * @brief Remove duplicated element in SinglyLinkedList with two loops.
-		 * 
-		 * @return void
-		 */
-		void removeDuplicates() {
-			SinglyNode<T>* curr = head;
+			 * @brief Remove duplicated element in SinglyLinkedList with two loops.
+			 * 
+			 * @return void
+			 */
+		void removeDuplicates()
+		{
+			SinglyNode<T> *curr = head;
 
-			while (curr != nullptr) {
+			while (curr != nullptr)
+			{
 				SinglyNode<T> *runner = curr->getNext();
 				SinglyNode<T> *prevRunner = curr;
 
-				while (runner != nullptr) {
-					if (runner->getData() == curr->getData()) {
+				while (runner != nullptr)
+				{
+					if (runner->getData() == curr->getData())
+					{
 						prevRunner->setNext(runner->getNext());
 						delete runner;
 
 						runner = prevRunner->getNext();
-					} else {
+					}
+					else
+					{
 						prevRunner = runner;
 						runner = runner->getNext();
 					}
@@ -558,24 +648,29 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Remove duplicated element in SinglyLinkedList using Set (with extra memory but efficient in time).
-		 * 
-		 * @return void
-		 */
-		void removeDuplicatesUsingSet() {
+			 * @brief Remove duplicated element in SinglyLinkedList using Set (with extra memory but efficient in time).
+			 * 
+			 * @return void
+			 */
+		void removeDuplicatesUsingSet()
+		{
 			set<T> s;
 
 			SinglyNode<T> *curr = head;
 			SinglyNode<T> *prev = nullptr;
 
-			while (curr != nullptr) {
+			while (curr != nullptr)
+			{
 				bool isDuplicate = s.find(curr->getData()) != s.end();
 
-				if (isDuplicate) {
+				if (isDuplicate)
+				{
 					SinglyNode<T> *next = curr->getNext();
 					prev->setNext(next);
 					delete curr;
-				} else {
+				}
+				else
+				{
 					s.insert(curr->getData());
 					prev = curr;
 				}
@@ -585,16 +680,18 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Reverse linkedlist in one pass using 3 pointers.
-		 * 
-		 * @return void
-		 */
-		void reverse() {
+			 * @brief Reverse linkedlist in one pass using 3 pointers.
+			 * 
+			 * @return void
+			 */
+		void reverse()
+		{
 			SinglyNode<T> *curr = head;
 			SinglyNode<T> *prev = nullptr;
 			SinglyNode<T> *next = nullptr;
 
-			while (curr != nullptr) {
+			while (curr != nullptr)
+			{
 				next = curr->getNext();
 				curr->setNext(prev);
 
@@ -606,69 +703,78 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Reverse linkedlist in one pass using 3 pointers.
-		 * 
-		 * @return SinglyNode
-		 */
-		SinglyNode<T>* reverse(SinglyNode<T>* head) {
+			 * @brief Reverse linkedlist in one pass using 3 pointers.
+			 * 
+			 * @return SinglyNode
+			 */
+		SinglyNode<T> *reverse(SinglyNode<T> *head)
+		{
 			SinglyNode<T> *prev = nullptr;
 			SinglyNode<T> *next = nullptr;
 			SinglyNode<T> *curr = head;
-			
-			while (curr) {
+
+			while (curr)
+			{
 				next = curr->getNext();
 				curr->setNext(prev);
-				
+
 				prev = curr;
 				curr = next;
 			}
-			
+
 			return prev;
 		}
 
 		/**
-		 * @brief Remove an element from SinglyLinkedList.
-		 * 
-		 * @param k 
-		 * @return void
-		 */
-		void removeKFromList(T k) {
+			 * @brief Remove an element from SinglyLinkedList.
+			 * 
+			 * @param k 
+			 * @return void
+			 */
+		void removeKFromList(T k)
+		{
 			this->head = removeKFromList(head, k);
 		}
 
 		/**
-		 * @brief Treat linkedlist as a number an subtract one from it.
-		 * 
-		 * @return void
-		 */
-		void subtractOne() {
+			 * @brief Treat linkedlist as a number an subtract one from it.
+			 * 
+			 * @return void
+			 */
+		void subtractOne()
+		{
 			subtractOneUtil(head);
 
-			while (head && head->getNext() && head->getData() == 0) {
+			while (head && head->getNext() && head->getData() == 0)
+			{
 				head = head->getNext();
 			}
 		}
 
 		/**
-		 * @brief Get middle of linkedlist in one pass.
-		 * 
-		 * @return T
-		 */
-		T middle() {
+			 * @brief Get middle of linkedlist in one pass.
+			 * 
+			 * @return T
+			 */
+		T middle()
+		{
 			SinglyNode<T> *curr = head;
 			SinglyNode<T> *middle = head;
 			int length = 0;
 
-			while (curr->getNext()) {
+			while (curr->getNext())
+			{
 				length++;
-				if (length % 2 == 0) {
-						middle = middle->getNext();
+				if (length % 2 == 0)
+				{
+					middle = middle->getNext();
 				}
 
 				curr = curr->getNext();
 			}
 
-			if (length % 2 == 1) {
+			if (length % 2 == 1)
+			{
 				middle = middle->getNext();
 			}
 
@@ -676,27 +782,32 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Odd-even list.
-		 * @example Input: head = [1,2,3,4,5]
-		 *          Output: [1,3,5,2,4]
-		 * 
-		 * @return void
-		 */
-		SinglyLinkedList<T> oddEvenList() {
-			SinglyNode<T>* even = nullptr;
-			SinglyNode<T>* odd = this->oddEvenRecv(head, &even);
+			 * @brief Odd-even list.
+			 * @example Input: head = [1,2,3,4,5]
+			 *          Output: [1,3,5,2,4]
+			 * 
+			 * @return void
+			 */
+		SinglyLinkedList<T> oddEvenList()
+		{
+			SinglyNode<T> *even = nullptr;
+			SinglyNode<T> *odd = this->oddEvenRecv(head, &even);
 			even = this->reverse(even);
 
-			SinglyNode<T>* temp = odd;
-			if (temp) {
-				while (temp->getNext()) {
+			SinglyNode<T> *temp = odd;
+			if (temp)
+			{
+				while (temp->getNext())
+				{
 					temp = temp->getNext();
 				}
 
 				temp->setNext(even);
 
 				return SinglyLinkedList<T>(odd);
-			} else {
+			}
+			else
+			{
 				return SinglyLinkedList<T>(even);
 			}
 
@@ -704,106 +815,125 @@ class SinglyLinkedList {
 		}
 
 		/**
-		 * @brief Get length of linkedlist.
-		 * 
-		 * @return int
-		 */
-		int length() {
-			SinglyNode<T>* curr = head;
+			 * @brief Get length of linkedlist.
+			 * 
+			 * @return int
+			 */
+		int length()
+		{
+			SinglyNode<T> *curr = head;
 			int len = 0;
 
-			while (curr) {
+			while (curr)
+			{
 				curr = curr->getNext();
 				len++;
 			}
 
 			return len;
 		}
-	
+
 		/**
-		 * @brief Given the head of a linked list, rotate the list to the right by k places.
-		 * 
-		 * @param k 
-		 * @return SinglyNode<T>* 
-		 */
-		SinglyNode<T>* rotate(int k) {
-			if (head == nullptr) return head;
+			 * @brief Given the head of a linked list, rotate the list to the right by k places.
+			 * 
+			 * @param k 
+			 * @return SinglyNode<T>* 
+			 */
+		SinglyNode<T> *rotate(int k)
+		{
+			if (head == nullptr)
+				return head;
 			int len = this->length();
-			
-			for (int i = 0; i < (k % len); i++) {
-				SinglyNode<T>* newHead = nullptr;
-				SinglyNode<T>* headTemp = rotate(head, &newHead);
+
+			for (int i = 0; i < (k % len); i++)
+			{
+				SinglyNode<T> *newHead = nullptr;
+				SinglyNode<T> *headTemp = rotate(head, &newHead);
 				newHead->setNext(headTemp);
-				
+
 				head = newHead;
 			}
-			
+
 			return head;
 		}
 
 		/**
-		 * @brief return linkedlist as sum of two linkedlist using operator+.
-		 * 
-		 * @param l2 
-		 * @return SinglyLinkedList<T> 
-		 */
-		SinglyLinkedList operator+(SinglyLinkedList<T>& l2) {
-			SinglyNode<T>* l3 = nullptr;
-			SinglyNode<T>* curr3 = nullptr;
-			SinglyNode<T>* curr1 = this->front();
-			SinglyNode<T>* curr2 = l2.front();
+			 * @brief return linkedlist as sum of two linkedlist using operator+.
+			 * 
+			 * @param l2 
+			 * @return SinglyLinkedList<T> 
+			 */
+		SinglyLinkedList operator+(SinglyLinkedList<T> &l2)
+		{
+			SinglyNode<T> *l3 = nullptr;
+			SinglyNode<T> *curr3 = nullptr;
+			SinglyNode<T> *curr1 = this->front();
+			SinglyNode<T> *curr2 = l2.front();
 			int carry = 0;
-			
-			while (curr1 && curr2) {
+
+			while (curr1 && curr2)
+			{
 				int sum = curr1->getData() + curr2->getData() + carry;
 				int digit = (sum % 10);
 				carry = sum >= 10 ? 1 : 0;
-				
-				if (!l3) {
+
+				if (!l3)
+				{
 					l3 = new SinglyNode<T>(digit);
 					curr3 = l3;
-				} else {
+				}
+				else
+				{
 					curr3->setNext(new SinglyNode<T>(digit));
 					curr3 = curr3->getNext();
 				}
-				
+
 				curr1 = curr1->getNext();
 				curr2 = curr2->getNext();
 			}
-			
-			while (curr1) {
+
+			while (curr1)
+			{
 				int sum = curr1->getData() + carry;
 				int digit = (sum % 10);
 				carry = sum >= 10 ? 1 : 0;
-				
-				if (!l3) {
+
+				if (!l3)
+				{
 					l3 = new SinglyNode<T>(digit);
 					curr3 = l3;
-				} else {
+				}
+				else
+				{
 					curr3->setNext(new SinglyNode<T>(digit));
 					curr3 = curr3->getNext();
 				}
-				
+
 				curr1 = curr1->getNext();
 			}
-			
-			while (curr2) {
+
+			while (curr2)
+			{
 				int sum = curr2->getData() + carry;
 				int digit = (sum % 10);
 				carry = sum >= 10 ? 1 : 0;
-				
-				if (!l3) {
+
+				if (!l3)
+				{
 					l3 = new SinglyNode<T>(digit);
 					curr3 = l3;
-				} else {
+				}
+				else
+				{
 					curr3->setNext(new SinglyNode<T>(digit));
 					curr3 = curr3->getNext();
 				}
-				
+
 				curr2 = curr2->getNext();
 			}
-			
-			if (carry > 0) {
+
+			if (carry > 0)
+			{
 				curr3->setNext(new SinglyNode<T>(1));
 			}
 

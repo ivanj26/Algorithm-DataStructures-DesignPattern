@@ -1,70 +1,76 @@
 #include "singlylinkedlist.cpp"
 
 template <typename T>
-SinglyLinkedList<T> addTwoLinkedList(SinglyLinkedList<T> *list1, SinglyLinkedList<T> *list2) {
-    SinglyNode<int> *first = list1->front();
-    SinglyNode<int> *second = list2->front();
-    SinglyNode<int> *temp, *prev, *resultan = nullptr;
-    int carry = 0, sum;
+SinglyLinkedList<T> addTwoLinkedList(SinglyLinkedList<T> *list1, SinglyLinkedList<T> *list2)
+{
+	SinglyNode<int> *first = list1->front();
+	SinglyNode<int> *second = list2->front();
+	SinglyNode<int> *temp, *prev, *resultan = nullptr;
+	int carry = 0, sum;
 
-    while (first != nullptr || second != nullptr) {
-        sum = carry
-            + (first ? first->getData() : 0)
-            + (second ? second->getData() : 0);
-        
-        // update carry
-        carry = (sum >= 10) ? 1 : 0;
+	while (first != nullptr || second != nullptr)
+	{
+		sum = carry + (first ? first->getData() : 0) + (second ? second->getData() : 0);
 
-        // update sum
-        sum = sum % 10;
+		// update carry
+		carry = (sum >= 10) ? 1 : 0;
 
-        // create a new node
-        temp = new SinglyNode<int>(sum);
+		// update sum
+		sum = sum % 10;
 
-        if (resultan == nullptr) {
-            resultan = temp;
-        } else {
-            prev->setNext(temp);
-        }
+		// create a new node
+		temp = new SinglyNode<int>(sum);
 
-        prev = temp;
+		if (resultan == nullptr)
+		{
+			resultan = temp;
+		}
+		else
+		{
+			prev->setNext(temp);
+		}
 
-        if (first) {
-            first = first->getNext();
-        }
+		prev = temp;
 
-        if (second) {
-            second = second->getNext();
-        }
-    }
+		if (first)
+		{
+			first = first->getNext();
+		}
 
-    delete first;
-    delete second;
+		if (second)
+		{
+			second = second->getNext();
+		}
+	}
 
-    if (carry > 0)
-        temp->setNext(new SinglyNode<int>(carry));
-    
-    return SinglyLinkedList<int>(resultan);
+	delete first;
+	delete second;
+
+	if (carry > 0)
+		temp->setNext(new SinglyNode<int>(carry));
+
+	return SinglyLinkedList<int>(resultan);
 }
 
 int main(int argc, char const *argv[])
 {
-    SinglyLinkedList<int> list1;
-    SinglyLinkedList<int> list2;
-    
-    // list1= 0->1->2->3->4
-    for (int i = 0; i < 5; i++)
-    {
-        list1.push(i);
-    }
+	SinglyLinkedList<int> list1;
+	SinglyLinkedList<int> list2;
 
-    // list2= 5->4->3->2->1->0
-    for (int i = 5; i >= 0; i--) {
-        list2.push(i);
-    }
+	// list1= 0->1->2->3->4
+	for (int i = 0; i < 5; i++)
+	{
+		list1.push(i);
+	}
 
-    SinglyLinkedList<int> listRes = addTwoLinkedList(&list1, &list2);
-    listRes.printNthToLast(0);
+	// list2= 5->4->3->2->1->0
+	for (int i = 5; i >= 0; i--)
+	{
+		list2.push(i);
+	}
 
-    return 0;
+	SinglyLinkedList<int> listRes = addTwoLinkedList(&list1, &list2);
+	listRes.printNthToLast(0);
+
+	return 0;
 }

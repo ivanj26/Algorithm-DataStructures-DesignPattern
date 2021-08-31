@@ -6,60 +6,67 @@
 using namespace std;
 
 template <class T>
-class BFSAlgorithm {
-    private:
-        DirectedGraph<T> g;
-    public:
-        BFSAlgorithm(const DirectedGraph<T>& g) {
-            this->g = g;
-        }
+class BFSAlgorithm
+{
+private:
+	DirectedGraph<T> g;
 
-        void doFromNode(T s) {
-            long size = g.nbOfNodes;
-            vector<T> *vec = g.adjNodes;
+public:
+	BFSAlgorithm(const DirectedGraph<T> &g)
+	{
+		this->g = g;
+	}
 
-            bool *visited = new bool[size];
-            for (long i = 0; i < size; i++)
-            {
-                visited[i] = false;
-            }
+	void doFromNode(T s)
+	{
+		long size = g.nbOfNodes;
+		vector<T> *vec = g.adjNodes;
 
-            visited[(long) s] = true;
+		bool *visited = new bool[size];
+		for (long i = 0; i < size; i++)
+		{
+			visited[i] = false;
+		}
 
-            queue<T> q;
-            q.push((long) s);
+		visited[(long)s] = true;
 
-            while (!q.empty()) {
-                s = q.front();
-                cout << s << " ";
-                q.pop();
+		queue<T> q;
+		q.push((long)s);
 
-                for (auto i: vec[(long)s])
-                {
-                    if (!visited[(long)i]) {
-                        visited[i] = true;
-                        q.push(i);
-                    }
-                }
-            }
+		while (!q.empty())
+		{
+			s = q.front();
+			cout << s << " ";
+			q.pop();
 
-            cout << endl;
+			for (auto i : vec[(long)s])
+			{
+				if (!visited[(long)i])
+				{
+					visited[i] = true;
+					q.push(i);
+				}
+			}
+		}
 
-            delete[] visited;
-        }
+		cout << endl;
+
+		delete[] visited;
+	}
 };
 
-int main(int argc, const char** argv) {
-    DirectedGraph<int> g(5);
-    g.addAdjNodes(0, 1);
-    g.addAdjNodes(0, 2);
-    g.addAdjNodes(1, 2);
-    g.addAdjNodes(2, 0);
-    g.addAdjNodes(2, 3);
-    g.addAdjNodes(3, 3);
+int main(int argc, const char **argv)
+{
+	DirectedGraph<int> g(5);
+	g.addAdjNodes(0, 1);
+	g.addAdjNodes(0, 2);
+	g.addAdjNodes(1, 2);
+	g.addAdjNodes(2, 0);
+	g.addAdjNodes(2, 3);
+	g.addAdjNodes(3, 3);
 
-    BFSAlgorithm<int> bfs(g);
-    bfs.doFromNode(2);
+	BFSAlgorithm<int> bfs(g);
+	bfs.doFromNode(2);
 
-    return 0;
+	return 0;
 }
