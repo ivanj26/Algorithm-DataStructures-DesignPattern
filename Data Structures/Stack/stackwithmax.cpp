@@ -66,10 +66,10 @@ class Stack
         {
             if (top > 0)
             {
-                // - flag if already popped out
-                arr[top - 1] = -999;
-
                 int val = arr[--top];
+                // - flag if already popped out
+                arr[top + 1] = -999;
+
                 if (val == max)
                 {
                     max = -99;
