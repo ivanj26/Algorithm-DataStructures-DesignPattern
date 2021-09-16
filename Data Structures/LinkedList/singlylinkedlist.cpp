@@ -691,19 +691,19 @@ class SinglyLinkedList
 
 			while (curr)
 			{
-				T val = curr->data;
+				T val = curr->getData();
 				if (s.find(val) != s.end())
 				{
 					if (prev)
 					{
-						SinglyNode<T> *next = curr->next;
+						SinglyNode<T> *next = curr->getNext();
 
-						while (next && s.find(next->data) != s.end())
+						while (next && s.find(next->getData()) != s.end())
 						{
-							next = next->next;
+							next = next->getNext();
 						}
 
-						prev->next = next;
+						prev->getNext() = next;
 					}
 				}
 				else
@@ -712,7 +712,7 @@ class SinglyLinkedList
 				}
 
 				prev = curr;
-				curr = curr->next;
+				curr = curr->getNext();
 			}
 
 			return SinglyLinkedList<T>(head);
