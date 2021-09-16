@@ -18,12 +18,12 @@ class SinglyLinkedList
 		SinglyNode<T> *head;
 
 		/**
-			 * @brief Utility for isPalindrome() to get palindrome of linkedlist by using recursive strategy.
-			 * 
-			 * @param left 
-			 * @param right 
-			 * @return bool 
-			 */
+		 * @brief Utility for isPalindrome() to get palindrome of linkedlist by using recursive strategy.
+		 * 
+		 * @param left 
+		 * @param right 
+		 * @return bool 
+		 */
 		bool isPalindromeUtil(SinglyNode<T> **left, SinglyNode<T> *right)
 		{
 			if (right == nullptr)
@@ -40,12 +40,12 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Utility for removeKFromList().
-			 * 
-			 * @param head 
-			 * @param k 
-			 * @return SinglyNode<T>* 
-			 */
+		 * @brief Utility for removeKFromList().
+		 * 
+		 * @param head 
+		 * @param k 
+		 * @return SinglyNode<T>* 
+		 */
 		SinglyNode<T> *removeKFromList(SinglyNode<T> *head, T k)
 		{
 			if (head == nullptr)
@@ -68,11 +68,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Utility for subtractOne().
-			 * 
-			 * @param node 
-			 * @return int 
-			 */
+		 * @brief Utility for subtractOne().
+		 * 
+		 * @param node 
+		 * @return int 
+		 */
 		int subtractOneUtil(SinglyNode<T> *node)
 		{
 			if (node == nullptr)
@@ -100,13 +100,13 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Utility to help move even numbers to the end of list.
-			 * 
-			 * @param odd 
-			 * @param even 
-			 * @param i 
-			 * @return SinglyNode<T>* 
-			 */
+		 * @brief Utility to help move even numbers to the end of list.
+		 * 
+		 * @param odd 
+		 * @param even 
+		 * @param i 
+		 * @return SinglyNode<T>* 
+		 */
 		SinglyNode<T> *oddEvenRecv(SinglyNode<T> *odd, SinglyNode<T> **even, int i = 0)
 		{
 			if (odd == nullptr)
@@ -140,12 +140,12 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Utility function to help rotate linkedlist.
-			 * 
-			 * @param curr 
-			 * @param end 
-			 * @return SinglyNode<T>* 
-			 */
+		 * @brief Utility function to help rotate linkedlist.
+		 * 
+		 * @param curr 
+		 * @param end 
+		 * @return SinglyNode<T>* 
+		 */
 		SinglyNode<T> *rotate(SinglyNode<T> *curr, SinglyNode<T> **end)
 		{
 			if (curr->getNext() == nullptr)
@@ -160,37 +160,37 @@ class SinglyLinkedList
 
 	public:
 		/**
-			 * @brief Construct a new Singly Linked List object.
-			 * 
-			 */
+		 * @brief Construct a new Singly Linked List object.
+		 * 
+		 */
 		SinglyLinkedList()
 		{
 			head = nullptr;
 		}
 
 		/**
-			 * @brief Copy construct a Singly Linked List object
-			 * 
-			 * @param list 
-			 */
+		 * @brief Copy construct a Singly Linked List object
+		 * 
+		 * @param list 
+		 */
 		SinglyLinkedList(const SinglyLinkedList<T> &list)
 		{
 			head = list.head;
 		}
 
 		/**
-			 * @brief Construct a new Singly Linked List object
-			 * 
-			 * @param _head 
-			 */
+		 * @brief Construct a new Singly Linked List object
+		 * 
+		 * @param _head 
+		 */
 		SinglyLinkedList(SinglyNode<T> *_head) : head(_head) {}
 
 		/**
-			 * @brief Replace left hand pointer with right hand pointer.
-			 * 
-			 * @param l 
-			 * @return SinglyLinkedList& 
-			 */
+		 * @brief Replace left hand pointer with right hand pointer.
+		 * 
+		 * @param l 
+		 * @return SinglyLinkedList& 
+		 */
 		SinglyLinkedList &operator=(const SinglyLinkedList<T> &l)
 		{
 			swap(*this, l);
@@ -199,9 +199,9 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Destroy the Singly Linked List object
-			 * @return void
-			 */
+		 * @brief Destroy the Singly Linked List object
+		 * @return void
+		 */
 		~SinglyLinkedList()
 		{
 			SinglyNode<T> *curr = head;
@@ -216,12 +216,12 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Print the linkedlist using operator <<.
-			 * 
-			 * @param os 
-			 * @param l 
-			 * @return ostream& 
-			 */
+		 * @brief Print the linkedlist using operator <<.
+		 * 
+		 * @param os 
+		 * @param l 
+		 * @return ostream& 
+		 */
 		friend ostream &operator<<(ostream &os, SinglyLinkedList &l)
 		{
 			SinglyNode<T> *temp = l.front();
@@ -236,20 +236,20 @@ class SinglyLinkedList
 		}
 
 		/************************
-			/* Linkedlist operation
-			/************************
+		/* Linkedlist operation
+		/************************
 
-			/**
-			 * @brief Get head of SinglyLinkedList.
-			 * @return SinglyNode<T>*
-			 */
+		/**
+		 * @brief Get head of SinglyLinkedList.
+		 * @return SinglyNode<T>*
+		 */
 		SinglyNode<T> *front() { return head; }
 
 		/**
-			 * @brief Push new element into tail of SinglyLinkedList.
-			 * @param t 
-			 * @return void
-			 */
+		 * @brief Push new element into tail of SinglyLinkedList.
+		 * @param t 
+		 * @return void
+		 */
 		void push(T t)
 		{
 			SinglyNode<T> *temp = head;
@@ -270,11 +270,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Push new element into tail of SinglyLinkedList.
-			 * 
-			 * @param node 
-			 * @return void
-			 */
+		 * @brief Push new element into tail of SinglyLinkedList.
+		 * 
+		 * @param node 
+		 * @return void
+		 */
 		void push(SinglyNode<T> *node)
 		{
 			SinglyNode<T> *temp = head;
@@ -295,11 +295,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Delete element in SinglyLinkedList at a given index.
-			 * 
-			 * @param idx
-			 * @return void
-			 */
+		 * @brief Delete element in SinglyLinkedList at a given index.
+		 * 
+		 * @param idx
+		 * @return void
+		 */
 		void deleteAt(long idx)
 		{
 			// - check if index is correct or not
@@ -347,10 +347,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get length of SinglyLinkedList.
-			 * 
-			 * @return long 
-			 */
+		 * @brief Get length of SinglyLinkedList.
+		 * 
+		 * @return long 
+		 */
 		long count()
 		{
 			if (head == nullptr)
@@ -370,11 +370,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get first occurence from a given value in SinglyLinkedList.
-			 * 
-			 * @param value 
-			 * @return long 
-			 */
+		 * @brief Get first occurence from a given value in SinglyLinkedList.
+		 * 
+		 * @param value 
+		 * @return long 
+		 */
 		long search(T value)
 		{
 			SinglyNode<T> *temp = head;
@@ -395,11 +395,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get all occurences from a given value in SingleLinkedList.
-			 * 
-			 * @param value 
-			 * @return vector<int> 
-			 */
+		 * @brief Get all occurences from a given value in SingleLinkedList.
+		 * 
+		 * @param value 
+		 * @return vector<int> 
+		 */
 		vector<int> searchOccurrences(T value)
 		{
 			vector<int> vec;
@@ -421,11 +421,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get element at a given index.
-			 * 
-			 * @param idx 
-			 * @return T 
-			 */
+		 * @brief Get element at a given index.
+		 * 
+		 * @param idx 
+		 * @return T 
+		 */
 		T at(long idx)
 		{
 			// - check if index is correct or not
@@ -446,9 +446,9 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get nth element from last node.
-			 * @return T
-			 */
+		 * @brief Get nth element from last node.
+		 * @return T
+		 */
 		T getNthFromEnd(int n)
 		{
 			int start = 1;
@@ -470,11 +470,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Print "sub" linkedlist from a given index.
-			 * 
-			 * @param idx 
-			 * @return void
-			 */
+		 * @brief Print "sub" linkedlist from a given index.
+		 * 
+		 * @param idx 
+		 * @return void
+		 */
 		void printNthToLast(long idx)
 		{
 			assert(idx >= 0);
@@ -496,10 +496,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Print all elements in linkedlist.
-			 * 
-			 * @return void
-			 */
+		 * @brief Print all elements in linkedlist.
+		 * 
+		 * @return void
+		 */
 		void print()
 		{
 			SinglyNode<T> *temp = head;
@@ -512,12 +512,12 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief 
-			 * 
-			 * @param from 
-			 * @param to 
-			 * @return SinglyLinkedList<T> 
-			 */
+		 * @brief 
+		 * 
+		 * @param from 
+		 * @param to 
+		 * @return SinglyLinkedList<T> 
+		 */
 		SinglyLinkedList<T> sub(long from, long to)
 		{
 			// - check if given indices are correct
@@ -548,10 +548,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Return true if linkedlist has a cycle.
-			 * 
-			 * @return bool 
-			 */
+		 * @brief Return true if linkedlist has a cycle.
+		 * 
+		 * @return bool 
+		 */
 		bool isCyclic()
 		{
 			set<SinglyNode<T> *> s;
@@ -570,10 +570,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Check if linkedlist is a palindrome list.
-			 * 
-			 * @return bool
-			 */
+		 * @brief Check if linkedlist is a palindrome list.
+		 * 
+		 * @return bool
+		 */
 		bool isPalindrome()
 		{
 			if (head == nullptr)
@@ -603,10 +603,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Check if linkedlist is a palindrome list using recursive. (Without stack)
-			 * 
-			 * @return bool
-			 */
+		 * @brief Check if linkedlist is a palindrome list using recursive. (Without stack)
+		 * 
+		 * @return bool
+		 */
 		bool isPalindrome2()
 		{
 			SinglyNode<T> *temp = head;
@@ -614,10 +614,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Remove duplicated element in SinglyLinkedList with two loops.
-			 * 
-			 * @return void
-			 */
+		 * @brief Remove duplicated element in SinglyLinkedList with two loops.
+		 * 
+		 * @return void
+		 */
 		void removeDuplicates()
 		{
 			SinglyNode<T> *curr = head;
@@ -648,10 +648,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Remove duplicated element in SinglyLinkedList using Set (with extra memory but efficient in time).
-			 * 
-			 * @return void
-			 */
+		 * @brief Remove duplicated element in SinglyLinkedList using Set (with extra memory but efficient in time).
+		 * 
+		 * @return void
+		 */
 		void removeDuplicatesUsingSet()
 		{
 			set<T> s;
@@ -680,10 +680,49 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Reverse linkedlist in one pass using 3 pointers.
-			 * 
-			 * @return void
-			 */
+		 * @brief Remove duplicates for corner case.
+		 * 
+		 */
+		SinglyLinkedList<T> removeDuplicatesUsingSet2()
+		{
+			SinglyNode<T> *prev;
+			SinglyNode<T> *curr = head;
+			set<T> s;
+
+			while (curr)
+			{
+				T val = curr->data;
+				if (s.find(val) != s.end())
+				{
+					if (prev)
+					{
+						SinglyNode<T> *next = curr->next;
+
+						while (next && s.find(next->data) != s.end())
+						{
+							next = next->next;
+						}
+
+						prev->next = next;
+					}
+				}
+				else
+				{
+					s.insert(val);
+				}
+
+				prev = curr;
+				curr = curr->next;
+			}
+
+			return SinglyLinkedList<T>(head);
+		}
+
+		/**
+		 * @brief Reverse linkedlist in one pass using 3 pointers.
+		 * 
+		 * @return void
+		 */
 		void reverse()
 		{
 			SinglyNode<T> *curr = head;
@@ -703,10 +742,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Reverse linkedlist in one pass using 3 pointers.
-			 * 
-			 * @return SinglyNode
-			 */
+		 * @brief Reverse linkedlist in one pass using 3 pointers.
+		 * 
+		 * @return SinglyNode
+		 */
 		SinglyNode<T> *reverse(SinglyNode<T> *head)
 		{
 			SinglyNode<T> *prev = nullptr;
@@ -726,21 +765,21 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Remove an element from SinglyLinkedList.
-			 * 
-			 * @param k 
-			 * @return void
-			 */
+		 * @brief Remove an element from SinglyLinkedList.
+		 * 
+		 * @param k 
+		 * @return void
+		 */
 		void removeKFromList(T k)
 		{
 			this->head = removeKFromList(head, k);
 		}
 
 		/**
-			 * @brief Treat linkedlist as a number an subtract one from it.
-			 * 
-			 * @return void
-			 */
+		 * @brief Treat linkedlist as a number an subtract one from it.
+		 * 
+		 * @return void
+		 */
 		void subtractOne()
 		{
 			subtractOneUtil(head);
@@ -752,10 +791,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get middle of linkedlist in one pass.
-			 * 
-			 * @return T
-			 */
+		 * @brief Get middle of linkedlist in one pass.
+		 * 
+		 * @return T
+		 */
 		T middle()
 		{
 			SinglyNode<T> *curr = head;
@@ -782,12 +821,12 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Odd-even list.
-			 * @example Input: head = [1,2,3,4,5]
-			 *          Output: [1,3,5,2,4]
-			 * 
-			 * @return void
-			 */
+		 * @brief Odd-even list.
+		 * @example Input: head = [1,2,3,4,5]
+		 *          Output: [1,3,5,2,4]
+		 * 
+		 * @return void
+		 */
 		SinglyLinkedList<T> oddEvenList()
 		{
 			SinglyNode<T> *even = nullptr;
@@ -815,10 +854,10 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Get length of linkedlist.
-			 * 
-			 * @return int
-			 */
+		 * @brief Get length of linkedlist.
+		 * 
+		 * @return int
+		 */
 		int length()
 		{
 			SinglyNode<T> *curr = head;
@@ -834,11 +873,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief Given the head of a linked list, rotate the list to the right by k places.
-			 * 
-			 * @param k 
-			 * @return SinglyNode<T>* 
-			 */
+		 * @brief Given the head of a linked list, rotate the list to the right by k places.
+		 * 
+		 * @param k 
+		 * @return SinglyNode<T>* 
+		 */
 		SinglyNode<T> *rotate(int k)
 		{
 			if (head == nullptr)
@@ -858,11 +897,11 @@ class SinglyLinkedList
 		}
 
 		/**
-			 * @brief return linkedlist as sum of two linkedlist using operator+.
-			 * 
-			 * @param l2 
-			 * @return SinglyLinkedList<T> 
-			 */
+		 * @brief return linkedlist as sum of two linkedlist using operator+.
+		 * 
+		 * @param l2 
+		 * @return SinglyLinkedList<T> 
+		 */
 		SinglyLinkedList operator+(SinglyLinkedList<T> &l2)
 		{
 			SinglyNode<T> *l3 = nullptr;
