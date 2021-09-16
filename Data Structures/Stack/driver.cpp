@@ -36,6 +36,48 @@ bool areBalancedBrackets(string expr)
 	return s.empty();
 }
 
+bool balanceBrackets(string str)
+{
+	stack<char> s;
+
+	for (auto c : str)
+	{
+		switch (c)
+		{
+		case '(':
+		case '{':
+		case '[':
+			s.push(c);
+			break;
+		case '}':
+		case ')':
+		case ']':
+			// - if stack is empty while still looping the string
+			if (s.empty())
+			{
+				return false;
+			}
+
+			char top = s.top();
+			bool isPair1 = (c == ')' && top == '(');
+			bool isPair2 = (c == ']' && top == '[');
+			bool isPair3 = (c == '}' && top == '{');
+
+			if (isPair1 || isPair2 || isPair3)
+			{
+				s.pop();
+			}
+			else
+			{
+				return false;
+			}
+			break;
+		}
+	}
+
+	return s.empty();
+}
+
 int reverseNumberUsingStack(int number)
 {
 	stack<int> s;
