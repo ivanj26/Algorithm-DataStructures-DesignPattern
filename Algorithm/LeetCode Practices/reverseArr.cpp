@@ -1,10 +1,11 @@
 #include <vector>
 using namespace std;
 
-void swap(int *x, int *y) {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
+void swap(int *x, int *y)
+{
+	int temp = *x;
+	*x = *y;
+	*y = temp;
 }
 
 /**
@@ -15,17 +16,19 @@ void swap(int *x, int *y) {
  * @param arr 
  * @return vector<int> 
  */
-vector<int> reverseArray(vector<int> arr) {
-    int size = arr.size();
-    int n = size / 2;
-    
-    int i = 0;
-    while (i < n) {
-        int j = size - i - 1;
-        swap(&arr[i], &arr[j]);
+vector<int> reverseArray(vector<int> arr)
+{
+	int size = arr.size();
+	int n = size / 2;
 
-        i++;
-    }
-    
-    return arr;
+	int i = 0;
+	while (i < n)
+	{
+		int j = size - i - 1;
+		swap(&arr[i], &arr[j]);
+
+		i++;
+	}
+
+	return arr;
 }
