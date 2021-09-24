@@ -4,17 +4,20 @@
 #include <iostream>
 using namespace std;
 
-int getMax(vector<int> nums) {
-    int max = INT_MIN;
-    int idxMax = 0;
-    for (int i = 0; i < nums.size(); i++) {
-        if (max < nums[i]) {
-            max = nums[i];
-            idxMax = i;
-        }
-    }
-    
-    return idxMax;
+int getMax(vector<int> nums)
+{
+	int max = INT_MIN;
+	int idxMax = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (max < nums[i])
+		{
+			max = nums[i];
+			idxMax = i;
+		}
+	}
+
+	return idxMax;
 }
 
 template <class T>
@@ -23,7 +26,7 @@ class Tree
 	private:
 		Tree<T> *left, *right;
 		T value;
-        int minimum = INT_MAX;
+		int minimum = INT_MAX;
 
 		//Left - Root - Right
 		void printInOrderUtil(Tree<T> *tree)
@@ -301,25 +304,28 @@ class Tree
 			return heightUtil(this);
 		}
 
-        int minimumHeight(Tree* tree, int depth = 1)
-        {
-            if (depth == 1) {
-                tree = this->root;
-            }
+		int minimumHeight(Tree *tree, int depth = 1)
+		{
+			if (depth == 1)
+			{
+				tree = this->root;
+			}
 
-            if (tree) {
-                if (!tree->left && !tree->right) {
-                    minimum = min(minimum, depth);
-                }
-                
-                this->minDepth(tree->left, depth + 1);
-                this->minDepth(tree->right, depth + 1);
-                
-                return minimum;
-            }
-            
-            return 0;
-        }
+			if (tree)
+			{
+				if (!tree->left && !tree->right)
+				{
+					minimum = min(minimum, depth);
+				}
+
+				this->minDepth(tree->left, depth + 1);
+				this->minDepth(tree->right, depth + 1);
+
+				return minimum;
+			}
+
+			return 0;
+		}
 
 		bool isSymmetric()
 		{
@@ -358,20 +364,22 @@ class Tree
 			return false;
 		}
 
-        Tree<T>* constructBinaryTreeFromVector(vector<int>& nums) {
-            if (nums.size() == 0) return nullptr;
-            
-            int idxMax = getMax(nums);
-            vector<int> arr1 = {nums.begin(), nums.begin() + idxMax};
-            vector<int> arr2 = {nums.begin() + idxMax + 1, nums.end()};
-            
-            Tree<T>* root = new Tree<T>(nums.at(idxMax));
-            
-            root->left = constructBinaryTreeFromVector(arr1);
-            root->right = constructBinaryTreeFromVector(arr2);
-            
-            return root;
-        }
+		Tree<T> *constructBinaryTreeFromVector(vector<int> &nums)
+		{
+			if (nums.size() == 0)
+				return nullptr;
+
+			int idxMax = getMax(nums);
+			vector<int> arr1 = {nums.begin(), nums.begin() + idxMax};
+			vector<int> arr2 = {nums.begin() + idxMax + 1, nums.end()};
+
+			Tree<T> *root = new Tree<T>(nums.at(idxMax));
+
+			root->left = constructBinaryTreeFromVector(arr1);
+			root->right = constructBinaryTreeFromVector(arr2);
+
+			return root;
+		}
 };
 
 int main(int argc, const char **argv)

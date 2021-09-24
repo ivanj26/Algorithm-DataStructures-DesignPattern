@@ -2,55 +2,68 @@
 #include <iostream>
 using namespace std;
 
-struct Tree {
+struct Tree
+{
 	int val;
-	Tree* left;
-	Tree* right;
+	Tree *left;
+	Tree *right;
 
-	Tree(int v) {
+	Tree(int v)
+	{
 		this->val = v;
 		this->left = nullptr;
 		this->right = nullptr;
 	}
 };
 
-class DFS {
+class DFS
+{
 	private:
-		set<Tree*> visited;
-		Tree* root;
+		set<Tree *> visited;
+		Tree *root;
 
-		void printUtil(Tree* tree) {
-			if (tree) {
+		void printUtil(Tree *tree)
+		{
+			if (tree)
+			{
 				bool isVisited = visited.find(tree) != visited.end();
-				if (isVisited) {
+				if (isVisited)
+				{
 					// nothing
-				} else {
+				}
+				else
+				{
 					cout << tree->val << " ";
 
 					visited.insert(tree);
 
-					Tree* left = tree->left;
-					Tree* right = tree->right;
+					Tree *left = tree->left;
+					Tree *right = tree->right;
 
 					this->printUtil(left);
 					this->printUtil(right);
 				}
 			}
 		}
+
 	public:
-		DFS(Tree* root) {
+		DFS(Tree *root)
+		{
 			this->root = root;
 		}
 
-		void print() {
+		void print()
+		{
 			printUtil(root);
 		}
 };
 
-void deleteTree(Tree** tree) {
-	if (*tree) {
-		Tree* right = (*tree)->right;
-		Tree* left = (*tree)->left;
+void deleteTree(Tree **tree)
+{
+	if (*tree)
+	{
+		Tree *right = (*tree)->right;
+		Tree *left = (*tree)->left;
 
 		delete *tree;
 		deleteTree(&left);
@@ -60,7 +73,7 @@ void deleteTree(Tree** tree) {
 
 int main(int argc, char const *argv[])
 {
-	Tree* root = new Tree(1);
+	Tree *root = new Tree(1);
 	root->left = new Tree(2);
 	root->right = new Tree(6);
 	root->left->left = new Tree(3);
