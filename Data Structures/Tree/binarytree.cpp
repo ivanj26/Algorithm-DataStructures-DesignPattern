@@ -356,7 +356,7 @@ class Tree
 				return false;
 			}
 
-			if (isBSTree(tree->getLeft(), tree->getValue(), INT_MIN) && isBSTree(tree->getRight(), INT_MAX, tree->getValue()))
+			if (isBSTree(tree->getLeft(), tree->getValue(), min) && isBSTree(tree->getRight(), max, tree->getValue()))
 			{
 				return true;
 			}
