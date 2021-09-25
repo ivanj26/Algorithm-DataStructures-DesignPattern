@@ -175,7 +175,7 @@ class SinglyLinkedList
 		SinglyLinkedList(int v)
 		{
 			head = new SinglyNode<T>(v);
-            head->setNext(nullptr);
+			head->setNext(nullptr);
 		}
 
 		/**
