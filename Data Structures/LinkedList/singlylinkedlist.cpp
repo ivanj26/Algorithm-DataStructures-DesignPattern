@@ -168,6 +168,16 @@ class SinglyLinkedList
 			head = nullptr;
 		}
 
+        /**
+		 * @brief Construct a new Singly Linked List object.
+		 * 
+		 */
+		SinglyLinkedList(int v)
+		{
+			head = new SinglyNode<T>(v);
+            head->setNext(nullptr);
+		}
+
 		/**
 		 * @brief Copy construct a Singly Linked List object
 		 * 
@@ -980,51 +990,3 @@ class SinglyLinkedList
 			return ll3;
 		}
 };
-
-int main(int argc, char const *argv[])
-{
-	SinglyLinkedList<int> list;
-	SinglyLinkedList<int> list2;
-
-	// Insert data to linkedlist
-	// [1,2,3,4,5]
-	list.push(1);
-	list.push(2);
-	list.push(3);
-	list.push(4);
-	list.push(5);
-
-	// Insert data to linkedlist
-	// [1,2,3,4,5]
-	list2.push(1);
-	list2.push(2);
-	list2.push(3);
-	list2.push(4);
-	list2.push(5);
-
-	cout << "Input:" << endl;
-	cout << list << endl;
-
-	// - rotate linkedlist
-	SinglyLinkedList<int> list3 = list + list2;
-	list3.print();
-
-	// - get last nth node
-	// cout << list.getNthFromEnd(5) << endl;
-
-	// - print the oddEvenList
-	// SinglyLinkedList<int> oddEvenList = list.oddEvenList();
-	// oddEvenList.print();
-
-	// - check if its palindrome
-	// cout << "is palindrome? : " << list.isPalindrome2() << endl << endl;
-
-	// - treat linkedlist as number and subtract one
-	// list.subtractOne();
-
-	// - check middle of linkedlist
-	// cout << "Middle: " << list.middle() << endl;
-	// cout << "Length: " << list.count() << endl;
-
-	return 0;
-}
