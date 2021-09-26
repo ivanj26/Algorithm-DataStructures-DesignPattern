@@ -115,6 +115,30 @@ class Tree
 				return false;
 		}
 
+		bool isSubTreeHelper(Tree<T> *tree, Tree<T> *subTree)
+		{
+			if (!tree && !subTree)
+			{
+				return true;
+			}
+
+			if ((!tree && subTree) || (tree && !subTree))
+			{
+				return false;
+			}
+
+			bool isSame = tree->getValue() == subTree->getValue();
+			if (isSame)
+			{
+				bool isSameLeft = isSubTreeHelper(tree->getLeft(), subTree->getLeft());
+				bool isSameRight = isSubTreeHelper(tree->getRight(), subTree->getRight());
+
+				return isSame && isSameRight && isSameLeft;
+			}
+
+			return isSame;
+		}
+
 	public:
 		Tree(T value)
 		{
@@ -379,6 +403,36 @@ class Tree
 			root->right = constructBinaryTreeFromVector(arr2);
 
 			return root;
+		}
+
+		bool isSubTree(Tree<T> *subTree)
+		{
+			queue<Tree<T> *> q;
+			q.push(this);
+
+			bool isSubTree = false;
+			while (!q.empty() && !isSubTree)
+			{
+				Tree<T> *tree = q.front();
+				q.pop();
+
+				Tree<T> *left = tree->getLeft();
+				Tree<T> *right = tree->getRight();
+
+				if (left)
+				{
+					q.push(left);
+				}
+
+				if (right)
+				{
+					q.push(right);
+				}
+
+				isSubTree = isSubTreeHelper(tree, subTree);
+			}
+
+			return isSubTree;
 		}
 };
 
