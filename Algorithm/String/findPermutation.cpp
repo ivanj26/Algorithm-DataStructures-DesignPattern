@@ -4,10 +4,10 @@
 
 using namespace std;
 
-string permutate(string s, string answer = "")
+string permutate(string s, int maxLen = 3, string answer = "")
 {
 	string answers;
-	if (s.length() == 0)
+	if (answer.length() == maxLen)
 	{
 		return answer + " ";
 	}
@@ -18,7 +18,7 @@ string permutate(string s, string answer = "")
 		string leftSubStr = s.substr(0, i);
 		string rightSubStr = s.substr(i + 1);
 		string next = leftSubStr + rightSubStr;
-		answers += permutate(next, answer + c);
+		answers += permutate(next, maxLen, answer + c);
 	}
 
 	return answers;
@@ -47,7 +47,7 @@ vector<string> toVector(string s)
 
 int main(int argc, char const *argv[])
 {
-	string ans = permutate("ABCD");
+	string ans = permutate("ABCD", 2);
 	vector<string> v = toVector(ans);
 
 	for (int i = 0; i < v.size(); i++)
