@@ -1,59 +1,78 @@
-#include <string>
 #include <iostream>
+#include <assert.h>
+#include <string>
 #include <vector>
 
 using namespace std;
 
-string permutate(string s, int maxLen = 3, string answer = "")
-{
-	string answers;
-	if (answer.length() == maxLen)
-	{
-		return answer + " ";
-	}
+class PermutationIterator {
+    private:
+        vector<string> permutations;
+        int ptr;
 
-	for (int i = 0; i < s.length(); i++)
-	{
-		char c = s[i];
-		string leftSubStr = s.substr(0, i);
-		string rightSubStr = s.substr(i + 1);
-		string next = leftSubStr + rightSubStr;
-		answers += permutate(next, maxLen, answer + c);
-	}
+        string constructPermutations(string characters, int maxLength, string permutation = "")
+        {
+            if (permutation.length() == maxLength)
+            {
+                return permutation + " ";
+            }
 
-	return answers;
-}
+            string finalAnswers = "";
+            for (int i = 0; i < characters.length(); i++)
+            {
+                char c = characters[i];
+                string leftSubStr = characters.substr(0, i);
+                string rightSubStr = characters.substr(i + 1);
 
-vector<string> toVector(string s)
-{
-	string ss;
-	vector<string> res;
-	for (int i = 0; i < s.length(); i++)
-	{
-		char c = s.at(i);
-		if (c != ' ')
-		{
-			ss += c;
-		}
-		else
-		{
-			res.push_back(ss);
-			ss = "";
-		}
-	}
+                finalAnswers += constructPermutations(leftSubStr + rightSubStr, maxLength, permutation + c);
+            }
 
-	return res;
-}
+            return finalAnswers;
+        }
+
+        vector<string> toVector(string perms, string delimiter = " ")
+        {
+            int start = 0;
+            int end = perms.find(delimiter);
+            vector<string> res;
+
+            while (end != -1)
+            {
+                string perm = perms.substr(start, end - start);
+                start = end + delimiter.size();
+                end = perms.find(delimiter, start);
+
+                res.push_back(perm);
+            }
+
+            return res;
+        }
+    public:
+        PermutationIterator(string characters, int permutationLength): ptr(0)
+        {
+            permutations = toVector(constructPermutations(characters, permutationLength));
+        }
+
+        bool hasNext()
+        {
+            return ptr < permutations.size();
+        }
+
+        string next()
+        {
+            assert(hasNext());
+            return permutations[ptr++];
+        }
+};
 
 int main(int argc, char const *argv[])
 {
-	string ans = permutate("ABCD", 2);
-	vector<string> v = toVector(ans);
+    PermutationIterator it("ABCD", 2);
 
-	for (int i = 0; i < v.size(); i++)
-	{
-		cout << v[i] << " ";
-	}
-	cout << endl;
-	return 0;
+    // 4P2 = 4! / (4 - 2)! = 4 * 3 = 12 object
+    
+    while (it.hasNext()) {
+        cout << it.next() << endl;
+    }
+    return 0;
 }
