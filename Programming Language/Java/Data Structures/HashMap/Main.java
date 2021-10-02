@@ -23,7 +23,7 @@ class HashMap<K, V> {
     }
 
     public HashMap() {
-        this.size = 100000;
+        this.size = 2000;
         this.buckets = new Node[size];
         this.keys = new ArrayList<K>();
     }
@@ -36,11 +36,11 @@ class HashMap<K, V> {
             this.buckets[hashKey] = new Node<K, V>(key, value);
             keys.add(key);
         } else {
-            while (node.next != null && node.key != key) {
+            while (node.next != null && !key.equals(node.key)) {
                 node = node.next;
             }
 
-            if (node.key == key) {
+            if (key.equals(node.key)) {
                 node.val = value;
             } else {
                 if (node.next == null) {
@@ -56,7 +56,7 @@ class HashMap<K, V> {
         Node<K, V> node = this.buckets[hashKey];
 
         if (node != null) {
-            if (node.key == key) { // if head of linkedlist is null
+            if (key.equals(node.key)) { // if head of linkedlist is null
                 this.buckets[hashKey] = null;
                 keys.remove(key);
 
@@ -64,13 +64,13 @@ class HashMap<K, V> {
             }
 
             Node<K, V> prev = null;
-            while (node != null && node.key != key) {
+            while (node != null && !key.equals(node.key)) {
                 prev = node;
                 node = node.next;
             }
 
             if (node != null) {
-                if (node.key == key) {
+                if (key.equals(node.key)) {
                     if (prev != null) {
                         prev.next = node.next;
                     }
@@ -87,7 +87,7 @@ class HashMap<K, V> {
             return null;
         }
 
-        while (node != null && node.key != key) {
+        while (node != null && !key.equals(node.key)) {
             node = node.next;
         }
 
@@ -103,7 +103,7 @@ public class Main {
     public static void main(String[] args) {
         HashMap<String, String> map = new HashMap<String, String>();
         
-        int n = 10 ^ 6;
+        int n = 1000000;
         for (int i = 0; i < n; i++) {
             map.put(String.valueOf(i), "value" + i);
         }
@@ -124,7 +124,9 @@ public class Main {
         for (int i = 0; i < n; i++) {
             String value = map.get(String.valueOf(i));
 
-            System.out.println(value);
+            if (!value.equals("value" + i)) {
+                System.out.println("Incorrect val");
+            }
         }
     }
 }
