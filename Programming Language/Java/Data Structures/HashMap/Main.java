@@ -98,15 +98,24 @@ class HashMap<K, V> {
 public class Main {
     public static void main(String[] args) {
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("budi", "test");
-        map.put("bude", "ya");
-        map.put("buda", "ok");
-
-        map.remove("bude");
+        
+        int n = 10 ^ 6;
+        for (int i = 0; i < n; i++) {
+            map.put(String.valueOf(i), "value" + i);
+        }
 
         List<String> keys = map.keys();
+        int j = 0;
+
+        // - check if is there any missing key?
         for (String key : keys) {
-            System.out.printf("Key: %s\n", key);
+            if (Integer.valueOf(key) != j) {
+                System.out.println("Incorrect key");
+                return;
+            }
+            j++;
         }
+
+        System.out.println("Correct!");
     }
 }
