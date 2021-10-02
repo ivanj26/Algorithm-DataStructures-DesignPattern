@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Node<K, V> {
-    Node next;
+    Node<K, V> next;
     V val;
     K key;
 
