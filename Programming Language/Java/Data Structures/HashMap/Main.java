@@ -40,13 +40,13 @@ class HashMap<K, V> {
                 node = node.next;
             }
 
-            if (node.next == null) {
-                node.next = new Node<K, V>(key, value);
-                keys.add(key);
-            }
-
             if (node.key == key) {
                 node.val = value;
+            } else {
+                if (node.next == null) {
+                    node.next = new Node<K, V>(key, value);
+                    keys.add(key);
+                }
             }
         }
     }
@@ -56,7 +56,7 @@ class HashMap<K, V> {
         Node<K, V> node = this.buckets[hashKey];
 
         if (node != null) {
-            if (node == this.buckets[hashKey]) { // if head of linkedlist is null
+            if (node.key == key) { // if head of linkedlist is null
                 this.buckets[hashKey] = null;
                 keys.remove(key);
 
@@ -69,15 +69,19 @@ class HashMap<K, V> {
                 node = node.next;
             }
 
-            if (node.key == key) {
-                prev.next = node.next;
+            if (node != null) {
+                if (node.key == key) {
+                    if (prev != null) {
+                        prev.next = node.next;
+                    }
+                }
             }
         }
     }
 
     public V get(K key) {
         int hashKey = this.hash(key);
-        Node<K, V> node = buckets[hashKey];
+        Node<K, V> node = this.buckets[hashKey];
 
         if (node == null) {
             return null;
@@ -116,6 +120,11 @@ public class Main {
             j++;
         }
 
-        System.out.println("Correct!");
+        // - check if is there any missing value?
+        for (int i = 0; i < n; i++) {
+            String value = map.get(String.valueOf(i));
+
+            System.out.println(value);
+        }
     }
 }
