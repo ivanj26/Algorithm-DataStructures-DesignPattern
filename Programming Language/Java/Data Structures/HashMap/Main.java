@@ -71,6 +71,8 @@ class HashMap<K, V> {
 
             if (node != null) {
                 if (key.equals(node.key)) {
+                    keys.remove(key);
+
                     if (prev != null) {
                         prev.next = node.next;
                     }
