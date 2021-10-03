@@ -48,6 +48,11 @@ int fib3(int n)
 		return x;
 	}
 
+    if (n == 1)
+    {
+        return y;
+    }
+
 	for (int i = 2; i <= n; i++)
 	{
 		z = x + y; //Replace by adding f[i-2] + f[i-1]
