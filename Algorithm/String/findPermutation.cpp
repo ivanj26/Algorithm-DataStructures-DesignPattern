@@ -65,6 +65,41 @@ class PermutationIterator {
         }
 };
 
+class NumberPermutationIterator {
+    private:
+        vector< vector<int> > res;
+        int ptr;
+
+        void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0) {
+            if (count == maxLength) {
+                res.push_back(temp);
+                return;
+            }
+
+            for (int j = i; j <= nums.size(); j++) {
+                temp.push_back(j);
+                backtrack(nums, maxLength, temp, i + 1, count + 1);
+                temp.pop_back();
+            }
+        }
+
+    public:
+        NumberPermutationIterator(vector<int> nums, int k) : ptr(0) {
+            vector<int> temp;
+            backtrack(nums, k, temp);
+        }
+
+        bool hasNext() {
+            return ptr < res.size();
+        }
+
+        vector<int> next() {
+            return res[ptr++];
+        }
+
+        int size() { return res.size(); }
+};
+
 int main(int argc, char const *argv[])
 {
     PermutationIterator it("ABCD", 2);

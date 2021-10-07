@@ -49,9 +49,77 @@ class CombinationIterator
 		}
 };
 
+class NumberPermutationIterator {
+    private:
+        vector< vector<int> > res;
+        int ptr;
+
+        void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0) {
+            if (count == maxLength) {
+                res.push_back(temp);
+                return;
+            }
+
+            for (int j = i; j <= nums.size(); j++) {
+                temp.push_back(j);
+                backtrack(nums, maxLength, temp, j + 1, count + 1);
+                temp.pop_back();
+            }
+        }
+
+    public:
+        NumberPermutationIterator(vector<int> nums, int k) : ptr(0) {
+            vector<int> temp;
+            backtrack(nums, k, temp);
+        }
+
+        bool hasNext() {
+            return ptr < res.size();
+        }
+
+        vector<int> next() {
+            return res[ptr++];
+        }
+
+        int size() { return res.size(); }
+};
+
 /**
  * Your CombinationIterator object will be instantiated and called as such:
  * CombinationIterator* obj = new CombinationIterator(characters, combinationLength);
  * string param_1 = obj->next();
  * bool param_2 = obj->hasNext();
  */
+
+int main(int argc, char const *argv[])
+{
+    vector<int>  nums;
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(3);
+    nums.push_back(4);
+    nums.push_back(5);
+
+    NumberPermutationIterator it(nums, 3);
+
+    while (it.hasNext()) {
+        vector<int> res = it.next();
+        
+        for (int i = 0; i < res.size(); i++) {
+            cout << res.at(i);
+        }
+
+        cout << endl;
+    }
+
+    /**
+     * @brief n! / r! * (n - r)!
+     * = 5! / 2! * (5-2)!
+     * = (5! / 2! * 3!)
+     * = 10;
+     * 
+     */
+
+    cout << "\n" << it.size() << endl;
+    return 0;
+}
