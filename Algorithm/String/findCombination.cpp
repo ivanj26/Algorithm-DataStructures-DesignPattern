@@ -49,7 +49,7 @@ class CombinationIterator
 		}
 };
 
-class NumberPermutationIterator {
+class NumberCombinationIterator {
     private:
         vector< vector<int> > res;
         int ptr;
@@ -68,7 +68,7 @@ class NumberPermutationIterator {
         }
 
     public:
-        NumberPermutationIterator(vector<int> nums, int k) : ptr(0) {
+        NumberCombinationIterator(vector<int> nums, int k) : ptr(0) {
             vector<int> temp;
             backtrack(nums, k, temp);
         }
@@ -100,7 +100,7 @@ int main(int argc, char const *argv[])
     nums.push_back(4);
     nums.push_back(5);
 
-    NumberPermutationIterator it(nums, 3);
+    NumberCombinationIterator it(nums, 3);
 
     while (it.hasNext()) {
         vector<int> res = it.next();
