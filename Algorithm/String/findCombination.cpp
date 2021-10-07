@@ -4,8 +4,7 @@
 
 using namespace std;
 
-class CombinationIterator
-{
+class CombinationIterator {
 	private:
 		vector<string> combinations;
 		int index = 0;
@@ -50,38 +49,44 @@ class CombinationIterator
 };
 
 class NumberCombinationIterator {
-    private:
-        vector< vector<int> > res;
-        int ptr;
+	private:
+		vector<vector<int>> res;
+		int ptr;
 
-        void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0) {
-            if (count == maxLength) {
-                res.push_back(temp);
-                return;
-            }
+		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0)
+		{
+			if (count == maxLength)
+			{
+				res.push_back(temp);
+				return;
+			}
 
-            for (int j = i; j <= nums.size(); j++) {
-                temp.push_back(j);
-                backtrack(nums, maxLength, temp, j + 1, count + 1);
-                temp.pop_back();
-            }
-        }
+			for (int j = i; j <= nums.size(); j++)
+			{
+				temp.push_back(j);
+				backtrack(nums, maxLength, temp, j + 1, count + 1);
+				temp.pop_back();
+			}
+		}
 
-    public:
-        NumberCombinationIterator(vector<int> nums, int k) : ptr(0) {
-            vector<int> temp;
-            backtrack(nums, k, temp);
-        }
+	public:
+		NumberCombinationIterator(vector<int> nums, int k) : ptr(0)
+		{
+			vector<int> temp;
+			backtrack(nums, k, temp);
+		}
 
-        bool hasNext() {
-            return ptr < res.size();
-        }
+		bool hasNext()
+		{
+			return ptr < res.size();
+		}
 
-        vector<int> next() {
-            return res[ptr++];
-        }
+		vector<int> next()
+		{
+			return res[ptr++];
+		}
 
-        int size() { return res.size(); }
+		int size() { return res.size(); }
 };
 
 /**
@@ -93,33 +98,36 @@ class NumberCombinationIterator {
 
 int main(int argc, char const *argv[])
 {
-    vector<int>  nums;
-    nums.push_back(1);
-    nums.push_back(2);
-    nums.push_back(3);
-    nums.push_back(4);
-    nums.push_back(5);
+	vector<int> nums;
+	nums.push_back(1);
+	nums.push_back(2);
+	nums.push_back(3);
+	nums.push_back(4);
+	nums.push_back(5);
 
-    NumberCombinationIterator it(nums, 3);
+	NumberCombinationIterator it(nums, 3);
 
-    while (it.hasNext()) {
-        vector<int> res = it.next();
-        
-        for (int i = 0; i < res.size(); i++) {
-            cout << res.at(i);
-        }
+	while (it.hasNext())
+	{
+		vector<int> res = it.next();
 
-        cout << endl;
-    }
+		for (int i = 0; i < res.size(); i++)
+		{
+			cout << res.at(i);
+		}
 
-    /**
-     * @brief n! / r! * (n - r)!
-     * = 5! / 2! * (5-2)!
-     * = (5! / 2! * 3!)
-     * = 10;
-     * 
-     */
+		cout << endl;
+	}
 
-    cout << "\n" << it.size() << endl;
-    return 0;
+	/**
+	 * @brief n! / r! * (n - r)!
+	 * = 5! / 2! * (5-2)!
+	 * = (5! / 2! * 3!)
+	 * = 10;
+	 * 
+	 */
+
+	cout << "\n"
+		 << it.size() << endl;
+	return 0;
 }

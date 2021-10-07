@@ -6,108 +6,116 @@
 using namespace std;
 
 class PermutationIterator {
-    private:
-        vector<string> permutations;
-        int ptr;
+	private:
+		vector<string> permutations;
+		int ptr;
 
-        string constructPermutations(string characters, int maxLength, string permutation = "")
-        {
-            if (permutation.length() == maxLength)
-            {
-                return permutation + " ";
-            }
+		string constructPermutations(string characters, int maxLength, string permutation = "")
+		{
+			if (permutation.length() == maxLength)
+			{
+				return permutation + " ";
+			}
 
-            string finalAnswers = "";
-            for (int i = 0; i < characters.length(); i++)
-            {
-                char c = characters[i];
-                string leftSubStr = characters.substr(0, i);
-                string rightSubStr = characters.substr(i + 1);
+			string finalAnswers = "";
+			for (int i = 0; i < characters.length(); i++)
+			{
+				char c = characters[i];
+				string leftSubStr = characters.substr(0, i);
+				string rightSubStr = characters.substr(i + 1);
 
-                finalAnswers += constructPermutations(leftSubStr + rightSubStr, maxLength, permutation + c);
-            }
+				finalAnswers += constructPermutations(leftSubStr + rightSubStr, maxLength, permutation + c);
+			}
 
-            return finalAnswers;
-        }
+			return finalAnswers;
+		}
 
-        vector<string> toVector(string perms, string delimiter = " ")
-        {
-            int start = 0;
-            int end = perms.find(delimiter);
-            vector<string> res;
+		vector<string> toVector(string perms, string delimiter = " ")
+		{
+			int start = 0;
+			int end = perms.find(delimiter);
+			vector<string> res;
 
-            while (end != -1)
-            {
-                string perm = perms.substr(start, end - start);
-                start = end + delimiter.size();
-                end = perms.find(delimiter, start);
+			while (end != -1)
+			{
+				string perm = perms.substr(start, end - start);
+				start = end + delimiter.size();
+				end = perms.find(delimiter, start);
 
-                res.push_back(perm);
-            }
+				res.push_back(perm);
+			}
 
-            return res;
-        }
-    public:
-        PermutationIterator(string characters, int permutationLength): ptr(0)
-        {
-            permutations = toVector(constructPermutations(characters, permutationLength));
-        }
+			return res;
+		}
 
-        bool hasNext()
-        {
-            return ptr < permutations.size();
-        }
+	public:
+		PermutationIterator(string characters, int permutationLength) : ptr(0)
+		{
+			permutations = toVector(constructPermutations(characters, permutationLength));
+		}
 
-        string next()
-        {
-            assert(hasNext());
-            return permutations[ptr++];
-        }
+		bool hasNext()
+		{
+			return ptr < permutations.size();
+		}
+
+		string next()
+		{
+			assert(hasNext());
+			return permutations[ptr++];
+		}
 };
 
 class NumberPermutationIterator {
-    private:
-        vector< vector<int> > res;
-        int ptr;
+	private:
+		vector<vector<int>> res;
+		int ptr;
 
-        void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0) {
-            if (count == maxLength) {
-                res.push_back(temp);
-                return;
-            }
+		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0)
+		{
+			if (count == maxLength)
+			{
+				res.push_back(temp);
+				return;
+			}
 
-            for (int j = i; j <= nums.size(); j++) {
-                temp.push_back(j);
-                backtrack(nums, maxLength, temp, i + 1, count + 1);
-                temp.pop_back();
-            }
-        }
+			for (int j = i; j <= nums.size(); j++)
+			{
+				temp.push_back(j);
+				backtrack(nums, maxLength, temp, i + 1, count + 1);
+				temp.pop_back();
+			}
+		}
 
-    public:
-        NumberPermutationIterator(vector<int> nums, int k) : ptr(0) {
-            vector<int> temp;
-            backtrack(nums, k, temp);
-        }
+	public:
+		NumberPermutationIterator(vector<int> nums, int k) : ptr(0)
+		{
+			vector<int> temp;
+			backtrack(nums, k, temp);
+		}
 
-        bool hasNext() {
-            return ptr < res.size();
-        }
+		bool hasNext()
+		{
+			return ptr < res.size();
+		}
 
-        vector<int> next() {
-            return res[ptr++];
-        }
+		vector<int> next()
+		{
+			return res[ptr++];
+		}
 
-        int size() { return res.size(); }
+		int size() { return res.size(); }
 };
 
 int main(int argc, char const *argv[])
 {
-    PermutationIterator it("ABCD", 2);
+	PermutationIterator it("ABCD", 2);
 
-    // 4P2 = 4! / (4 - 2)! = 4 * 3 = 12 object
-    
-    while (it.hasNext()) {
-        cout << it.next() << endl;
-    }
-    return 0;
+	// 4P2 = 4! / (4 - 2)! = 4 * 3 = 12 object
+
+	while (it.hasNext())
+	{
+		cout << it.next() << endl;
+	}
+	return 0;
 }
