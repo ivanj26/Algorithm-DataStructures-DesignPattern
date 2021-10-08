@@ -713,7 +713,7 @@ class SinglyLinkedList
 							next = next->getNext();
 						}
 
-						prev->getNext() = next;
+						prev->setNext(next);
 					}
 				}
 				else
