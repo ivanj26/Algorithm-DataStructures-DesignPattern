@@ -139,6 +139,20 @@ class Tree
 			return isSame;
 		}
 
+        bool hasPathSumUtil(Tree<T>* root, int targetSum, int count = 0) {
+            if (root) {
+                int sum = count + root->getValue();
+
+                if (!root->getLeft() && !root->getRight()) {
+                    return sum == targetSum;
+                }
+
+                return hasPathSumUtil(root->left, targetSum, sum) || hasPathSumUtil(root->right, targetSum, sum);
+            }
+
+            return false;
+        }
+
 	public:
 		Tree(T value)
 		{
@@ -434,6 +448,10 @@ class Tree
 
 			return isSubTree;
 		}
+
+        bool hasPathSum(int targetSum) {
+            return hasPathSumUtil(this->front(), targetSum);
+        }
 };
 
 int main(int argc, const char **argv)
