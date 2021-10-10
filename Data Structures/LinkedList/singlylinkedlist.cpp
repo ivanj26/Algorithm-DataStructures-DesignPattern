@@ -158,6 +158,24 @@ class SinglyLinkedList
 			return curr;
 		}
 
+        /**
+         * @brief Reverse the linkedlist using recursive approach.
+         * 
+         * @param SinglyNode<T>* node
+         */
+        SinglyNode<T>* reverseRecv(SinglyNode<T> *node = this->front()) {
+            if (node == nullptr || node->getNext() == nullptr) {
+                return node;
+            }
+
+            SinglyNode<T> *revHead = this->reverseRecv(node->getNext());
+            SinglyNode<T> *tail = node->getNext();
+            tail->setNext(node);
+            node->setNext(nullptr);
+
+            return revHead;
+        }
+
 	public:
 		/**
 		 * @brief Construct a new Singly Linked List object.
