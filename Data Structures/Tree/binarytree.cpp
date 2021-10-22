@@ -89,7 +89,7 @@ class Tree
 			int left = 1 + heightUtil(root->left);
 			int right = 1 + heightUtil(root->right);
 
-			return left > right ? left : right;
+			return max(left, right);
 		}
 
 		bool isSymmetricUtil(Tree<T> *left, Tree<T> *right)
@@ -356,8 +356,8 @@ class Tree
 					minimum = min(minimum, depth);
 				}
 
-				this->minDepth(tree->left, depth + 1);
-				this->minDepth(tree->right, depth + 1);
+				this->minimumHeight(tree->left, depth + 1);
+				this->minimumHeight(tree->right, depth + 1);
 
 				return minimum;
 			}
