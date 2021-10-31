@@ -1,6 +1,3 @@
-#include <iostream>
-using namespace std;
-
 struct HashNode
 {
 	HashNode *next;
@@ -38,25 +35,30 @@ class HashMap
 		{
 			int hashKey = this->hashFunc(key);
 			HashNode *curr = this->buckets[hashKey];
+            HashNode *prev = nullptr;
 
 			while (curr && curr->key != key)
 			{
+                prev = curr;
 				curr = curr->next;
 			}
 
 			if (!curr)
 			{
-				this->buckets[hashKey] = new HashNode(key, value);
+                if (prev)
+                {
+                    curr = prev;
+					curr->next = new HashNode(key, value);
+				} else
+                {
+                    this->buckets[hashKey] = new HashNode(key, value);
+                }
 			}
 			else
 			{
 				if (curr->key == key)
 				{
 					curr->val = value;
-				}
-				else
-				{
-					curr->next = new HashNode(key, value);
 				}
 			}
 		}
@@ -102,23 +104,3 @@ class HashMap
 			return !curr ? -1 : curr->val;
 		}
 };
-
-int main(int argc, char const *argv[])
-{
-	HashMap map;
-	map.put(1, 3);
-	map.put(2, 2);
-	map.put(1, 4);
-	cout << map.get(1) << endl;
-
-	map.remove(1);
-
-	cout << map.get(1) << endl;
-	cout << map.get(2) << endl;
-	cout << map.get(3) << endl;
-
-	map.put(1, 5);
-
-	cout << map.get(1) << endl;
-	return 0;
-}
