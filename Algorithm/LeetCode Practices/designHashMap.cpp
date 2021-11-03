@@ -35,24 +35,25 @@ class HashMap
 		{
 			int hashKey = this->hashFunc(key);
 			HashNode *curr = this->buckets[hashKey];
-            HashNode *prev = nullptr;
+			HashNode *prev = nullptr;
 
 			while (curr && curr->key != key)
 			{
-                prev = curr;
+				prev = curr;
 				curr = curr->next;
 			}
 
 			if (!curr)
 			{
-                if (prev)
-                {
-                    curr = prev;
+				if (prev)
+				{
+					curr = prev;
 					curr->next = new HashNode(key, value);
-				} else
-                {
-                    this->buckets[hashKey] = new HashNode(key, value);
-                }
+				}
+				else
+				{
+					this->buckets[hashKey] = new HashNode(key, value);
+				}
 			}
 			else
 			{
