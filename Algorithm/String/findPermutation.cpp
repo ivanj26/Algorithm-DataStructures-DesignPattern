@@ -68,12 +68,12 @@ class PermutationIterator {
 
 class NumberPermutationIterator {
 	private:
-		vector<vector<int>> res;
+		vector< vector<int> > res;
 		int ptr;
 
-		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0)
+		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1)
 		{
-			if (count == maxLength)
+			if (temp.size() == maxLength)
 			{
 				res.push_back(temp);
 				return;
@@ -82,7 +82,7 @@ class NumberPermutationIterator {
 			for (int j = i; j <= nums.size(); j++)
 			{
 				temp.push_back(j);
-				backtrack(nums, maxLength, temp, i + 1, count + 1);
+				backtrack(nums, maxLength, temp, i + 1);
 				temp.pop_back();
 			}
 		}
@@ -109,13 +109,45 @@ class NumberPermutationIterator {
 
 int main(int argc, char const *argv[])
 {
-	PermutationIterator it("ABCD", 2);
+	// PermutationIterator it("ABCD", 2);
 
-	// 4P2 = 4! / (4 - 2)! = 4 * 3 = 12 object
+	// // 4P2 = 4! / (4 - 2)! = 4 * 3 = 12 object
+
+	// while (it.hasNext())
+	// {
+	// 	cout << it.next() << endl;
+	// }
+
+    vector<int> nums;
+	nums.push_back(1);
+	nums.push_back(2);
+	nums.push_back(3);
+	nums.push_back(4);
+	nums.push_back(5);
+
+    NumberPermutationIterator it(nums, 3);
 
 	while (it.hasNext())
 	{
-		cout << it.next() << endl;
+		vector<int> res = it.next();
+
+		for (int i = 0; i < res.size(); i++)
+		{
+			cout << res.at(i);
+		}
+
+		cout << endl;
 	}
+
+	/**
+	 * @brief n! / r! * (n - r)!
+	 * = 5! / 2! * (5-2)!
+	 * = (5! / 2! * 3!)
+	 * = 10;
+	 * 
+	 */
+
+	cout << "\n"
+		 << it.size() << endl;
 	return 0;
 }

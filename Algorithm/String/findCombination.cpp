@@ -50,12 +50,12 @@ class CombinationIterator {
 
 class NumberCombinationIterator {
 	private:
-		vector<vector<int>> res;
+		vector< vector<int> > res;
 		int ptr;
 
-		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1, int count = 0)
+		void backtrack(vector<int> &nums, int maxLength, vector<int> temp, int i = 1)
 		{
-			if (count == maxLength)
+			if (temp.size() == maxLength)
 			{
 				res.push_back(temp);
 				return;
@@ -64,7 +64,7 @@ class NumberCombinationIterator {
 			for (int j = i; j <= nums.size(); j++)
 			{
 				temp.push_back(j);
-				backtrack(nums, maxLength, temp, j + 1, count + 1);
+				backtrack(nums, maxLength, temp, j + 1);
 				temp.pop_back();
 			}
 		}
