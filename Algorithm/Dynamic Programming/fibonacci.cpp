@@ -35,6 +35,24 @@ int fib2(int n)
 	return f[n];
 }
 
+// fib array must be initialize with n size
+// n must be large enough
+// Problem: https://www.hackerrank.com/challenges/ctci-fibonacci-numbers/problem
+int fibRecursive(int *fib, int n, int i = 1)
+{
+    if (n == 0 || n == 1) {
+        return fib[n];
+    }
+
+    if (n != i) {
+        i++;
+        fib[i] = fib[i - 2] + fib[i - 1];
+        return fibRecursive(fib, n, i);
+    }
+
+    return fib[i];
+}
+
 /**
  * Fibonnaci using dynamic programming with space optimized
  * Time complexity  : O(n)

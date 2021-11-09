@@ -389,7 +389,7 @@ class Tree
 			if (tree == nullptr)
 				return true;
 
-			if ((min != INT_MIN && tree->getValue() <= min) || (max != INT_MAX && max < tree->getValue()))
+			if ((min != INT_MIN && tree->getValue() <= min) || (max != INT_MAX && max <= tree->getValue()))
 			{
 				return false;
 			}
