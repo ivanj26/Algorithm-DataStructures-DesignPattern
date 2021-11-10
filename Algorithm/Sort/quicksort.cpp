@@ -17,12 +17,12 @@ int partition(int *arr, int low, int high)
 
 	while (i <= j)
 	{
-		while (arr[i] < pivot)
+		while (arr[i] < arr[pivot])
 		{
 			i++;
 		}
 
-		while (arr[j] < pivot)
+		while (arr[j] > arr[pivot])
 		{
 			j--;
 		}
