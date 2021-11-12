@@ -56,10 +56,11 @@ class SinglyLinkedList
             head->setNext(this->removeKFromList(head->getNext(), k));
             if (head->getData() == k)
             {
+                SinglyNode<T> *next = head->getNext();
                 SinglyNode<T> *temp = head;
                 delete temp;
 
-                return head->getNext();
+                return next;
             }
             else
             {
