@@ -1,7 +1,10 @@
 #include <queue>
 #include <vector>
+#include <set>
+#include <functional>
 #include <climits>
 #include <iostream>
+
 using namespace std;
 
 int getMax(vector<int> nums)
@@ -452,6 +455,36 @@ class Tree
         bool hasPathSum(int targetSum) {
             return hasPathSumUtil(this->front(), targetSum);
         }
+
+        /**
+         * @brief Print right view of Tree
+         * 
+         */
+        void rightView()
+        {
+            std::function<void(Tree<T>*, vector<int>&, int, set<int>&)> traverse;
+            traverse = [&traverse](Tree<T>* node, vector<int> &res, int level, set<int> &levelVisited) {
+                if (node) {
+                    if (levelVisited.find(level) == levelVisited.end()) {
+                        res.push_back(node->getValue());
+                        levelVisited.insert(level);
+                    }
+
+                    traverse(node->getRight(), res, level + 1, levelVisited);
+                    traverse(node->getLeft(), res, level + 1, levelVisited);
+                }
+            };
+
+            set<int> s;
+            vector<int> v;
+            traverse(this, v, 0, s);
+
+            for (auto num : v)
+            {
+                cout << num << " ";
+            }
+            cout << endl;
+        }
 };
 
 int main(int argc, const char **argv)
@@ -465,6 +498,9 @@ int main(int argc, const char **argv)
 	// tree.printPostOrder();
 	// tree.levelOrder();
 	cout << "Is Symetric? " << tree.isSymmetric() << endl;
+
+    // Print right view of Tree
+    tree.rightView();
 
 	return 0;
 }
