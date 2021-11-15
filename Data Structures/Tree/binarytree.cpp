@@ -142,19 +142,19 @@ class Tree
 			return isSame;
 		}
 
-        bool hasPathSumUtil(Tree<T>* root, int targetSum, int count = 0) {
-            if (root) {
-                int sum = count + root->getValue();
+		bool hasPathSumUtil(Tree<T>* root, int targetSum, int count = 0) {
+			if (root) {
+				int sum = count + root->getValue();
 
-                if (!root->getLeft() && !root->getRight()) {
-                    return sum == targetSum;
-                }
+				if (!root->getLeft() && !root->getRight()) {
+					return sum == targetSum;
+				}
 
-                return hasPathSumUtil(root->left, targetSum, sum) || hasPathSumUtil(root->right, targetSum, sum);
-            }
+				return hasPathSumUtil(root->left, targetSum, sum) || hasPathSumUtil(root->right, targetSum, sum);
+			}
 
-            return false;
-        }
+			return false;
+		}
 
 	public:
 		Tree(T value)
@@ -452,39 +452,39 @@ class Tree
 			return isSubTree;
 		}
 
-        bool hasPathSum(int targetSum) {
-            return hasPathSumUtil(this->front(), targetSum);
-        }
+		bool hasPathSum(int targetSum) {
+			return hasPathSumUtil(this->front(), targetSum);
+		}
 
-        /**
-         * @brief Print right view of Tree
-         * 
-         */
-        void rightView()
-        {
-            std::function<void(Tree<T>*, vector<int>&, int, set<int>&)> traverse;
-            traverse = [&traverse](Tree<T>* node, vector<int> &res, int level, set<int> &levelVisited) {
-                if (node) {
-                    if (levelVisited.find(level) == levelVisited.end()) {
-                        res.push_back(node->getValue());
-                        levelVisited.insert(level);
-                    }
+		/**
+		 * @brief Print right view of Tree
+		 * 
+		 */
+		void rightView()
+		{
+			std::function<void(Tree<T>*, vector<int>&, int, set<int>&)> traverse;
+			traverse = [&traverse](Tree<T>* node, vector<int> &res, int level, set<int> &levelVisited) {
+				if (node) {
+					if (levelVisited.find(level) == levelVisited.end()) {
+						res.push_back(node->getValue());
+						levelVisited.insert(level);
+					}
 
-                    traverse(node->getRight(), res, level + 1, levelVisited);
-                    traverse(node->getLeft(), res, level + 1, levelVisited);
-                }
-            };
+					traverse(node->getRight(), res, level + 1, levelVisited);
+					traverse(node->getLeft(), res, level + 1, levelVisited);
+				}
+			};
 
-            set<int> s;
-            vector<int> v;
-            traverse(this, v, 0, s);
+			set<int> s;
+			vector<int> v;
+			traverse(this, v, 0, s);
 
-            for (auto num : v)
-            {
-                cout << num << " ";
-            }
-            cout << endl;
-        }
+			for (auto num : v)
+			{
+				cout << num << " ";
+			}
+			cout << endl;
+		}
 };
 
 int main(int argc, const char **argv)
@@ -499,8 +499,8 @@ int main(int argc, const char **argv)
 	// tree.levelOrder();
 	cout << "Is Symetric? " << tree.isSymmetric() << endl;
 
-    // Print right view of Tree
-    tree.rightView();
+	// Print right view of Tree
+	tree.rightView();
 
 	return 0;
 }
