@@ -485,6 +485,40 @@ class Tree
 			}
 			cout << endl;
 		}
+
+		/**
+		 * @brief Print left view of tree
+		 * 
+		 */
+		void leftView()
+		{
+			function<void(Tree<T>*, int, vector<int>&, set<int>&)> traverse;
+			traverse = [&traverse](Tree<T>* node, int level, vector<int> &res, set<int>& levelVisited)
+			{
+				if (node)
+				{
+					if (levelVisited.find(level) == levelVisited.end())
+					{
+						res.push_back(node->getValue());
+						levelVisited.insert(level);
+					}
+
+					traverse(node->getLeft(), level + 1, res, levelVisited);
+					traverse(node->getRight(), level + 1, res, levelVisited);
+				}
+			};
+
+			vector<int> v;
+			set<int> s;
+			traverse(this, 0, v, s);
+
+			for (auto num : v)
+			{
+				cout << num << " ";
+			}
+
+			cout << endl;
+		}
 };
 
 int main(int argc, const char **argv)
@@ -501,6 +535,9 @@ int main(int argc, const char **argv)
 
 	// Print right view of Tree
 	tree.rightView();
+
+	// Print left view of Tree
+	tree.leftView();
 
 	return 0;
 }
