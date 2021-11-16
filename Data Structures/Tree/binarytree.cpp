@@ -462,22 +462,24 @@ class Tree
 		 */
 		void rightView()
 		{
-			std::function<void(Tree<T>*, vector<int>&, int, set<int>&)> traverse;
-			traverse = [&traverse](Tree<T>* node, vector<int> &res, int level, set<int> &levelVisited) {
+			std::function<void(Tree<T>*, vector<int>&, int)> traverse;
+			int maxLevel = 0;
+
+			traverse = [&traverse, &maxLevel](Tree<T>* node, vector<int> &res, int level) {
 				if (node) {
-					if (levelVisited.find(level) == levelVisited.end()) {
+					if (maxLevel < level)
+					{
+						maxLevel++;
 						res.push_back(node->getValue());
-						levelVisited.insert(level);
 					}
 
-					traverse(node->getRight(), res, level + 1, levelVisited);
-					traverse(node->getLeft(), res, level + 1, levelVisited);
+					traverse(node->getRight(), res, level + 1);
+					traverse(node->getLeft(), res, level + 1);
 				}
 			};
 
-			set<int> s;
 			vector<int> v;
-			traverse(this, v, 0, s);
+			traverse(this, v, 1);
 
 			for (auto num : v)
 			{
@@ -492,25 +494,25 @@ class Tree
 		 */
 		void leftView()
 		{
-			function<void(Tree<T>*, int, vector<int>&, set<int>&)> traverse;
-			traverse = [&traverse](Tree<T>* node, int level, vector<int> &res, set<int>& levelVisited)
+			function<void(Tree<T>*, int, vector<int>&)> traverse;
+			int maxLevel = 0;
+			traverse = [&traverse, &maxLevel](Tree<T>* node, int level, vector<int> &res)
 			{
 				if (node)
 				{
-					if (levelVisited.find(level) == levelVisited.end())
+					if (maxLevel < level)
 					{
-						res.push_back(node->getValue());
-						levelVisited.insert(level);
+						maxLevel++;
+						cout << node->getValue() << " ";
 					}
 
-					traverse(node->getLeft(), level + 1, res, levelVisited);
-					traverse(node->getRight(), level + 1, res, levelVisited);
+					traverse(node->getLeft(), level + 1, res);
+					traverse(node->getRight(), level + 1, res);
 				}
 			};
 
 			vector<int> v;
-			set<int> s;
-			traverse(this, 0, v, s);
+			traverse(this, 1, v);
 
 			for (auto num : v)
 			{
@@ -527,6 +529,15 @@ int main(int argc, const char **argv)
 	tree.insert(1);
 	tree.insert(2);
 	tree.insert(4);
+
+	// (() (1) (() (2) ())) (3) (() (4) ())
+
+	//          3
+	//      1       4
+	// null   2
+
+	// output left view: 3 1 2
+	// output right view: 3 4 2
 
 	tree.printInOrder();
 	// tree.printPostOrder();
