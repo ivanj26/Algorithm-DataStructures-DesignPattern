@@ -970,7 +970,7 @@ class SinglyLinkedList
 		 */
 		SinglyNode<T>* rotateLeft(int k)
 		{
-            long len = this->count();
+			long len = this->count();
 			if (k % len == 0)
 			{
 				return this->front();
@@ -988,7 +988,7 @@ class SinglyLinkedList
 			SinglyNode<T>* curr2 = temp;
 
 			if (k % len > 1){
-                curr = curr->getNext();
+				curr = curr->getNext();
 
 				for (int i = 1; i < (k % len); i++)
 				{
@@ -1104,7 +1104,7 @@ class SinglyLinkedList
 int main(int argc, char const *argv[])
 {
 	SinglyLinkedList<int> list(1);
-    list.push(2);
+	list.push(2);
 	list.push(3);
 	list.push(4);
 	
