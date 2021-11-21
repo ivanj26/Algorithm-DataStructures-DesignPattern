@@ -686,6 +686,25 @@ class Tree {
 
 			return 0;
 		}
+
+		/**
+		 * @brief Count all the tree nodes.
+		 * 
+		 * @param t 
+		 * @param isRoot 
+		 * @return int 
+		 */
+		int count(Tree<T>* t = nullptr, bool isRoot = true) {
+			if (isRoot) {
+				t = this->root;
+			}
+
+			if (!t) {
+				return 0;
+			}
+
+			return 1 + this->count(t->getLeft(), false) + this->count(t->getRight(), false);
+		}
 };
 
 template <class T>
