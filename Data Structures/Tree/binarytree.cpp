@@ -27,14 +27,13 @@ template <class T>
 struct TreeNode;
 
 template <class T>
-class Tree
-{
+class Tree {
 	private:
 		Tree<T> *left, *right;
 		T value;
 		int minimum = INT_MAX;
 
-		//Left - Root - Right
+		// Left - Root - Right
 		void printInOrderUtil(Tree<T> *tree)
 		{
 			if (!tree)
@@ -53,7 +52,7 @@ class Tree
 			cout << ")";
 		}
 
-		//Root - Left - Right
+		// Root - Left - Right
 		void printPreOrderUtil(Tree<T> *tree)
 		{
 			if (!tree)
@@ -70,7 +69,7 @@ class Tree
 			cout << ")";
 		}
 
-		//Left - Right - Root
+		// Left - Right - Root
 		void printPostOrderUtil(Tree<T> *tree)
 		{
 			if (!tree)
@@ -100,7 +99,7 @@ class Tree
 
 		bool isSymmetricUtil(Tree<T> *left, Tree<T> *right)
 		{
-			//if left has no children and right ones too
+			// if left has no children and right ones too
 			if (left && right)
 			{
 				if (!left->left && !left->right && !right->left && !right->right)
@@ -145,11 +144,14 @@ class Tree
 			return isSame;
 		}
 
-		bool hasPathSumUtil(Tree<T>* root, int targetSum, int count = 0) {
-			if (root) {
+		bool hasPathSumUtil(Tree<T> *root, int targetSum, int count = 0)
+		{
+			if (root)
+			{
 				int sum = count + root->getValue();
 
-				if (!root->getLeft() && !root->getRight()) {
+				if (!root->getLeft() && !root->getRight())
+				{
 					return sum == targetSum;
 				}
 
@@ -278,10 +280,10 @@ class Tree
 				}
 				else
 				{
-					//vector to save subtree in same depth
+					// vector to save subtree in same depth
 					vector<Tree<T> *> vec2;
 
-					//push tree with same depth
+					// push tree with same depth
 					while (!q.empty())
 					{
 						vec2.push_back(q.front());
@@ -293,7 +295,7 @@ class Tree
 					if (right)
 						q.push(right);
 
-					//get maximum in same depth
+					// get maximum in same depth
 					int max = tr->value;
 					for (auto i : vec2)
 					{
@@ -348,15 +350,16 @@ class Tree
 
 		/**
 		 * @brief Grouping tree node with same level in same array bucket.
-		 * 
-		 * @return vector< vector<T> > 
+		 *
+		 * @return vector< vector<T> >
 		 */
-		vector< vector<T> > groupLevelOrder()
+		vector<vector<T>> groupLevelOrder()
 		{
 			queue<TreeNode<T>> q;
-			vector< vector<T> > res;
+			vector<vector<T>> res;
 
-			if (this == nullptr) {
+			if (this == nullptr)
+			{
 				return res;
 			}
 
@@ -365,12 +368,13 @@ class Tree
 			while (!q.empty())
 			{
 				TreeNode<T> t = q.front();
-				Tree<T>* tree = t.tree;
+				Tree<T> *tree = t.tree;
 				int level = t.level;
 
 				q.pop();
 
-				if (tree) {
+				if (tree)
+				{
 					vector<T> vec;
 
 					if (level == 0)
@@ -390,8 +394,8 @@ class Tree
 						}
 					}
 
-					Tree<T>* left = tree->getLeft();
-					Tree<T>* right = tree->getRight();
+					Tree<T> *left = tree->getLeft();
+					Tree<T> *right = tree->getRight();
 					if (left)
 					{
 						q.push(TreeNode<T>(left, level + 1));
@@ -463,7 +467,7 @@ class Tree
 
 		void search(T value)
 		{
-			//Do search algo
+			// Do search algo
 		}
 
 		static bool isBSTree(Tree<T> *tree, int max = INT_MAX, int min = INT_MIN)
@@ -501,6 +505,13 @@ class Tree
 			return root;
 		}
 
+		/**
+		 * @brief Given the another tree, return true if the tree is subtree.
+		 * 
+		 * @param subTree 
+		 * @return true 
+		 * @return false 
+		 */
 		bool isSubTree(Tree<T> *subTree)
 		{
 			queue<Tree<T> *> q;
@@ -531,21 +542,63 @@ class Tree
 			return isSubTree;
 		}
 
-		bool hasPathSum(int targetSum) {
+		/**
+		 * @brief Given an integer target value, return true if the tree has a root-to-leaf
+		 * 		  such that adding up all the values along the path equals to `targetSum`
+		 * 
+		 * @param targetSum 
+		 * @return true 
+		 * @return false 
+		 */
+		bool hasPathSum(int targetSum)
+		{
 			return hasPathSumUtil(this->front(), targetSum);
 		}
 
 		/**
-		 * @brief Print right view of Tree
+		 * @brief Given another tree, return true if the another tree is same with this tree
 		 * 
+		 * @param anotherTree
+		 * @param tree 
+		 * @param isRoot
+		 * @return true 
+		 * @return false 
+		 */
+		bool isSame(Tree<T>* anotherTree, Tree<T>* tree = nullptr, bool isRoot = true)
+		{
+			if (isRoot) {
+				tree = this;
+			}
+
+			if (tree == nullptr && anotherTree == nullptr) {
+				return true;
+			}
+
+			if (!tree || !anotherTree) {
+				return false;
+			}
+
+			bool isSameVal = tree->getValue() == anotherTree->getValue();
+			if (isSameVal) {
+				return isSame(anotherTree->getLeft(), tree->getLeft(), false) && isSame(anotherTree->getRight(), tree->getRight(), false);
+			}
+
+			return false;
+		}
+
+		/**
+		 * @brief Print right view of Tree
+		 *
 		 */
 		void rightView()
 		{
-			std::function<void(Tree<T>*, vector<int>&, int)> traverse;
+			std::function<void(Tree<T> *, vector<int> &, int)> traverse;
 			int maxLevel = 0;
 
-			traverse = [&traverse, &maxLevel](Tree<T>* node, vector<int> &res, int level) {
-				if (node) {
+			traverse = [&traverse, &maxLevel](Tree<T> *node, vector<int> &res, int level)
+			{
+				if (node)
+				{
 					if (maxLevel < level)
 					{
 						maxLevel++;
@@ -569,13 +622,13 @@ class Tree
 
 		/**
 		 * @brief Print left view of tree
-		 * 
+		 *
 		 */
 		void leftView()
 		{
-			function<void(Tree<T>*, int, vector<int>&)> traverse;
+			function<void(Tree<T> *, int, vector<int> &)> traverse;
 			int maxLevel = 0;
-			traverse = [&traverse, &maxLevel](Tree<T>* node, int level, vector<int> &res)
+			traverse = [&traverse, &maxLevel](Tree<T> *node, int level, vector<int> &res)
 			{
 				if (node)
 				{
@@ -603,12 +656,13 @@ class Tree
 
 		/**
 		 * @brief Get max depth of Tree
-		 * 
-		 * @param root 
-		 * @param isRoot 
-		 * @return int 
+		 *
+		 * @param root
+		 * @param isRoot
+		 * @return int the max depth of Tree
 		 */
-		int maxDepth(Tree<T>* root = nullptr, bool isRoot = true) {
+		int maxDepth(Tree<T> *root = nullptr, bool isRoot = true)
+		{
 			if (isRoot)
 			{
 				root = this;
@@ -616,8 +670,8 @@ class Tree
 
 			if (root)
 			{
-				Tree<T>* left = root->getLeft();
-				Tree<T>* right = root->getRight();
+				Tree<T> *left = root->getLeft();
+				Tree<T> *right = root->getRight();
 
 				if (!left && !right)
 				{
@@ -635,11 +689,12 @@ class Tree
 };
 
 template <class T>
-struct TreeNode {
-	Tree<T>* tree;
+struct TreeNode
+{
+	Tree<T> *tree;
 	int level;
 
-	TreeNode(Tree<T>* t, int l) : tree(t), level(l) {}
+	TreeNode(Tree<T> *t, int l) : tree(t), level(l) {}
 };
 
 int main(int argc, const char **argv)
@@ -669,7 +724,7 @@ int main(int argc, const char **argv)
 	// Print left view of Tree
 	tree.leftView();
 
-	vector< vector<int> > res = tree.groupLevelOrder();
+	vector<vector<int>> res = tree.groupLevelOrder();
 
 	cout << "\nGroup level order: " << endl;
 	for (auto v : res)
@@ -683,6 +738,8 @@ int main(int argc, const char **argv)
 	}
 
 	cout << "\nMax Depth of Tree: " << tree.maxDepth() << endl;
+
+	cout << "\nIs Same Tree?: " << ((tree.isSame(&tree) == 1) ? "Same" : "Not Same") << endl;
 
 	return 0;
 }
