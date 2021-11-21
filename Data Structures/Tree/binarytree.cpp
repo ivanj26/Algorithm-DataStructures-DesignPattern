@@ -24,6 +24,9 @@ int getMax(vector<int> nums)
 }
 
 template <class T>
+struct TreeNode;
+
+template <class T>
 class Tree
 {
 	private:
@@ -315,7 +318,10 @@ class Tree
 			return vec;
 		}
 
-		//Print by using BFS Algorithm style
+		/**
+		 * @brief Print level order using BFS style.
+		 * @return void
+		 */
 		void levelOrder()
 		{
 			queue<Tree<T> *> q;
@@ -338,6 +344,79 @@ class Tree
 					q.push(t->right);
 				}
 			}
+		}
+
+		/**
+		 * @brief Grouping tree node with same level in same array bucket.
+		 * 
+		 * @return vector< vector<T> > 
+		 */
+		vector< vector<T> > groupLevelOrder()
+		{
+			queue<TreeNode<T>> q;
+			vector< vector<T> > res;
+
+			if (this == nullptr) {
+				return res;
+			}
+
+			q.push(TreeNode<T>(this, 0));
+
+			while (!q.empty())
+			{
+				TreeNode<T> t = q.front();
+				Tree<T>* tree = t.tree;
+				int level = t.level;
+
+				q.pop();
+
+				if (tree) {
+					vector<T> vec;
+
+					if (level == 0)
+					{
+						vec.push_back(tree->getValue());
+					}
+					else
+					{
+						if (level + 1 <= res.size())
+						{
+							vec = res.at(level);
+							vec.push_back(tree->getValue());
+						}
+						else
+						{
+							vec.push_back(tree->getValue());
+						}
+					}
+
+					Tree<T>* left = tree->getLeft();
+					Tree<T>* right = tree->getRight();
+					if (left)
+					{
+						q.push(TreeNode<T>(left, level + 1));
+					}
+
+					if (right)
+					{
+						q.push(TreeNode<T>(right, level + 1));
+					}
+
+					if (vec.size() > 0)
+					{
+						if (level + 1 <= res.size())
+						{
+							res[level] = vec;
+						}
+						else
+						{
+							res.push_back(vec);
+						}
+					}
+				}
+			}
+
+			return res;
 		}
 
 		int height()
@@ -523,6 +602,14 @@ class Tree
 		}
 };
 
+template <class T>
+struct TreeNode {
+	Tree<T>* tree;
+	int level;
+
+	TreeNode(Tree<T>* t, int l) : tree(t), level(l) {}
+};
+
 int main(int argc, const char **argv)
 {
 	Tree<int> tree(3);
@@ -549,6 +636,19 @@ int main(int argc, const char **argv)
 
 	// Print left view of Tree
 	tree.leftView();
+
+	vector< vector<int> > res = tree.groupLevelOrder();
+
+	cout << "\nGroup level order: " << endl;
+	for (auto v : res)
+	{
+		for (int val : v)
+		{
+			cout << val << " ";
+		}
+
+		cout << endl;
+	}
 
 	return 0;
 }
