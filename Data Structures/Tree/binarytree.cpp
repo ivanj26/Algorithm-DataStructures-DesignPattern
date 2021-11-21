@@ -600,6 +600,38 @@ class Tree
 
 			cout << endl;
 		}
+
+		/**
+		 * @brief Get max depth of Tree
+		 * 
+		 * @param root 
+		 * @param isRoot 
+		 * @return int 
+		 */
+		int maxDepth(Tree<T>* root = nullptr, bool isRoot = true) {
+			if (isRoot)
+			{
+				root = this;
+			}
+
+			if (root)
+			{
+				Tree<T>* left = root->getLeft();
+				Tree<T>* right = root->getRight();
+
+				if (!left && !right)
+				{
+					return 1;
+				}
+
+				int maxLeft = 1 + maxDepth(left, false);
+				int maxRight = 1 + maxDepth(right, false);
+
+				return max(maxLeft, maxRight);
+			}
+
+			return 0;
+		}
 };
 
 template <class T>
@@ -649,6 +681,8 @@ int main(int argc, const char **argv)
 
 		cout << endl;
 	}
+
+	cout << "\nMax Depth of Tree: " << tree.maxDepth() << endl;
 
 	return 0;
 }
