@@ -1,6 +1,7 @@
 #include <queue>
 #include <vector>
 #include <set>
+#include <stack>
 #include <functional>
 #include <climits>
 #include <iostream>
@@ -248,6 +249,39 @@ class Tree {
 		void printPostOrder()
 		{
 			printPostOrderUtil(this);
+			cout << endl;
+		}
+
+		void printPreOrderTraversal()
+		{
+			stack<Tree<T>*> s;
+			set<Tree<T>*> visited;
+			s.push(this);
+
+			while (!s.empty())
+			{
+				Tree<T>* t = s.top();
+				Tree<T>* _right = t->getRight();
+				Tree<T>* _left = t->getLeft();
+
+				if (visited.find(t) != visited.end()) {
+					s.pop();
+					
+					if (_right) {
+						s.push(_right);
+					}
+				} else {
+					if (t) {
+						visited.insert(t);
+						cout << t->getValue() << " ";
+
+						if (_left) s.push(_left);
+					} else {
+						s.pop();
+					}
+				}
+			}
+
 			cout << endl;
 		}
 
@@ -742,6 +776,10 @@ int main(int argc, const char **argv)
 
 	// Print left view of Tree
 	tree.leftView();
+
+	// Print preorder traversal
+	cout << "Print preorder: " << endl;
+	tree.printPreOrderTraversal();
 
 	vector<vector<int>> res = tree.groupLevelOrder();
 
