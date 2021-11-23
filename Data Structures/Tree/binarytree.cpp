@@ -252,6 +252,10 @@ class Tree {
 			cout << endl;
 		}
 
+		/**
+		 * @brief Print pre-order using traversal mechanism (non-recursive).
+		 * 
+		 */
 		void printPreOrderTraversal()
 		{
 			stack<Tree<T>*> s;
@@ -285,6 +289,10 @@ class Tree {
 			cout << endl;
 		}
 
+		/**
+		 * @brief Print post-order using traversal mechanism (non-recursive).
+		 * 
+		 */
 		void printPostOrderTraversal()
 		{
 			set<Tree<T>*> visited;
