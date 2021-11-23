@@ -285,6 +285,40 @@ class Tree {
 			cout << endl;
 		}
 
+		void printPostOrderTraversal()
+		{
+			set<Tree<T>*> visited;
+			stack<Tree<T>*> s;
+
+			s.push(this);
+
+			while (!s.empty())
+			{
+				Tree<T>* t = s.top();
+				Tree<T>* _left = t->getLeft();
+				Tree<T>* _right = t->getRight();
+
+				if (visited.find(t) != visited.end()) {
+					s.pop();
+
+					if (_left) {
+						s.push(_left);
+					}
+				} else {
+					if (t) {
+						visited.insert(t);
+						cout << t->getValue() << " ";
+
+						if (_right) s.push(_right);
+					} else {
+						s.pop();
+					}
+				}
+			}
+
+			cout << endl;
+		}
+
 		vector<T> largestValuesInTreeRows(Tree<T> *t)
 		{
 			vector<T> vec;
@@ -780,6 +814,10 @@ int main(int argc, const char **argv)
 	// Print preorder traversal
 	cout << "Print preorder: " << endl;
 	tree.printPreOrderTraversal();
+
+	// Print postorder traversal
+	cout << "Print postorder: " << endl;
+	tree.printPostOrderTraversal();
 
 	vector<vector<int>> res = tree.groupLevelOrder();
 
