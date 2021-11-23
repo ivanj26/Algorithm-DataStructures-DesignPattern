@@ -504,7 +504,7 @@ class Tree {
 			return heightUtil(this);
 		}
 
-		int minimumHeight(Tree *tree, int depth = 1)
+		int minimumHeight(Tree<T>*tree = nullptr, int depth = 1)
 		{
 			if (depth == 1)
 			{
@@ -513,13 +513,13 @@ class Tree {
 
 			if (tree)
 			{
-				if (!tree->left && !tree->right)
+				if (!tree->getLeft() && !tree->getRight())
 				{
 					minimum = min(minimum, depth);
 				}
 
-				this->minimumHeight(tree->left, depth + 1);
-				this->minimumHeight(tree->right, depth + 1);
+				this->minimumHeight(tree->getLeft(), depth + 1);
+				this->minimumHeight(tree->getRight(), depth + 1);
 
 				return minimum;
 			}
