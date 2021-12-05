@@ -743,6 +743,36 @@ class Tree {
 
 			return 1 + this->count(t->getLeft(), false) + this->count(t->getRight(), false);
 		}
+
+		/**
+		 * @brief Sum of left leaves.
+		 * 
+		 * @return long
+		 */
+		long sumOfLeftLeaves() {
+			std::function<void(Tree<T> *, bool)> tracing;
+			long c = 0;
+
+			tracing = [&tracing, &c](Tree<T> *n, bool isLeft = false) {
+				if (!n) {
+					return;
+				}
+
+				Tree<T>* left = n->getLeft();
+				Tree<T>* right = n->getRight();
+
+				if (!left && !right) {
+					if (isLeft) c += n->getValue();
+				}
+
+				tracing(left, true);
+				tracing(right, false);
+			};
+
+			tracing(this, false);
+
+			return c;
+		}
 };
 
 template <class T>
@@ -760,6 +790,7 @@ int main(int argc, const char **argv)
 	tree.insert(1);
 	tree.insert(2);
 	tree.insert(4);
+	tree.insert(-1);
 
 	// (() (1) (() (2) ())) (3) (() (4) ())
 
@@ -801,6 +832,8 @@ int main(int argc, const char **argv)
 	cout << "\nMax Depth of Tree: " << tree.maxDepth() << endl;
 
 	cout << "\nIs Same Tree?: " << ((tree.isSame(&tree) == 1) ? "Same" : "Not Same") << endl;
+
+	cout << "\nSum of Left Leaves: " << (tree.sumOfLeftLeaves()) << endl;
 
 	return 0;
 }
