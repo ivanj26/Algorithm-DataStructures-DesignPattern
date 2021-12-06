@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 /**
 * Variables
@@ -52,6 +55,9 @@ func constant() {
 
 	fmt.Printf("Const c = %d\n", c)
 	fmt.Printf("Const d = %s\n", d)
+
+	const e = 5
+	fmt.Printf("Const e = %d\n", e)
 }
 
 /**
@@ -81,6 +87,33 @@ func strings() {
 	fmt.Println(str2)
 }
 
+/**
+*	3 Types of Golang
+*
+* - bool
+* - Numeric type
+*		- int8, int16, int32, int64, int
+*		- uint8, uint16, uint32, uint64, uint
+*		- float32, float64
+*		- complex64, complex128
+*		- byte
+*		- rune (mutable)
+* - string (immutable)
+**/
+func types() {
+	fmt.Printf("Max of int8 = %d\n", math.MaxInt8)
+	fmt.Printf("Max of int16 = %d\n", math.MaxInt16)
+	fmt.Printf("Max of int32 = %d\n", math.MaxInt32)
+	fmt.Printf("Max of int64 = %d\n", math.MaxInt64)
+	fmt.Printf("Max of uint8 = %d\n", math.MaxUint8)
+	fmt.Printf("Max of uint16 = %d\n", math.MaxUint16)
+	fmt.Printf("Max of uint32 = %d\n", math.MaxUint32)
+	fmt.Printf("Max of float32 = %b\n", math.MaxFloat32)
+	fmt.Printf("Max of float64 = %b\n", math.MaxFloat64)
+}
+
 func main() {
 	strings()
+	constant()
+	types()
 }
