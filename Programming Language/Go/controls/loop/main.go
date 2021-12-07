@@ -57,4 +57,9 @@ func main() {
 
 		fmt.Println()
 	}
+
+	// infinite loop
+	// for {
+	// fmt.Println("Hello World!")
+	// }
 }
