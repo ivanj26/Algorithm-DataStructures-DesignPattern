@@ -1,4 +1,4 @@
 *.out
 *.jar
+*.class
 \META-INF
-./**/*.class
