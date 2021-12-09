@@ -1,11 +1,14 @@
+#include <iostream>
+using namespace std;
+
 class Singleton
 {
 	private:
 		static Singleton *instance;
-		int someValue;
-		Singleton(int val = 0)
+		int value;
+		Singleton(int value = 0)
 		{
-			someValue = val;
+			this->value = value;
 		}
 
 	public:
@@ -13,20 +16,21 @@ class Singleton
 		{
 			if (instance == nullptr)
 			{
+				cout << "Instance created!" << endl;
 				instance = new Singleton();
 			}
 
 			return instance;
 		}
 
-		void setValue(int val)
+		int getValue()
 		{
-			someValue = val;
+			return this->value;
 		}
 
-		int getValue() const
+		void setValue(int value)
 		{
-			return someValue;
+			this->value = value;
 		}
 };
 
