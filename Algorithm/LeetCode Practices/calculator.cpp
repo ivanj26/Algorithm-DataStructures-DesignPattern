@@ -4,84 +4,104 @@
  * @brief calculate / evaluate mathmetical expression in string.
  * @version 0.1
  * @date 2021-11-14
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
-#include <iostream>
 #include <string>
+#include <iostream>
+
 using namespace std;
 
-class Solution {
-    private:
-        int calc(int a, int b, char oper = '+')
-        {
-            return oper == '+'
-                ? a + b
-                : a - b;
-        }
+enum Character
+{
+	PLUS = '+',
+	MINUS = '-',
+	OPEN_BRACKET = '(',
+	CLOSE_BRACKET = ')'
+};
 
-        int calculateHelper(string s, int &i)
-        {
-            int ans = 0;
-            char oper = '+';
+class Calculator
+{
+	private:
+		int calc(int a, int b, char oper = Character::PLUS)
+		{
+			return oper == Character::PLUS
+					? a + b
+					: a - b;
+		}
 
-            while (i < s.length())
-            {
-                char c = s[i];
+		int calculateHelper(string s, int &i)
+		{
+			int ans = 0;
+			char oper = Character::PLUS;
 
-                switch (c) {
-                case '-':
-                case '+': {
-                    oper = c;
-                    break;
-                }
-                case '(': {
-                    int temp = calculateHelper(s, ++i);
-                    ans = calc(ans, temp, oper);
-                    break;
-                }
-                case ')': {
-                    return ans;
-                }
-                default:
-                    if (isdigit(c))
-                    {
-                        int digit = 0;
+			while (i < s.length())
+			{
+				char c = s.at(i);
 
-                        while (isdigit(c))
-                        {
-                            digit *= 10;
-                            digit += (c - '0');
-                            c = s[++i];
-                        }
+				switch (c)
+				{
+				case Character::MINUS:
+				case Character::PLUS:
+				{
+					oper = c;
+					break;
+				}
+				case Character::OPEN_BRACKET:
+				{
+					int temp = this->calculateHelper(s, ++i);
+					ans = this->calc(ans, temp, oper);
+					break;
+				}
+				case Character::CLOSE_BRACKET:
+				{
+					// base recursive
+					return ans;
+				}
+				default:
+				{
+					if (isdigit(c))
+					{
+						int base = 10;
+						int digit = 0;
 
-                        i--;
-                        ans = calc(ans, digit, oper);
-                    }
-                    break;
-                }
+						while (isdigit(c))
+						{
+							digit *= base;
+							digit += (c - '0');
 
-                i++;
-            }
+							c = s.at(++i);
+						}
 
-            return ans;
-        }
+						i--;
+						ans = this->calc(ans, digit, oper);
+					}
+					break;
+				}
+				}
 
-    public:
-        int calculate(string s)
-        {
-            int i = 0;
-            return calculateHelper(s, i);
-        }
+				i++;
+			}
+
+			return ans;
+		}
+
+	public:
+		int calculate(string s)
+		{
+			int i = 0;
+			return this->calculateHelper(s, i);
+		}
 };
 
 int main(int argc, char const *argv[])
 {
-    Solution s;
+	Calculator obj;
+	int result = obj.calculate("(245 - (3 + 2 - 1))");
 
-    cout << "-(3 + ( 5 - 7)):\t";
-    cout << s.calculate("-(3 + ( 5 - 7))") << endl;
-    return 0;
+	cout << result << endl;
+
+	return 0;
 }
