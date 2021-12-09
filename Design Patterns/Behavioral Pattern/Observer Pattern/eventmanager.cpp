@@ -6,14 +6,14 @@
 class EventManager
 {
 	private:
-		std::unordered_map<EventListener::Type, EventListener> listeners;
+		std::unordered_map<EventListener::Type, EventListener, std::hash<int>> listeners;
 
 	public:
 		void addListener(EventListener listener)
 		{
 			listeners.insert({
 				listener.getType(),
-				listener,
+				listener
 			});
 		}
 
