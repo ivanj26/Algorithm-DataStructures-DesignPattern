@@ -2,9 +2,16 @@ package com.example;
 
 public class Main {
     public static void main(String[] args) {
-        MealBuilder builder = new MealBuilder();
+        User user = new User.UserBuilder()
+                .setFirstName("Ivan")
+                .setLastName("Jonathan")
+                .setAddress("ABC no 60")
+                .setAge(20)
+                .setPhoneNumber("+628943824932")
+                .build();
 
-        Meal meal = builder.buildVegMeal();
-        System.out.printf("Total price of Vegetable Meal: %.2f\n", meal.getTotalPrice());
+        System.out.println(user.getFirstName());
+        System.out.println(user.getLastName());
+        System.out.println(user.getAddress());
     }
 }
