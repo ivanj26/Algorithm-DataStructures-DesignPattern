@@ -594,6 +594,83 @@ class Tree {
 		}
 
 		/**
+		 * @brief Given an the root of a binary tree containing digits from 0 to 9 only.
+		 * Each root-to-leaf path in the tree represents a number.
+		 *      For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+		 * 
+		 * @return the total sum of all root-to-leaf numbers.
+		 */
+		unsigned int sumNumbers()
+		{
+			std::function<bool(Tree<T>*)> isTerminal;
+			std::function<unsigned int(Tree<T>*, stack<int>, set<Tree<T>*>)> sumNumUtil;
+
+			// - lambda function to check if node is terminal or not
+			isTerminal = [](Tree<T>* node) {
+				if (node) {
+					return !node->getLeft() && !node->getRight();
+				}
+
+				return false;
+			};
+
+			// - lambda function to counting from root to terminal (leaf node)
+			sumNumUtil = [&sumNumUtil, &isTerminal] (Tree<T>* node, stack<int> s, set<Tree<T>*> visited) {
+				if (node) {
+					bool isVisited = visited.find(node) != visited.end();
+					if (!isVisited) {
+						s.push(node->getValue());
+						visited.insert(node);
+					}
+
+					// lets count!
+					if (isTerminal(node)) {
+						unsigned int count = 0;
+						unsigned int base = 1;
+
+						//    1
+						// 2     3
+						// stack should be:
+						// top: 2
+						//      1
+
+						// top: 3
+						//      1
+						while (!s.empty()) {
+							int val = s.top();
+
+							count += (val * base);
+							base *= 10;
+
+							s.pop();
+						}
+
+						return count;
+					}
+
+					return sumNumUtil(node->getLeft(), s, visited) + sumNumUtil(node->getRight(), s, visited);
+				}
+
+				return 0U; // to indicate 
+			};
+
+			if (isTerminal(this)) {
+				return this->getValue();
+			}
+
+			stack<int> s;
+			set<Tree<T>*> visited;
+
+			visited.insert(this);
+			s.push(this->getValue());
+
+			Tree<T> *left = this->getLeft();
+			Tree<T> *right = this->getRight();
+
+			return sumNumUtil(left, s, visited) + sumNumUtil(right, s, visited);
+		}
+
+		/**
 		 * @brief Given another tree, return true if the another tree is same with this tree
 		 * 
 		 * @param anotherTree
@@ -790,7 +867,6 @@ int main(int argc, const char **argv)
 	tree.insert(1);
 	tree.insert(2);
 	tree.insert(4);
-	tree.insert(-1);
 
 	// (() (1) (() (2) ())) (3) (() (4) ())
 
@@ -834,6 +910,9 @@ int main(int argc, const char **argv)
 	cout << "\nIs Same Tree?: " << ((tree.isSame(&tree) == 1) ? "Same" : "Not Same") << endl;
 
 	cout << "\nSum of Left Leaves: " << (tree.sumOfLeftLeaves()) << endl;
+
+	cout << endl;
+	cout << "\nSum from root to leaves: " << (tree.sumNumbers()) << endl;
 
 	return 0;
 }
