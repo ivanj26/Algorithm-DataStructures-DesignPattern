@@ -64,7 +64,10 @@ class MinStack
 		 */
 		void pop()
 		{
+			Node* deleted = currNode;
 			currNode = currNode->prev;
+
+			delete deleted;
 		}
 
 		/**
