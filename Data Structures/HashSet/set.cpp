@@ -91,9 +91,9 @@ class Set
 
 					if (curr == list->front())
 					{
-						delete curr;
-
 						this->bucket[mod] = new SinglyLinkedList<T>(curr->getNext());
+
+						delete curr;
 					}
 					else
 					{
