@@ -513,21 +513,18 @@ class SinglyLinkedList
 			{
 				fast = fast->getNext();
 
-				if (start > n)
+				if (start >= n)
 				{
 					prev = slow;
 					slow = slow->getNext();
 				}
+
+				start++;
 			}
 
 			if (prev)
 			{
 				prev->setNext(slow->getNext());
-			}
-
-			if (head != slow)
-			{
-				delete slow;
 			}
 
 			SinglyNode<T> *head2 = head == slow ? slow->getNext() : head;
