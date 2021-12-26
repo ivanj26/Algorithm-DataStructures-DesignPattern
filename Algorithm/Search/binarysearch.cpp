@@ -9,7 +9,7 @@ using namespace std;
  *                  3. Jika x == elemen tengah, return index
  * Complexity: O(log n)
  **/
-int binarySearch(int *arr, int start, int end, int x)
+int binarySearch(int *arr, int start, int end, int x) throw()
 {
 	if (end >= start)
 	{
@@ -24,7 +24,7 @@ int binarySearch(int *arr, int start, int end, int x)
 			return binarySearch(arr, start, idxMid - 1, x);
 	}
 
-	return -1;
+	std::__throw_runtime_error("Cannot found element in array!");
 }
 
 int main(int argc, char const *argv[])
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 	}
 
 	cout << sizeof(arr) << endl;
-	cout << (binarySearch(arr, 0, size - 1, 100) >= 0 ? "Found" : "Not Found");
+	cout << (binarySearch(arr, 0, size - 1, -1) >= 0 ? "Found" : "Not Found");
 
 	delete[] arr;
 	return 0;
