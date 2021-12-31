@@ -72,6 +72,17 @@ string findProfession(int level, int pos) {
 	return search(root, level, pos);
 }
 
+// optimum / efficient solution
+string solution(int level, int pos) {
+	if (level == 1)
+		return "Engineer";
+
+	if (solution(level - 1, (pos + 1) / 2) == "Doctor")
+		return (pos % 2) ? "Doctor" : "Engineer";
+
+	return (pos % 2) ? "Engineer" : "Doctor";
+}
+
 int main(int argc, char const *argv[])
 {
 	/* code */
