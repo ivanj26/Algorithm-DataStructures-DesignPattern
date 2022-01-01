@@ -1,16 +1,16 @@
+#include <string>
 #include <iostream>
-#include <string.h>
 
 using namespace std;
 
-//m -> length of pat string, pat -> pattern text
-void computeLPSArray(int *lps, int m, char *pat)
+void computeLPSArray(int *lps, string pat)
 {
-	lps[0] = 0;
+	int m = pat.length();
+	int i = 1;
 	int len = 0;
 
-	int i = 1; //Mulai dari 1 sampai M-1
-			   //Inget, longest prefix itu dari [0..m-1] cocokin dengan suffix [1..m]
+	lps[0] = 0;
+
 	while (i < m)
 	{
 		if (pat[i] == pat[len])
@@ -27,27 +27,31 @@ void computeLPSArray(int *lps, int m, char *pat)
 				i++;
 			}
 			else
-			{ //len != 0
+			{
 				len = lps[len - 1];
 			}
 		}
 	}
 }
 
-int KMPSearch(char *text, char *pat)
+void kmpSearch(string text, string pat)
 {
-	int n = strlen(text);
-	int m = strlen(pat);
+	int n = text.length();
+	int m = pat.length();
+
 	int *lps = new int[m];
+	computeLPSArray(lps, pat);
 
-	computeLPSArray(lps, m, pat);
+	int i = 0; // index for text
+	int j = 0; // index for pat
 
-	int i = 0; //index untuk text
-	int j = 0; //index untuk pat
+	// AACAABAABAABA
+	// AABA
+	// lps = [0, 1, 0, 1]
 
 	while (i < n)
 	{
-		if (text[i] == pat[j])
+		if (pat[j] == text[i])
 		{
 			i++;
 			j++;
@@ -55,32 +59,34 @@ int KMPSearch(char *text, char *pat)
 
 		if (j == m)
 		{
-			printf("Found at index %d", i - j);
+			cout << "Found pattern at index " << (i - j) << endl;
+			j = lps[m - 1];
 		}
-
-		if (i < n && pat[j] != text[i])
+		else if (i < n)
 		{
-			if (j != 0)
-			{ //udah ditengah jalan lalu mismatch
-				j = lps[j - 1];
-			}
-			else
+			if (pat[j] != text[i])
 			{
-				i++;
+				if (j != 0)
+				{
+					j = lps[j - 1];
+				}
+				else
+				{
+					i++;
+				}
 			}
 		}
 	}
 
 	delete[] lps;
-	return -1;
 }
 
 int main(int argc, char const *argv[])
 {
-	char text[] = "ABABDABACDABABCABAB";
-	char pat[] = "ABABCABA";
+	string pat = "AABA";
+	string text = "AACAABAABAABA";
 
-	KMPSearch(text, pat);
+	kmpSearch(text, pat);
 
 	return 0;
 }
