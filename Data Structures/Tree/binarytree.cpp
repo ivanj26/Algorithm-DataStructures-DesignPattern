@@ -4,6 +4,7 @@
 #include <stack>
 #include <functional>
 #include <climits>
+#include <assert.h>
 #include <iostream>
 
 using namespace std;
@@ -849,6 +850,34 @@ class Tree {
 			tracing(this, false);
 
 			return c;
+		}
+
+		/**
+		 * @brief Get kth smallest element in Tree
+		 * 
+		 * @param k kth smallest
+		 * @return T element
+		 */
+		T kthSmallest(int k) {
+			Tree<T>* t = this;
+			vector<T> v;
+
+			std::function<T(Tree<T>*, vector<T>)> traverse;
+			traverse = [&traverse](Tree<T>* tree, vector<T> &vec) {
+				if (tree) {
+					vec.push_back(tree->getValue());
+
+					traverse(tree->getLeft(), vec);
+					traverse(tree->getRight(), vec);
+				}
+			}
+
+			traverse(t, v);
+			assert(k <= v.size() && k >= 1);
+
+			std::sort(v.begin(), v.end());
+
+			return v.at(k - 1);
 		}
 };
 
