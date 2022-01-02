@@ -7,28 +7,28 @@ void computeLPSArray(int *lps, string pat)
 {
 	int m = pat.length();
 	int i = 1;
-	int len = 0;
+	int j = 0;
 
 	lps[0] = 0;
 
 	while (i < m)
 	{
-		if (pat[i] == pat[len])
+		if (pat[i] == pat[j])
 		{
-			len++;
-			lps[i] = len;
+			j++;
+			lps[i] = j;
 			i++;
 		}
 		else
 		{
-			if (len == 0)
+			if (j == 0)
 			{
 				lps[i] = 0;
 				i++;
 			}
 			else
 			{
-				len = lps[len - 1];
+				j = lps[j - 1];
 			}
 		}
 	}
