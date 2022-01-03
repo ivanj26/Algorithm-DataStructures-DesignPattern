@@ -55,7 +55,7 @@ class MergeSort {
 			merge(arr, left, middle, right);
 		}
 	public:
-		static void mergeSort(vector<int> &arr)
+		static void compute(vector<int> &arr)
 		{
 			split(arr, 0, arr.size());
 		}
@@ -64,7 +64,7 @@ class MergeSort {
 int main(int argc, char const *argv[])
 {
 	vector<int> vec = {3, 4, 7, 2, 1, 10, 9};
-	MergeSort::mergeSort(vec);
+	MergeSort::compute(vec);
 
 	print(vec);
 	return 0;
