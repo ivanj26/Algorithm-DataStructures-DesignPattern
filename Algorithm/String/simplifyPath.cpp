@@ -1,38 +1,33 @@
 #include <deque>
 #include <string>
 #include <iostream>
+#include <set>
 
-enum Command {
-	BACK_TO_PARENT = '..',
-	CURR = '.'
-};
 
 void insertToCommands(std::string subStr, std::deque<std::string> &commands)
 {
-	switch (subStr) {
-		case Command::CURR:
-			// skip
-		break;
-		case Command::BACK_TO_PARENT:
-			if (!commands.empty()) {
-				commands.pop_back();
-			}
-		break;
-		default:
-			if (subStr.length() > 0) commands.push_back(subStr);
+	if (subStr.length() == 1 && subStr[0] == '.') {
+		// skip
+	}
+	else if (subStr.length() > 1 && subStr == "..") {
+		if (!commands.empty()) {
+			commands.pop_back();
+		}        
+	} else {
+		if (subStr.length() > 0) commands.push_back(subStr);
 	}
 }
 
 std::string createSimplePath(std::deque<std::string> &commands) {
 	std::string result = "/";
-    while (!commands.empty()) {
-        std::string c = commands.front();
-        commands.pop_front();
-        
-        result += result.size() == 1 ? c : ("/" + c);
-    }
-    
-    return result;
+	while (!commands.empty()) {
+		std::string c = commands.front();
+		commands.pop_front();
+		
+		result += result.size() == 1 ? c : ("/" + c);
+	}
+	
+	return result;
 }
 
 std::string simplifyPath(std::string path)
@@ -66,12 +61,12 @@ std::string simplifyPath(std::string path)
 	std::string lastCommand = path.substr(start, path.size() - start);
 	insertToCommands(lastCommand, commands);
 
-    return createSimplePath(commands);
+	return createSimplePath(commands);
 }
 
 int main(int argc, char const *argv[])
 {
-	std::string path = "";
+	std::string path = "/home/ubuntu/ivan//abc";
 	std::string simpler = simplifyPath(path);
 
 	std::cout << simpler << std::endl;
