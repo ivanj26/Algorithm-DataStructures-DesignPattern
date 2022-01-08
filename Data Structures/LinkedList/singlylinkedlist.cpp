@@ -1096,46 +1096,6 @@ class SinglyLinkedList
 			SinglyLinkedList<T> ll3 = SinglyLinkedList(l3);
 			return ll3;
 		}
-
-		/**
-		 * @brief Add huge number, one node represent integer from 0 to 9999
-		 * 
-		 * e.g. L1 = [1, 2000, 4000]
-		 *      L2 = [1, 2001, 0]
-		 * 
-		 * result = L1 + L2 = 120004000 + 120010 = 120124010
-		 * 
-		 */
-		SinglyLinkedList<T> addHugeNumber(SinglyLinkedList<T> &l2)
-		{
-			SinglyNode<T>* res = nullptr, *itr;
-			int rest = 0;
-			
-			SinglyNode<T> *a = this->reverse(this->front());
-			SinglyNode<T> *b = this->reveres(l2.front());
-
-			while (a || b || rest != 0) {
-				if (b) {
-					rest += b->getData();
-					b = b->getNext();
-				}
-
-				if (a) {
-					rest += a->getData();
-					a = a ->getNext();
-				}
-
-				res = new SinglyNode<T>(rest % 10000);
-				if (itr) {
-					res->next = itr;
-				}
-
-				itr = res;
-				rest /= 10000;
-			}
-
-			return SinglyLinkedList<T>(res);
-		}
 };
 
 int main(int argc, char const *argv[])
