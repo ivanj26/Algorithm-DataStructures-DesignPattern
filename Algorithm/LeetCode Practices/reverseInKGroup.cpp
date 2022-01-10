@@ -40,14 +40,9 @@ ListNode<int>* reverseInKGroup(ListNode<int> *l, int k)
 		curr = next;
 	}
 
-	ListNode<int> *head = prev;
-	while (prev->next) {
-		prev = prev->next;
-	}
-	
-	prev->next = reverseInKGroup(curr, k);
+	l->next = reverseInKGroup(curr, k);
 
-	return head;
+	return prev;
 }
 
 int main(int argc, char const *argv[])
