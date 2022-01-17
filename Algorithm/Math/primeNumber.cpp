@@ -1,5 +1,6 @@
 #include <math.h>
 #include <iostream>
+using namespace std;
 
 bool isPrime(unsigned int num)
 {
@@ -7,7 +8,9 @@ bool isPrime(unsigned int num)
 		return false;
 	}
 
-	for (int i = 2; i <= sqrt(num); i++) {
+	int squareRoot = sqrt(num);
+
+	for (int i = 2; i <= squareRoot; i++) {
 		if (num % i == 0) {
 			return false;
 		}
