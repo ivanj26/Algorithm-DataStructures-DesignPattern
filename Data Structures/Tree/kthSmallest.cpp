@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <vector>
 #include <set>
+#include <functional>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ struct TreeNode {
 	TreeNode* right;
 	TreeNode(): val(0), left(nullptr), right(nullptr) {}
 	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),  right(right) {};
+	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),  right(right) {};
 };
 
 class Solution {
@@ -36,5 +37,40 @@ class Solution {
 			sort(v.begin(), v.end());
 
 			return v.at(k - 1);
+		}
+
+		/**
+		 * @brief kth smallest element with memory optimization
+		 * 
+		 */
+		int kthSmallest2(TreeNode* root, int k) {
+			std::function<void(TreeNode*, int)> func;
+			int result = INT_MIN;
+			int count = 0;
+
+			// function to traverse the tree inorder
+			func = [&func, &result, &count](TreeNode* node, int _k) {
+				if (!node) {
+					return;
+				}
+
+				func(node->left, _k);
+				count++;
+
+				if (count == _k) {
+					result = node->val;
+					return;
+				}
+
+				if (count > _k) {
+					return;
+				}
+
+				func(node->right, _k);
+			};
+
+			func(root, k);
+
+			return result;
 		}
 };
