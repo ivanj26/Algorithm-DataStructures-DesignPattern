@@ -882,6 +882,10 @@ class SinglyLinkedList
 			return middle->getData();
 		}
 
+		/**
+		 * @brief Delete middle of linkedlist in one pass
+		 * 
+		 */
 		void deleteMiddle()
 		{
 			SinglyNode<T> *curr = this->front();
