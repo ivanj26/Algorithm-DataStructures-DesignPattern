@@ -882,6 +882,39 @@ class SinglyLinkedList
 			return middle->getData();
 		}
 
+		void deleteMiddle()
+		{
+			SinglyNode<T> *curr = this->front();
+			SinglyNode<T> *middle = this->front();
+			SinglyNode<T> *prev = nullptr;
+
+			int length = 0;
+
+			while (curr->getNext()) {
+				length++;
+
+				if (length % 2 == 0) {
+					prev = middle;
+					middle = middle->getNext();
+				}
+
+				curr = curr->getNext();
+			}
+
+			if (length % 2 == 1) {
+				prev = middle;
+				middle = middle->getNext();
+			}
+
+			if (middle) {
+				if (prev) {
+					prev->setNext(middle->getNext());
+				}
+
+				delete middle;
+			}
+		}
+
 		/**
 			 * @brief Odd-even list.
 			 * @example Input: head = [1,2,3,4,5]
