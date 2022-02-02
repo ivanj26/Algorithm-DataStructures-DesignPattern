@@ -1,6 +1,7 @@
 #include <queue>
 #include <vector>
 #include <set>
+#include <map>
 #include <stack>
 #include <functional>
 #include <climits>
@@ -768,6 +769,45 @@ class Tree {
 			}
 
 			cout << endl;
+		}
+
+		/**
+		 * @brief Print binary tree from top view
+		 * 
+		 */
+		void topView()
+		{
+			map<int, pair<int, int>> map;
+			Tree<T>* root = this;
+
+			std::function<void(Tree<T>*, int, int, auto&)> printTop;
+			// define printTop function
+			printTop = [&printTop] (Tree<T>* tree, int xLevel, int yLevel, auto& map) {
+				if (!tree) {
+					return;
+				}
+
+				// if horizontal level is seen for the first time
+				// -> update it
+				// if current level is less than maximum level seen so far
+				// -> update it
+				if (map.find(xLevel) == map.end() || yLevel < map[xLevel].second) {
+					map[xLevel] = make_pair(tree->getValue(), yLevel);
+				}
+
+				// traversing using preorder style
+				//
+
+				printTop(tree->getLeft(), xLevel - 1, yLevel + 1, map);
+				printTop(tree->getRight(), xLevel + 1, yLevel + 1, map);
+			};
+
+			printTop(root, 0, 0, map);
+
+			for (auto it : map) {
+				// print tree value
+				cout << it.second.first << endl;
+			}
 		}
 
 		/**
