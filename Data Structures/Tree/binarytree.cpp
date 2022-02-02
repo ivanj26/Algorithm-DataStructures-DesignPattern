@@ -398,11 +398,6 @@ class Tree {
 			queue<TreeNode<T>> q;
 			vector<vector<T>> res;
 
-			if (this == nullptr)
-			{
-				return res;
-			}
-
 			q.push(TreeNode<T>(this, 0));
 
 			while (!q.empty())
@@ -780,9 +775,9 @@ class Tree {
 			map<int, pair<int, int>> map;
 			Tree<T>* root = this;
 
-			std::function<void(Tree<T>*, int, int, auto&)> printTop;
+			std::function<void(Tree<T>*, int, int, std::map<int, pair<int, int>>&)> printTop;
 			// define printTop function
-			printTop = [&printTop] (Tree<T>* tree, int xLevel, int yLevel, auto& map) {
+			printTop = [&printTop] (Tree<T>* tree, int xLevel, int yLevel, std::map<int, pair<int, int>> &map) {
 				if (!tree) {
 					return;
 				}
@@ -910,7 +905,7 @@ class Tree {
 					traverse(tree->getLeft(), vec);
 					traverse(tree->getRight(), vec);
 				}
-			}
+			};
 
 			traverse(t, v);
 			assert(k <= v.size() && k >= 1);
