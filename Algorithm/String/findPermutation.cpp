@@ -107,6 +107,96 @@ class NumberPermutationIterator {
 		int size() { return res.size(); }
 };
 
+class Permutator {
+	protected:
+		bool *visited;
+		vector< vector<int> > res;
+
+		virtual void backtrack(vector<int>& nums, vector<int> temp) = 0;
+	public:
+		virtual ~Permutator()
+		{
+			delete[] visited;
+		}
+		vector<vector<int>> permutate(vector<int>& nums)
+		{
+			// initialize visited array elements with false value
+			int size = nums.size();
+			visited = new bool[size];
+			fill_n(visited, size, false);
+
+			this->backtrack(nums, {});
+
+			return this->res;
+		}
+};
+
+class Permutation: public Permutator {
+	private:
+		void backtrack(vector<int> &nums, vector<int> temp)
+		{
+			// if the temp size is equal to original array size
+			// push it to result
+			if (temp.size() == nums.size())
+			{
+				res.push_back(temp);
+				return;
+			}
+
+			for (int i = 0; i < nums.size(); i++)
+			{
+				// make sure only un-visited element pushed into temp variable
+				if (visited[i])
+				{
+					continue; // need to by pass if already visited
+				}
+
+				temp.push_back(nums[i]);
+				visited[i] = true;
+
+				this->backtrack(nums, temp);
+
+				temp.pop_back();
+				visited[i] = false;
+			}
+		}
+	
+	public:
+		Permutation() : Permutator() {}
+};
+
+class PermutationWithRepitition: public Permutator {
+	private:
+		void backtrack(vector<int>& nums, vector<int> temp)
+		{
+			if (temp.size() == nums.size())
+			{
+				res.push_back(temp);
+				return;
+			}
+
+			for (int i = 0; i < nums.size(); i++)
+			{
+				temp.push_back(nums[i]);
+				this->backtrack(nums, temp);
+				temp.pop_back();
+			}
+		}
+	public:
+		PermutationWithRepitition() : Permutator() {}
+};
+
+class PermutatorBuilder {
+	public:
+		static Permutator* build(string type = "no-repeat") {
+			if (type == "repeat") {
+				return new PermutationWithRepitition();
+			} else {
+				return new Permutation();
+			}
+		}
+};
+
 int main(int argc, char const *argv[])
 {
 	// PermutationIterator it("ABCD", 2);
@@ -118,14 +208,14 @@ int main(int argc, char const *argv[])
 	// 	cout << it.next() << endl;
 	// }
 
-    vector<int> nums;
+	vector<int> nums;
 	nums.push_back(1);
 	nums.push_back(2);
 	nums.push_back(3);
-	nums.push_back(4);
-	nums.push_back(5);
+	// nums.push_back(4);
+	// nums.push_back(5);
 
-    NumberPermutationIterator it(nums, 3);
+	NumberPermutationIterator it(nums, 3);
 
 	while (it.hasNext())
 	{
@@ -147,7 +237,18 @@ int main(int argc, char const *argv[])
 	 * 
 	 */
 
-	cout << "\n"
-		 << it.size() << endl;
+	Permutator *p = PermutatorBuilder::build();
+	vector<vector<int>> res = p->permutate(nums);
+
+	for (vector<int> v : res) {
+		for (int num : v) {
+			cout << num << " ";
+		}
+
+		cout << endl;
+	}
+
+	delete p;
+
 	return 0;
 }
