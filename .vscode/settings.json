@@ -107,7 +107,9 @@
         "ranges": "cpp",
         "stop_token": "cpp",
         "syncstream": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__memory": "cpp",
+        "__functional_base_03": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
