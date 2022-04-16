@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
     v.push_back(1);
     v.push_back(2);
     v.push_back(3);
+    v.push_back(4);
 
     vector< vector<int> > result = sol.permutate(v);
 
