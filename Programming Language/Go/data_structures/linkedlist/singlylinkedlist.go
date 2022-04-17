@@ -6,6 +6,8 @@ type SinglyNode struct {
 }
 
 type ISinglyLinkedList interface {
+	Push(val int)
+	PushNode(node *SinglyNode)
 	AddList(sl2 SinglyLinkedList) SinglyLinkedList
 	ReverseKGroup(k int) SinglyLinkedList
 	RemoveElements(val int)
@@ -14,6 +16,44 @@ type ISinglyLinkedList interface {
 
 type SinglyLinkedList struct {
 	Head *SinglyNode
+}
+
+func (sl SinglyLinkedList) Push(val int) {
+	head := sl.Head
+
+	if head == nil {
+		head = &SinglyNode{
+			Val: val,
+		}
+
+		return
+	}
+
+	var curr *SinglyNode
+	node := &SinglyNode{Val: val}
+
+	for curr = head; curr.Next != nil; curr = curr.Next {
+		//
+	}
+
+	curr.Next = node
+}
+
+func (sl SinglyLinkedList) PushNode(node *SinglyNode) {
+	head := sl.Head
+
+	if head == nil {
+		head = node
+		return
+	}
+
+	var curr *SinglyNode
+
+	for curr = sl.Head; curr.Next != nil; curr = curr.Next {
+
+	}
+
+	curr.Next = node
 }
 
 func (sl SinglyLinkedList) AddList(sl2 SinglyLinkedList) SinglyLinkedList {

@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+func Push(sl ISinglyLinkedList, val int) {
+	sl.Push(val)
+}
+
+func PushNode(sl ISinglyLinkedList, val int) {
+	sl.PushNode(&SinglyNode{Val: val})
+}
+
 func AddTwoNumbers(sl1 ISinglyLinkedList, sl2 SinglyLinkedList) SinglyLinkedList {
 	return sl1.AddList(sl2)
 }
@@ -23,6 +31,74 @@ func ReverseKGroup(sl ISinglyLinkedList, k int) SinglyLinkedList {
 
 // Test functions
 //
+
+func TestPush(t *testing.T) {
+	t.Run("Test case 1: Test Push() function", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+
+		Push(sl, 4)
+
+		expectation := 4
+
+		// Get last element
+		var actual int
+		var curr *SinglyNode
+		for curr = sl.Head; curr.Next != nil; curr = curr.Next {
+		}
+
+		actual = curr.Val
+
+		if expectation != actual {
+			t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+		}
+	})
+
+	t.Run("Test case 2: Test PushNode() function", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+
+		PushNode(sl, 4)
+
+		expectation := 4
+
+		// Get last element
+		var actual int
+		var curr *SinglyNode
+		for curr = sl.Head; curr.Next != nil; curr = curr.Next {
+		}
+
+		actual = curr.Val
+
+		if expectation != actual {
+			t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+		}
+	})
+}
 
 func TestAddTwoNumbers(t *testing.T) {
 	var l1, l2 *SinglyNode
