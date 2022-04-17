@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -11,6 +12,22 @@ func Push(sl ISinglyLinkedList, val int) {
 
 func PushNode(sl ISinglyLinkedList, val int) {
 	sl.PushNode(&SinglyNode{Val: val})
+}
+
+func Count(sl ISinglyLinkedList) int {
+	return sl.Count()
+}
+
+func Search(sl ISinglyLinkedList, val int) int {
+	return sl.Search(val)
+}
+
+func Print(sl ISinglyLinkedList) string {
+	return sl.Print()
+}
+
+func At(sl ISinglyLinkedList, index int) int {
+	return sl.At(index)
 }
 
 func DeleteAt(sl ISinglyLinkedList, index int) (SinglyLinkedList, error) {
@@ -104,6 +121,132 @@ func TestPush(t *testing.T) {
 
 		if expectation != actual {
 			t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+		}
+	})
+}
+
+func TestCount(t *testing.T) {
+	t.Run("Test 1 : empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{Head: nil}
+		actual := Count(sl)
+
+		if expectation := 0; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+
+	t.Run("Test 2 : non-empty linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := SinglyLinkedList{Head: head}
+		actual := Count(sl)
+
+		if expectation := 3; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+}
+
+func TestSearch(t *testing.T) {
+	t.Run("Test 1 : empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{Head: nil}
+		actual := Search(sl, 1)
+
+		if expectation := -1; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+
+	t.Run("Test 2 : non-empty linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := SinglyLinkedList{Head: head}
+		actual := Search(sl, 2)
+
+		if expectation := 1; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+}
+
+func TestAt(t *testing.T) {
+	t.Run("Test 1: empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{Head: nil}
+
+		actual := At(sl, 2)
+		if expectation := math.MinInt; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+
+	t.Run("Test 2: non-empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{
+			Head: &SinglyNode{
+				Val: 1,
+				Next: &SinglyNode{
+					Val: 2,
+					Next: &SinglyNode{
+						Val:  3,
+						Next: nil,
+					},
+				},
+			},
+		}
+
+		actual := At(sl, 2)
+		if expectation := 3; expectation != actual {
+			t.Errorf("expectation: %d, actual: %d", expectation, actual)
+		}
+	})
+}
+
+func TestPrint(t *testing.T) {
+	t.Run("Test: empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{
+			Head: nil,
+		}
+
+		actual := Print(sl)
+		if expectation := ""; expectation != actual {
+			t.Errorf("expectation: %s, actual: %s", expectation, actual)
+		}
+	})
+
+	t.Run("Test: non-empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{
+			Head: &SinglyNode{
+				Val: 1,
+				Next: &SinglyNode{
+					Val: 2,
+					Next: &SinglyNode{
+						Val:  3,
+						Next: nil,
+					},
+				},
+			},
+		}
+
+		actual := Print(sl)
+		if expectation := "1 2 3 "; expectation != actual {
+			t.Errorf("expectation: %s, actual: %s", expectation, actual)
 		}
 	})
 }

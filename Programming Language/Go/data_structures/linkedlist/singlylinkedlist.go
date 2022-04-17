@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"math"
 )
 
 type SinglyNode struct {
@@ -12,6 +14,10 @@ type SinglyNode struct {
 type ISinglyLinkedList interface {
 	Push(val int)
 	PushNode(node *SinglyNode)
+	Count() int
+	At(index int) int
+	Print() string
+	Search(val int) int
 	DeleteAt(index int) (SinglyLinkedList, error)
 	AddList(sl2 SinglyLinkedList) SinglyLinkedList
 	ReverseKGroup(k int) SinglyLinkedList
@@ -60,6 +66,72 @@ func (sl SinglyLinkedList) PushNode(node *SinglyNode) {
 	}
 
 	curr.Next = node
+}
+
+func (sl SinglyLinkedList) Count() int {
+	if sl.Head == nil {
+		return 0
+	}
+
+	var (
+		curr  *SinglyNode
+		count int
+	)
+
+	count = 0
+	for curr = sl.Head; curr != nil; curr = curr.Next {
+		count++
+	}
+
+	return count
+}
+
+func (sl SinglyLinkedList) At(index int) int {
+	curr := sl.Head
+
+	var i int
+
+	for i = 0; i < index && curr != nil; i++ {
+		curr = curr.Next
+	}
+
+	if i == index {
+		if curr != nil {
+			return curr.Val
+		}
+
+		return math.MinInt
+	}
+
+	return math.MinInt
+}
+
+func (sl SinglyLinkedList) Print() string {
+	curr := sl.Head
+
+	out := ""
+	for ; curr != nil; curr = curr.Next {
+		out += fmt.Sprintf("%d ", curr.Val)
+	}
+
+	return out
+}
+
+func (sl SinglyLinkedList) Search(val int) int {
+	curr := sl.Head
+	if curr == nil {
+		return -1
+	}
+
+	for i := 0; curr != nil; curr = curr.Next {
+		if curr.Val == val {
+			return i
+		}
+
+		i++
+	}
+
+	return -1
 }
 
 func (sl SinglyLinkedList) DeleteAt(index int) (SinglyLinkedList, error) {
