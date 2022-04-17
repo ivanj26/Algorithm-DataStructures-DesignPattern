@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math"
+	"os"
 	"testing"
 )
 
@@ -22,8 +24,8 @@ func Search(sl ISinglyLinkedList, val int) int {
 	return sl.Search(val)
 }
 
-func Print(sl ISinglyLinkedList) string {
-	return sl.Print()
+func Print(sl ISinglyLinkedList) {
+	sl.Print()
 }
 
 func At(sl ISinglyLinkedList, index int) int {
@@ -224,7 +226,18 @@ func TestPrint(t *testing.T) {
 			Head: nil,
 		}
 
-		actual := Print(sl)
+		rescueStdout := os.Stdout
+		r, w, _ := os.Pipe()
+		os.Stdout = w
+
+		Print(sl)
+
+		w.Close()
+		out, _ := ioutil.ReadAll(r)
+		os.Stdout = rescueStdout
+
+		actual := fmt.Sprintf("%s", out)
+
 		if expectation := ""; expectation != actual {
 			t.Errorf("expectation: %s, actual: %s", expectation, actual)
 		}
@@ -244,7 +257,18 @@ func TestPrint(t *testing.T) {
 			},
 		}
 
-		actual := Print(sl)
+		rescueStdout := os.Stdout
+		r, w, _ := os.Pipe()
+		os.Stdout = w
+
+		Print(sl)
+
+		w.Close()
+		out, _ := ioutil.ReadAll(r)
+		os.Stdout = rescueStdout
+
+		actual := fmt.Sprintf("%s", out)
+
 		if expectation := "1 2 3 "; expectation != actual {
 			t.Errorf("expectation: %s, actual: %s", expectation, actual)
 		}

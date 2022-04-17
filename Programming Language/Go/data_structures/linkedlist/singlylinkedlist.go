@@ -16,7 +16,7 @@ type ISinglyLinkedList interface {
 	PushNode(node *SinglyNode)
 	Count() int
 	At(index int) int
-	Print() string
+	Print()
 	Search(val int) int
 	DeleteAt(index int) (SinglyLinkedList, error)
 	AddList(sl2 SinglyLinkedList) SinglyLinkedList
@@ -106,7 +106,7 @@ func (sl SinglyLinkedList) At(index int) int {
 	return math.MinInt
 }
 
-func (sl SinglyLinkedList) Print() string {
+func (sl SinglyLinkedList) Print() {
 	curr := sl.Head
 
 	out := ""
@@ -114,7 +114,7 @@ func (sl SinglyLinkedList) Print() string {
 		out += fmt.Sprintf("%d ", curr.Val)
 	}
 
-	return out
+	fmt.Print(out)
 }
 
 func (sl SinglyLinkedList) Search(val int) int {
