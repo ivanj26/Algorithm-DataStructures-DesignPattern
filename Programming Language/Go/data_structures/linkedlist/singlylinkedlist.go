@@ -1,5 +1,9 @@
 package main
 
+import (
+	"errors"
+)
+
 type SinglyNode struct {
 	Next *SinglyNode
 	Val  int
@@ -8,9 +12,11 @@ type SinglyNode struct {
 type ISinglyLinkedList interface {
 	Push(val int)
 	PushNode(node *SinglyNode)
+	DeleteAt(index int) (SinglyLinkedList, error)
 	AddList(sl2 SinglyLinkedList) SinglyLinkedList
 	ReverseKGroup(k int) SinglyLinkedList
 	RemoveElements(val int)
+	IsPalindrome() bool
 	HasCycle() bool
 }
 
@@ -54,6 +60,35 @@ func (sl SinglyLinkedList) PushNode(node *SinglyNode) {
 	}
 
 	curr.Next = node
+}
+
+func (sl SinglyLinkedList) DeleteAt(index int) (SinglyLinkedList, error) {
+	var (
+		prev *SinglyNode
+		i    int
+	)
+
+	curr := sl.Head
+
+	if curr == nil {
+		return sl, errors.New("linkedlist is empty!")
+	}
+
+	prev = nil
+	for i = 1; curr != nil && i < index; i++ {
+		prev = curr
+		curr = curr.Next
+	}
+
+	if i == index {
+		if prev == nil {
+			sl.Head = curr.Next
+		} else {
+			prev.Next = curr.Next
+		}
+	}
+
+	return sl, nil
 }
 
 func (sl SinglyLinkedList) AddList(sl2 SinglyLinkedList) SinglyLinkedList {
@@ -111,6 +146,11 @@ func (sl SinglyLinkedList) HasCycle() bool {
 	return false
 }
 
+func (sl SinglyLinkedList) IsPalindrome() bool {
+	right := sl.Head
+	return isPalindrome(&sl.Head, right)
+}
+
 func (sl SinglyLinkedList) ReverseKGroup(k int) SinglyLinkedList {
 	head := sl.Head
 	sn := reverseKGroup(head, k)
@@ -125,6 +165,22 @@ func length(head *SinglyNode) int {
 	}
 
 	return 1 + length(head.Next)
+}
+
+func isPalindrome(left **SinglyNode, right *SinglyNode) bool {
+	if right == nil {
+		return true
+	}
+
+	isp := isPalindrome(left, right.Next)
+	if isp == false {
+		return false
+	}
+
+	result := (*left).Val == right.Val
+	(*left) = (*left).Next
+
+	return result
 }
 
 func reverseKGroup(head *SinglyNode, k int) *SinglyNode {

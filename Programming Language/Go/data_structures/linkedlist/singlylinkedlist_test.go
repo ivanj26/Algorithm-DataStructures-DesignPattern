@@ -13,6 +13,10 @@ func PushNode(sl ISinglyLinkedList, val int) {
 	sl.PushNode(&SinglyNode{Val: val})
 }
 
+func DeleteAt(sl ISinglyLinkedList, index int) (SinglyLinkedList, error) {
+	return sl.DeleteAt(index)
+}
+
 func AddTwoNumbers(sl1 ISinglyLinkedList, sl2 SinglyLinkedList) SinglyLinkedList {
 	return sl1.AddList(sl2)
 }
@@ -23,6 +27,10 @@ func RemoveElements(sl ISinglyLinkedList, val int) {
 
 func HasCycle(sl ISinglyLinkedList) bool {
 	return sl.HasCycle()
+}
+
+func IsPalindrome(sl ISinglyLinkedList) bool {
+	return sl.IsPalindrome()
 }
 
 func ReverseKGroup(sl ISinglyLinkedList, k int) SinglyLinkedList {
@@ -96,6 +104,90 @@ func TestPush(t *testing.T) {
 
 		if expectation != actual {
 			t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+		}
+	})
+}
+
+func TestDeleteAt(t *testing.T) {
+	t.Run("Test 1: Delete first element of linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+
+		sl, err := DeleteAt(sl, 1)
+
+		if err == nil {
+			expectation := "2 3 "
+			var actual string
+
+			curr := sl.Head
+			for curr != nil {
+				actual += fmt.Sprintf("%d ", curr.Val)
+				curr = curr.Next
+			}
+
+			if actual != expectation {
+				t.Errorf("expected linkedlist: %s, actual linkedlist: %s", expectation, actual)
+			}
+		} else {
+			t.Error("expect: error is nil")
+		}
+	})
+
+	t.Run("Test 2: Delete middle element of linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+
+		sl, err := DeleteAt(sl, 2)
+
+		if err == nil {
+			expectation := "1 3 "
+			var actual string
+
+			curr := sl.Head
+			for curr != nil {
+				actual += fmt.Sprintf("%d ", curr.Val)
+				curr = curr.Next
+			}
+
+			if actual != expectation {
+				t.Errorf("expected linkedlist: %s, actual linkedlist: %s", expectation, actual)
+			}
+		} else {
+			t.Error("expect: error is nil")
+		}
+	})
+
+	t.Run("Test 3: Try to delete empty linkedlist", func(t *testing.T) {
+		sl := SinglyLinkedList{
+			Head: nil,
+		}
+
+		sl, err := DeleteAt(sl, 2)
+
+		if err == nil {
+			t.Error("expect: error occured")
 		}
 	})
 }
@@ -233,6 +325,51 @@ func TestHasCycle(t *testing.T) {
 
 		if expectation := true; expectation != actual {
 			t.Errorf("expected isCyclic: %t, actual isCyclic: %t", expectation, actual)
+		}
+	})
+}
+
+func TestIsPalindrome(t *testing.T) {
+	t.Run("Test 1: Palindrome linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  1,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+		actual := IsPalindrome(sl)
+
+		expectation := true
+		if expectation != actual {
+			t.Error("expect: actual value should be true!")
+		}
+	})
+
+	t.Run("Test 2: Non-palindrome linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val:  2,
+				Next: nil,
+			},
+		}
+
+		sl := SinglyLinkedList{
+			Head: head,
+		}
+		actual := IsPalindrome(sl)
+
+		expectation := false
+		if expectation != actual {
+			t.Error("expect: actual value should be false!")
 		}
 	})
 }
