@@ -18,9 +18,10 @@ type ISinglyLinkedList interface {
 	At(index int) int
 	Print()
 	Search(val int) int
-	DeleteAt(index int) (SinglyLinkedList, error)
-	AddList(sl2 SinglyLinkedList) SinglyLinkedList
-	ReverseKGroup(k int) SinglyLinkedList
+	DeleteAt(index int) error
+	AddList(sl2 *SinglyLinkedList) SinglyLinkedList
+	Reverse()
+	ReverseKGroup(k int)
 	RemoveElements(val int)
 	IsPalindrome() bool
 	HasCycle() bool
@@ -30,7 +31,7 @@ type SinglyLinkedList struct {
 	Head *SinglyNode
 }
 
-func (sl SinglyLinkedList) Push(val int) {
+func (sl *SinglyLinkedList) Push(val int) {
 	head := sl.Head
 
 	if head == nil {
@@ -51,7 +52,7 @@ func (sl SinglyLinkedList) Push(val int) {
 	curr.Next = node
 }
 
-func (sl SinglyLinkedList) PushNode(node *SinglyNode) {
+func (sl *SinglyLinkedList) PushNode(node *SinglyNode) {
 	head := sl.Head
 
 	if head == nil {
@@ -68,7 +69,7 @@ func (sl SinglyLinkedList) PushNode(node *SinglyNode) {
 	curr.Next = node
 }
 
-func (sl SinglyLinkedList) Count() int {
+func (sl *SinglyLinkedList) Count() int {
 	if sl.Head == nil {
 		return 0
 	}
@@ -86,7 +87,7 @@ func (sl SinglyLinkedList) Count() int {
 	return count
 }
 
-func (sl SinglyLinkedList) At(index int) int {
+func (sl *SinglyLinkedList) At(index int) int {
 	curr := sl.Head
 
 	var i int
@@ -106,7 +107,7 @@ func (sl SinglyLinkedList) At(index int) int {
 	return math.MinInt
 }
 
-func (sl SinglyLinkedList) Print() {
+func (sl *SinglyLinkedList) Print() {
 	curr := sl.Head
 
 	out := ""
@@ -117,7 +118,7 @@ func (sl SinglyLinkedList) Print() {
 	fmt.Print(out)
 }
 
-func (sl SinglyLinkedList) Search(val int) int {
+func (sl *SinglyLinkedList) Search(val int) int {
 	curr := sl.Head
 	if curr == nil {
 		return -1
@@ -134,7 +135,7 @@ func (sl SinglyLinkedList) Search(val int) int {
 	return -1
 }
 
-func (sl SinglyLinkedList) DeleteAt(index int) (SinglyLinkedList, error) {
+func (sl *SinglyLinkedList) DeleteAt(index int) error {
 	var (
 		prev *SinglyNode
 		i    int
@@ -143,7 +144,7 @@ func (sl SinglyLinkedList) DeleteAt(index int) (SinglyLinkedList, error) {
 	curr := sl.Head
 
 	if curr == nil {
-		return sl, errors.New("linkedlist is empty!")
+		return errors.New("linkedlist is empty!")
 	}
 
 	prev = nil
@@ -160,10 +161,10 @@ func (sl SinglyLinkedList) DeleteAt(index int) (SinglyLinkedList, error) {
 		}
 	}
 
-	return sl, nil
+	return nil
 }
 
-func (sl SinglyLinkedList) AddList(sl2 SinglyLinkedList) SinglyLinkedList {
+func (sl *SinglyLinkedList) AddList(sl2 *SinglyLinkedList) SinglyLinkedList {
 	l1 := sl.Head
 	l2 := sl2.Head
 	l3 := &SinglyNode{}
@@ -200,11 +201,11 @@ func (sl SinglyLinkedList) AddList(sl2 SinglyLinkedList) SinglyLinkedList {
 	}
 }
 
-func (sl SinglyLinkedList) RemoveElements(val int) {
+func (sl *SinglyLinkedList) RemoveElements(val int) {
 	removeRecursive(sl.Head, val)
 }
 
-func (sl SinglyLinkedList) HasCycle() bool {
+func (sl *SinglyLinkedList) HasCycle() bool {
 	s := make(map[*SinglyNode]bool)
 
 	for curr := sl.Head; curr != nil; curr = curr.Next {
@@ -218,16 +219,43 @@ func (sl SinglyLinkedList) HasCycle() bool {
 	return false
 }
 
-func (sl SinglyLinkedList) IsPalindrome() bool {
+func (sl *SinglyLinkedList) IsPalindrome() bool {
 	right := sl.Head
 	return isPalindrome(&sl.Head, right)
 }
 
-func (sl SinglyLinkedList) ReverseKGroup(k int) SinglyLinkedList {
+func (sl *SinglyLinkedList) ReverseKGroup(k int) {
 	head := sl.Head
 	sn := reverseKGroup(head, k)
 
-	return SinglyLinkedList{Head: sn}
+	sl.Head = sn
+}
+
+func (sl *SinglyLinkedList) Reverse() {
+	curr := sl.Head
+
+	if curr == nil {
+		return
+	}
+
+	var (
+		prev *SinglyNode
+		next *SinglyNode
+	)
+
+	prev = nil
+	next = nil
+
+	for curr != nil {
+		next = curr.Next
+
+		curr.Next = prev
+
+		prev = curr
+		curr = next
+	}
+
+	sl.Head = prev
 }
 
 // ...Util function

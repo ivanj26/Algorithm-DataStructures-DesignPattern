@@ -24,6 +24,10 @@ func Search(sl ISinglyLinkedList, val int) int {
 	return sl.Search(val)
 }
 
+func Reverse(sl ISinglyLinkedList) {
+	sl.Reverse()
+}
+
 func Print(sl ISinglyLinkedList) {
 	sl.Print()
 }
@@ -32,11 +36,11 @@ func At(sl ISinglyLinkedList, index int) int {
 	return sl.At(index)
 }
 
-func DeleteAt(sl ISinglyLinkedList, index int) (SinglyLinkedList, error) {
+func DeleteAt(sl ISinglyLinkedList, index int) error {
 	return sl.DeleteAt(index)
 }
 
-func AddTwoNumbers(sl1 ISinglyLinkedList, sl2 SinglyLinkedList) SinglyLinkedList {
+func AddTwoNumbers(sl1 ISinglyLinkedList, sl2 *SinglyLinkedList) SinglyLinkedList {
 	return sl1.AddList(sl2)
 }
 
@@ -52,12 +56,51 @@ func IsPalindrome(sl ISinglyLinkedList) bool {
 	return sl.IsPalindrome()
 }
 
-func ReverseKGroup(sl ISinglyLinkedList, k int) SinglyLinkedList {
-	return sl.ReverseKGroup(k)
+func ReverseKGroup(sl ISinglyLinkedList, k int) {
+	sl.ReverseKGroup(k)
 }
 
 // Test functions
 //
+
+func TestReverse(t *testing.T) {
+	t.Run("Test 1: reverse empty linkedlist", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: nil,
+		}
+
+		Reverse(sl)
+
+		// expect no error occurs
+	})
+
+	t.Run("Test 2: reverse non-empty linkedlist", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+		sl := &SinglyLinkedList{
+			Head: head,
+		}
+
+		Reverse(sl)
+
+		var actual string
+		for curr := sl.Head; curr != nil; curr = curr.Next {
+			actual += fmt.Sprintf("%d ", curr.Val)
+		}
+
+		if expectation := "3 2 1 "; expectation != actual {
+			t.Errorf("expectation: %s, actual: %s", expectation, actual)
+		}
+	})
+}
 
 func TestPush(t *testing.T) {
 	t.Run("Test case 1: Test Push() function", func(t *testing.T) {
@@ -72,7 +115,7 @@ func TestPush(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 
@@ -105,7 +148,7 @@ func TestPush(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 
@@ -129,7 +172,7 @@ func TestPush(t *testing.T) {
 
 func TestCount(t *testing.T) {
 	t.Run("Test 1 : empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{Head: nil}
+		sl := &SinglyLinkedList{Head: nil}
 		actual := Count(sl)
 
 		if expectation := 0; expectation != actual {
@@ -149,7 +192,7 @@ func TestCount(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{Head: head}
+		sl := &SinglyLinkedList{Head: head}
 		actual := Count(sl)
 
 		if expectation := 3; expectation != actual {
@@ -160,7 +203,7 @@ func TestCount(t *testing.T) {
 
 func TestSearch(t *testing.T) {
 	t.Run("Test 1 : empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{Head: nil}
+		sl := &SinglyLinkedList{Head: nil}
 		actual := Search(sl, 1)
 
 		if expectation := -1; expectation != actual {
@@ -180,7 +223,7 @@ func TestSearch(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{Head: head}
+		sl := &SinglyLinkedList{Head: head}
 		actual := Search(sl, 2)
 
 		if expectation := 1; expectation != actual {
@@ -191,7 +234,7 @@ func TestSearch(t *testing.T) {
 
 func TestAt(t *testing.T) {
 	t.Run("Test 1: empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{Head: nil}
+		sl := &SinglyLinkedList{Head: nil}
 
 		actual := At(sl, 2)
 		if expectation := math.MinInt; expectation != actual {
@@ -200,7 +243,7 @@ func TestAt(t *testing.T) {
 	})
 
 	t.Run("Test 2: non-empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: &SinglyNode{
 				Val: 1,
 				Next: &SinglyNode{
@@ -222,7 +265,7 @@ func TestAt(t *testing.T) {
 
 func TestPrint(t *testing.T) {
 	t.Run("Test: empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: nil,
 		}
 
@@ -244,7 +287,7 @@ func TestPrint(t *testing.T) {
 	})
 
 	t.Run("Test: non-empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: &SinglyNode{
 				Val: 1,
 				Next: &SinglyNode{
@@ -287,11 +330,11 @@ func TestDeleteAt(t *testing.T) {
 				},
 			},
 		}
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 
-		sl, err := DeleteAt(sl, 1)
+		err := DeleteAt(sl, 1)
 
 		if err == nil {
 			expectation := "2 3 "
@@ -322,11 +365,11 @@ func TestDeleteAt(t *testing.T) {
 				},
 			},
 		}
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 
-		sl, err := DeleteAt(sl, 2)
+		err := DeleteAt(sl, 2)
 
 		if err == nil {
 			expectation := "1 3 "
@@ -347,11 +390,11 @@ func TestDeleteAt(t *testing.T) {
 	})
 
 	t.Run("Test 3: Try to delete empty linkedlist", func(t *testing.T) {
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: nil,
 		}
 
-		sl, err := DeleteAt(sl, 2)
+		err := DeleteAt(sl, 2)
 
 		if err == nil {
 			t.Error("expect: error occured")
@@ -369,10 +412,10 @@ func TestAddTwoNumbers(t *testing.T) {
 	l2.Next = &SinglyNode{Val: 6}
 	l2.Next.Next = &SinglyNode{Val: 4}
 
-	sl1 := SinglyLinkedList{
+	sl1 := &SinglyLinkedList{
 		Head: l1,
 	}
-	sl2 := SinglyLinkedList{
+	sl2 := &SinglyLinkedList{
 		Head: l2,
 	}
 
@@ -418,7 +461,7 @@ func TestRemoveElements(t *testing.T) {
 
 	// Test 1
 	t.Run("Test case 1: If given element is not included in singlylinkedlist. Expect: nothing is removed", func(t *testing.T) {
-		sl := SinglyLinkedList{Head: node}
+		sl := &SinglyLinkedList{Head: node}
 		RemoveElements(sl, 5)
 
 		curr1 := sl.Head
@@ -435,7 +478,7 @@ func TestRemoveElements(t *testing.T) {
 
 	// Test 2
 	t.Run("Test case 2: If given element is included in singlylinkedlist. Expect: element: 4 is removed from sl", func(t *testing.T) {
-		sl := SinglyLinkedList{Head: node}
+		sl := &SinglyLinkedList{Head: node}
 		RemoveElements(sl, 4)
 
 		expectNode = &SinglyNode{
@@ -472,7 +515,7 @@ func TestHasCycle(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{Head: head}
+		sl := &SinglyLinkedList{Head: head}
 		actual := HasCycle(sl)
 
 		if expectation := false; expectation != actual {
@@ -487,7 +530,7 @@ func TestHasCycle(t *testing.T) {
 		n3 := &SinglyNode{Val: 30, Next: n4}
 		n6.Next = n3
 
-		sl := SinglyLinkedList{Head: n3}
+		sl := &SinglyLinkedList{Head: n3}
 		actual := HasCycle(sl)
 
 		if expectation := true; expectation != actual {
@@ -509,7 +552,7 @@ func TestIsPalindrome(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 		actual := IsPalindrome(sl)
@@ -529,7 +572,7 @@ func TestIsPalindrome(t *testing.T) {
 			},
 		}
 
-		sl := SinglyLinkedList{
+		sl := &SinglyLinkedList{
 			Head: head,
 		}
 		actual := IsPalindrome(sl)
@@ -554,11 +597,11 @@ func TestReverseKGroup(t *testing.T) {
 	}
 	expectation := "4 3 6 "
 
-	sl := SinglyLinkedList{Head: head}
-	reversed := ReverseKGroup(sl, 2)
+	sl := &SinglyLinkedList{Head: head}
+	ReverseKGroup(sl, 2)
 	var actual string
 
-	for curr := reversed.Head; curr != nil; curr = curr.Next {
+	for curr := sl.Head; curr != nil; curr = curr.Next {
 		actual += fmt.Sprintf("%d ", curr.Val)
 	}
 
