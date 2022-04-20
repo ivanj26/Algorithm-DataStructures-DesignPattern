@@ -36,6 +36,10 @@ func At(sl ISinglyLinkedList, index int) int {
 	return sl.At(index)
 }
 
+func GetNthFromEnd(sl ISinglyLinkedList, index int) int {
+	return sl.GetNthFromEnd(index)
+}
+
 func DeleteAt(sl ISinglyLinkedList, index int) error {
 	return sl.DeleteAt(index)
 }
@@ -261,6 +265,55 @@ func TestAt(t *testing.T) {
 			t.Errorf("expectation: %d, actual: %d", expectation, actual)
 		}
 	})
+}
+
+func TestGetNthFromEnd(t *testing.T) {
+	t.Run(
+		"Test Case 1\n"+
+			" Given that linkedlist 1->2->3\n"+
+			" we want to get last element\n"+
+			" expect return 3",
+		func(t *testing.T) {
+			head := &SinglyNode{
+				Val: 1,
+				Next: &SinglyNode{
+					Val: 2,
+					Next: &SinglyNode{
+						Val:  3,
+						Next: nil,
+					},
+				},
+			}
+
+			sl := &SinglyLinkedList{
+				Head: head,
+			}
+
+			actual := GetNthFromEnd(sl, 1)
+
+			if expectation := 3; actual != expectation {
+				t.Errorf("expectation: %d, actual: %d", expectation, actual)
+			}
+		},
+	)
+
+	t.Run(
+		"Test Case 2\n"+
+			" Given that empty linkedlist\n"+
+			" we want to get last element\n"+
+			" expect return math.MinInt",
+		func(t *testing.T) {
+			sl := &SinglyLinkedList{
+				Head: nil,
+			}
+
+			actual := GetNthFromEnd(sl, 1)
+
+			if expectation := math.MinInt; actual != expectation {
+				t.Errorf("expectation: %d, actual: %d", expectation, actual)
+			}
+		},
+	)
 }
 
 func TestPrint(t *testing.T) {

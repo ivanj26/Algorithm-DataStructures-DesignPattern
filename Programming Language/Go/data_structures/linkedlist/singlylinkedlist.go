@@ -16,6 +16,7 @@ type ISinglyLinkedList interface {
 	PushNode(node *SinglyNode)
 	Count() int
 	At(index int) int
+	GetNthFromEnd(index int) int
 	Print()
 	Search(val int) int
 	DeleteAt(index int) error
@@ -105,6 +106,27 @@ func (sl *SinglyLinkedList) At(index int) int {
 	}
 
 	return math.MinInt
+}
+
+func (sl *SinglyLinkedList) GetNthFromEnd(index int) int {
+	if sl.Head == nil {
+		return math.MinInt
+	}
+
+	fast := sl.Head
+	slow := sl.Head
+	start := 1
+
+	for fast.Next != nil {
+		fast = fast.Next
+		start += 1
+
+		if start > index {
+			slow = slow.Next
+		}
+	}
+
+	return slow.Val
 }
 
 func (sl *SinglyLinkedList) Print() {
