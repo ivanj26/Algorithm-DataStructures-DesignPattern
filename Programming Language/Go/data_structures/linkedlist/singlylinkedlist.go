@@ -14,6 +14,8 @@ type SinglyNode struct {
 type ISinglyLinkedList interface {
 	Push(val int)
 	PushNode(node *SinglyNode)
+	Pop()
+	Front() int
 	Count() int
 	At(index int) int
 	GetNthFromEnd(index int) int
@@ -68,6 +70,37 @@ func (sl *SinglyLinkedList) PushNode(node *SinglyNode) {
 	}
 
 	curr.Next = node
+}
+
+func (sl *SinglyLinkedList) Pop() {
+	head := sl.Head
+
+	if head != nil {
+		var prev *SinglyNode
+		prev = nil
+
+		for curr := head; curr.Next != nil; curr = curr.Next {
+			prev = curr
+		}
+
+		if prev != nil {
+			// the second last node should pointing to nil
+			prev.Next = nil
+		} else {
+			// has only one element in linkedlist
+			sl.Head = nil
+		}
+	}
+}
+
+func (sl *SinglyLinkedList) Front() int {
+	head := sl.Head
+
+	if head != nil {
+		return head.Val
+	}
+
+	return math.MinInt
 }
 
 func (sl *SinglyLinkedList) Count() int {

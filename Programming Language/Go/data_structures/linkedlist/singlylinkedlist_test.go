@@ -16,6 +16,14 @@ func PushNode(sl ISinglyLinkedList, val int) {
 	sl.PushNode(&SinglyNode{Val: val})
 }
 
+func Pop(sl ISinglyLinkedList) {
+	sl.Pop()
+}
+
+func Front(sl ISinglyLinkedList) int {
+	return sl.Front()
+}
+
 func Count(sl ISinglyLinkedList) int {
 	return sl.Count()
 }
@@ -170,6 +178,115 @@ func TestPush(t *testing.T) {
 
 		if expectation != actual {
 			t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+		}
+	})
+}
+
+func TestPop(t *testing.T) {
+	t.Run("Test case 1: if linkedlist is empty, expect no error occurs", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: nil,
+		}
+
+		Pop(sl)
+	})
+
+	t.Run("Test case 2: if linkedlist has more than 1 element", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: &SinglyNode{
+				Val: 1,
+				Next: &SinglyNode{
+					Val: 2,
+					Next: &SinglyNode{
+						Val:  3,
+						Next: nil,
+					},
+				},
+			},
+		}
+
+		Pop(sl)
+
+		expected := []int{1, 2}
+		expectedLength := len(expected)
+		i := 0
+
+		if expectedLength != sl.Count() {
+			t.Errorf("Failed because linkedlist length should be %d", expectedLength)
+		}
+
+		for curr := sl.Head; curr.Next != nil; curr = curr.Next {
+			expectation := expected[i]
+			actual := curr.Val
+
+			if actual != expectation {
+				t.Errorf("expected value: %d, actual value: %d", expectation, actual)
+			}
+
+			i += 1
+		}
+	})
+
+	t.Run("Test case 3: if linkedlist only has 1 element", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: &SinglyNode{
+				Val:  1,
+				Next: nil,
+			},
+		}
+
+		Pop(sl)
+
+		expected := []int{}
+		expectedLength := len(expected)
+
+		if expectedLength != sl.Count() {
+			t.Errorf("Failed because linkedlist length should be %d", expectedLength)
+		}
+	})
+}
+
+func TestFront(t *testing.T) {
+	t.Run("Test case 1: if linkedlist is empty, expect the value is math.MinInt", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: nil,
+		}
+
+		actual := Front(sl)
+
+		if expected := math.MinInt; actual != expected {
+			t.Errorf("expected value: %d, actual value: %d", expected, actual)
+		}
+	})
+
+	t.Run("Test case 2: if linkedlist is not empty, expect return the value of head pointer", func(t *testing.T) {
+		sl := &SinglyLinkedList{
+			Head: &SinglyNode{
+				Val: 1,
+				Next: &SinglyNode{
+					Val: 2,
+					Next: &SinglyNode{
+						Val:  3,
+						Next: nil,
+					},
+				},
+			},
+		}
+
+		actual := Front(sl)
+
+		if expected := 1; actual != expected {
+			t.Errorf("expected value: %d, actual value: %d", expected, actual)
+		}
+
+		// do Pop() method
+		Pop(sl)
+		Pop(sl)
+		Pop(sl)
+		actual = Front(sl)
+
+		if expected := math.MinInt; actual != expected {
+			t.Errorf("expected value: %d, actual value: %d", expected, actual)
 		}
 	})
 }
