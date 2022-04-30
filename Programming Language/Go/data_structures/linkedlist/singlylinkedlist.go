@@ -19,6 +19,7 @@ type ISinglyLinkedList interface {
 	Count() int
 	At(index int) int
 	GetNthFromEnd(index int) int
+	GetHead() *SinglyNode
 	Print()
 	Search(val int) int
 	DeleteAt(index int) error
@@ -32,6 +33,16 @@ type ISinglyLinkedList interface {
 
 type SinglyLinkedList struct {
 	Head *SinglyNode
+}
+
+func NewSinglyLinkedList(head *SinglyNode) ISinglyLinkedList {
+	return &SinglyLinkedList{
+		Head: head,
+	}
+}
+
+func (sl *SinglyLinkedList) GetHead() *SinglyNode {
+	return sl.Head
 }
 
 func (sl *SinglyLinkedList) Push(val int) {
