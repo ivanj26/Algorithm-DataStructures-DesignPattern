@@ -54,6 +54,7 @@ func NewHashMap() IHashMap {
 		Table: make([]*HashNode, BUCKET_SIZE),
 		Size:  BUCKET_SIZE,
 		Hash: func(key string) (hash uint32) {
+			// Using Jenkins hash function
 			hash = 0
 
 			for _, char := range key {
