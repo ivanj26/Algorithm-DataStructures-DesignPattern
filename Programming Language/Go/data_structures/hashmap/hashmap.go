@@ -98,6 +98,8 @@ func (h *HashMap) Put(key string, val int) {
 		if entry.Key != key {
 			prev = entry
 			entry = entry.Next
+		} else {
+			break
 		}
 	}
 

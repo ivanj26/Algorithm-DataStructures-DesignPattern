@@ -3,3 +3,5 @@
 *.class
 \META-INF
 main
+
+**/vendor
