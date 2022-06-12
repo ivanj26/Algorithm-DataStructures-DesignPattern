@@ -111,5 +111,8 @@
         "__memory": "cpp",
         "__functional_base_03": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "gopls": {
+        "build.experimentalWorkspaceModule": true
+    }
 }
