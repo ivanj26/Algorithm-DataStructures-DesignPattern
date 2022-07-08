@@ -3,10 +3,16 @@
 #include <sstream>
 #include "eventlistener.hpp"
 
+namespace std {
+  template <> struct hash<EventListener::Type> {
+    size_t operator() (const EventListener::Type &t) const { return size_t(t); }
+  };
+}
+
 class EventManager
 {
 	private:
-		std::unordered_map<EventListener::Type, EventListener, std::hash<int>> listeners;
+		std::unordered_map<EventListener::Type, EventListener> listeners;
 
 	public:
 		void addListener(EventListener listener)
