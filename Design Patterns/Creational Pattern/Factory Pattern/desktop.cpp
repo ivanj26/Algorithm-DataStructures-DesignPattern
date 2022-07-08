@@ -2,24 +2,33 @@
 
 class Desktop : public Computer
 {
-	public:
-		Desktop()
-		{
-			this->setName("Desktop");
-		}
+    private:
+        bool mOn;
 
-		void run() override
-		{
-			mOn = true;
-		}
+    public:
+        Desktop()
+        {
+            this->setName("Desktop");
+        }
 
-		void shutdown() override
-		{
-			mOn = false;
-		}
+        virtual ~Desktop()
+        {
+            // destructor
+            // clean memory here!
+        }
 
-		virtual ~Desktop() {}
+        void run() override
+        {
+            this->mOn = true;
+        }
 
-	private:
-		bool mOn;
+        void shutdown() override
+        {
+            this->mOn = false;
+        }
+
+        bool isShutdown() override
+        {
+            return this->mOn == false;
+        }
 };

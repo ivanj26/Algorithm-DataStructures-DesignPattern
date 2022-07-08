@@ -7,5 +7,5 @@ make
 ```
 # How to run?
 ```shell
-./main
+make run
 ```

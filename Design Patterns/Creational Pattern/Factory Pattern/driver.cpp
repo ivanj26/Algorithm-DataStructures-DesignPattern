@@ -1,14 +1,16 @@
 #include <iostream>
-
 #include "computerfactory.cpp"
 
-int main(int argc, const char **argv)
+using namespace std;
+
+int main(int argc, char const *argv[])
 {
-	ComputerFactory factory;
-	Computer *comp = factory.create(LAPTOP);
+    Computer *c = ComputerFactory::create("Laptop");
+    if (c != nullptr)
+    {
+        cout << "Computer Type: " << c->getName() << endl;
+    }
 
-	std::cout << comp->getName() << std::endl;
-
-	delete comp;
-	return 0;
+    delete c;
+    return 0;
 }

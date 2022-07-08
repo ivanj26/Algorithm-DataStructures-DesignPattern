@@ -2,24 +2,33 @@
 
 class Laptop : public Computer
 {
-	public:
-		Laptop()
-		{
-			this->setName("Laptop");
-		}
+    private:
+        bool mHibernate;
 
-		void run() override
-		{
-			mHibernate = false;
-		}
+    public:
+        Laptop()
+        {
+            this->setName("Laptop");
+        }
 
-		void shutdown() override
-		{
-			mHibernate = true;
-		}
+        virtual ~Laptop()
+        {
+            // destructor
+            // clean memory here!
+        }
 
-		virtual ~Laptop() {}
+        void run() override
+        {
+            this->mHibernate = true;
+        }
 
-	private:
-		bool mHibernate;
+        void shutdown() override
+        {
+            this->mHibernate = false;
+        }
+
+        bool isShutdown() override
+        {
+            return this->mHibernate == false;
+        }
 };

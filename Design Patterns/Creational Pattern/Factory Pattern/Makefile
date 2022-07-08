@@ -7,12 +7,16 @@ CC = g++
 CFLAGS  = -std=c++11
 
 # the build target executable:
-TARGET = main
+TARGET = driver
+LIBRARIES = computer.cpp
 
 all: $(TARGET)
 
 $(TARGET): $(TARGET).cpp
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).cpp
+	$(CC) $(CFLAGS) -o $(TARGET).out $(TARGET).cpp
 
 clean:
 	$(RM) $(TARGET)
+
+run:
+	./$(TARGET).out
