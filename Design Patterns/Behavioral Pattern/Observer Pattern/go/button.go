@@ -1,8 +1,7 @@
 package main
 
 import (
-	"bytes"
-	"encoding/gob"
+	"reflect"
 )
 
 type IButton interface {
@@ -21,15 +20,14 @@ func NewButton() Button {
 	}
 }
 
-func hash(l IListener) string {
-	var b bytes.Buffer
-
-	gob.NewEncoder(&b).Encode(l)
-	return b.String()
-}
-
 func (b *Button) RegisterListener(l IListener) {
-	b.Listeners[hash(l)] = l
+	key := reflect.
+		ValueOf(l).
+		Elem().
+		FieldByName("Name")
+	if !key.IsZero() {
+		b.Listeners[key.String()] = l
+	}
 }
 
 func (b *Button) UnregisterListener(key string) {

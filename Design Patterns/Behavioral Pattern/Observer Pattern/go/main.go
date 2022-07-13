@@ -21,6 +21,7 @@ func main() {
 			fmt.Println("long click method triggered")
 		}),
 	)
+	button.UnregisterListener(longClickListener.GetName())
 
 	button.NotifyAll()
 }
