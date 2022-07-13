@@ -23,9 +23,9 @@ class EventManager
 			});
 		}
 
-		void removeListener(EventListener listener)
+		void removeListener(EventListener::Type type)
 		{
-			listeners.erase(listener.getType());
+			listeners.erase(type);
 		}
 
 		void notify(EventListener::Type type)
@@ -33,13 +33,13 @@ class EventManager
 			try
 			{
 				std::unordered_map<EventListener::Type, EventListener>::iterator it = listeners.find(type);
-
-				if (it == listeners.end())
-				{
-					const std::string typeStr = EventListener::typeToString(type);
+				if (it == listeners.end()) {
+					// if the listener is not found in hashmap
+					// throw an error
 					std::stringstream ss;
-
-					ss << typeStr << "Listener is not implemented yet";
+					std::string typeStr = EventListener::typeToString(type);
+					ss << typeStr << " Listener is not implemented yet!" << std::endl;
+				
 					throw ss.str();
 				}
 
@@ -48,7 +48,7 @@ class EventManager
 			}
 			catch (const std::string msg)
 			{
-				std::cout << msg << std::endl;
+				std::cout << msg;
 			}
 		}
 };

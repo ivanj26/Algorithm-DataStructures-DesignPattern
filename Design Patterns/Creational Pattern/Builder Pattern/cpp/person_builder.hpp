@@ -9,7 +9,7 @@ class PersonBuilder
     Person p;
 
     public:
-        PersonBuilder(): p() {};
+        PersonBuilder();
         PersonBuilder& setName(std::string name);
         PersonBuilder& setAddress(std::string address);
         Person build();

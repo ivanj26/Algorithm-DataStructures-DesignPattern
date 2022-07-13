@@ -1,5 +1,9 @@
 #include "person_builder.hpp"
 
+PersonBuilder::PersonBuilder(): p() {
+    //
+}
+
 PersonBuilder& PersonBuilder::setName(std::string name) {
     p.name = name;
     return *this;

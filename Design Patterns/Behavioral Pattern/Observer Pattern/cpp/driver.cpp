@@ -1,4 +1,5 @@
 #include "button.cpp"
+#include "eventlistener.cpp"
 #include "singleclicklistener.cpp"
 #include "longclicklistener.cpp"
 
@@ -6,7 +7,7 @@ using namespace std;
 
 void printSomething()
 {
-	cout << "Clicked!" << endl;
+	cout << "SingleClick Clicked!" << endl;
 }
 
 void printSomething2()
@@ -23,14 +24,14 @@ int main(int argc, const char **argv)
 	singleClickListener.onClick(printSomething);
 	longClickListener.onLongClick(printSomething2);
 
-	//Add listener to EventManager
-	button.events.addListener(singleClickListener);
-	button.events.addListener(longClickListener);
+	// Set the listeners
+	button.setListener(singleClickListener);
+	button.setListener(longClickListener);
 
-	button.performClick(); //performing click
+	// Remove longclick listener
+	button.removeListener(EventListener::LONG_CLICK);
 
-	button.events.removeListener(singleClickListener);
-
+	// Invoke listener
 	button.performClick();
 	button.performLongClick();
 

@@ -1,12 +1,12 @@
 #include "eventlistener.hpp"
 #include <iostream>
 
-class LongClickListener : public EventListener
+class LongClickListener: public EventListener
 {
     public:
         LongClickListener()
         {
-            type = LONG_CLICK;
+            this->type = EventListener::LONG_CLICK;
         }
 
         void onLongClick(std::function<void()> funcLogic)
