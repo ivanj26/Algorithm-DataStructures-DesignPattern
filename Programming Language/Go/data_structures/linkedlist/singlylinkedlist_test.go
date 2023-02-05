@@ -301,6 +301,47 @@ func TestAt(t *testing.T) {
 	})
 }
 
+func TestGetMiddle(t *testing.T) {
+	t.Run("Test 1: Get Middle element of LinkedList if linkedlist length is odd number", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val:  3,
+					Next: nil,
+				},
+			},
+		}
+
+		sl := NewSinglyLinkedList(head)
+		actual := sl.GetMiddle()
+
+		assert.Equal(t, 2, actual.Val)
+	})
+
+	t.Run("Test 2: Get Middle element of LinkedList if linkedlist length is even number", func(t *testing.T) {
+		head := &SinglyNode{
+			Val: 1,
+			Next: &SinglyNode{
+				Val: 2,
+				Next: &SinglyNode{
+					Val: 3,
+					Next: &SinglyNode{
+						Val:  4,
+						Next: nil,
+					},
+				},
+			},
+		}
+
+		sl := NewSinglyLinkedList(head)
+		actual := sl.GetMiddle()
+
+		assert.Equal(t, 3, actual.Val)
+	})
+}
+
 func TestGetNthFromEnd(t *testing.T) {
 	t.Run(
 		"Test Case 1\n"+

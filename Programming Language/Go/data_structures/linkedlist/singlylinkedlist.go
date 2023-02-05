@@ -20,6 +20,7 @@ type ISinglyLinkedList interface {
 	At(index int) int
 	GetNthFromEnd(index int) int
 	GetHead() *SinglyNode
+	GetMiddle() *SinglyNode
 	Print()
 	Search(val int) int
 	DeleteAt(index int) error
@@ -43,6 +44,29 @@ func NewSinglyLinkedList(head *SinglyNode) ISinglyLinkedList {
 
 func (sl *SinglyLinkedList) GetHead() *SinglyNode {
 	return sl.Head
+}
+
+func (sl *SinglyLinkedList) GetMiddle() *SinglyNode {
+	curr := sl.Head
+	middle := sl.Head
+
+	length := 0
+
+	for curr.Next != nil {
+		length++
+
+		if length%2 == 0 {
+			middle = middle.Next
+		}
+
+		curr = curr.Next
+	}
+
+	if length%2 == 0 {
+		return middle
+	}
+
+	return middle.Next
 }
 
 func (sl *SinglyLinkedList) Push(val int) {
