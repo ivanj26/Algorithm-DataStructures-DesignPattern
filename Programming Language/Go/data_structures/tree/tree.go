@@ -72,14 +72,14 @@ func (t *Tree) Preorder() []byte {
 			return
 		}
 
+		// Push the element into array
+		*arr = append(*arr, node.Val)
+
 		// Traverse and recursive to Left hand side of Tree
 		preOrderUtilFunc(node.Left, arr)
 
 		// Traverse again to Right hand side of Tree
 		preOrderUtilFunc(node.Right, arr)
-
-		// Push the element into array
-		*arr = append(*arr, node.Val)
 	}
 
 	preOrderUtilFunc(t, &result)
@@ -111,6 +111,32 @@ func (t *Tree) RemoveLeaf(target byte) {
 	t = t.removeLeaf(t, target)
 }
 
+func (t *Tree) PrintDFSStyle() {
+	var fn func(tn *Tree, m map[*Tree]bool)
+	fn = func(tn *Tree, m map[*Tree]bool) {
+		if tn != nil {
+			isVisited := m[tn]
+
+			if isVisited {
+				// nothing to do
+			} else {
+				fmt.Printf("%v ", tn.Val)
+
+				m[tn] = true
+
+				left := tn.Left
+				right := tn.Right
+
+				fn(left, m)
+				fn(right, m)
+			}
+		}
+	}
+
+	mp := make(map[*Tree]bool)
+	fn(t, mp)
+}
+
 func main() {
 	tree := Tree{
 		Left: nil,
@@ -126,8 +152,6 @@ func main() {
 		Val: 1,
 	}
 
-	tree.RemoveLeaf(3)
-
 	bytes := tree.Inorder()
 	for _, b := range bytes {
 		fmt.Printf("%v ", b)
@@ -139,4 +163,8 @@ func main() {
 	for _, b := range bytes {
 		fmt.Printf("%v ", b)
 	}
+
+	fmt.Println()
+
+	tree.PrintDFSStyle()
 }
