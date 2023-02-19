@@ -5,10 +5,6 @@ import "container/list"
 func floodFill(image [][]int, sr int, sc int, color int) [][]int {
 	n := len(image)
 	m := len(image[0])
-	visited := make([][]bool, n)
-	for i := range visited {
-		visited[i] = make([]bool, m)
-	}
 
 	q := list.New()
 	q.PushBack([]int{sr, sc})
@@ -26,13 +22,12 @@ func floodFill(image [][]int, sr int, sc int, color int) [][]int {
 			continue
 		}
 
-		if visited[x][y] == true {
+		if image[x][y] == color {
 			continue
 		}
 
-		if visited[x][y] == false && image[x][y] == c {
+		if image[x][y] == c {
 			image[x][y] = color
-			visited[x][y] = true
 		}
 
 		// Top
