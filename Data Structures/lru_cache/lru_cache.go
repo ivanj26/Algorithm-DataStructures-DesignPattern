@@ -1,11 +1,8 @@
-package main
+package lru_cache
 
 import (
 	"container/list"
 	"fmt"
-	"math/rand"
-	"strconv"
-	"time"
 )
 
 // internal struct
@@ -74,25 +71,13 @@ func (this LRUCache) Put(key string, val interface{}) {
 		// Remove from map and queue
 		if this.Capacity == len(this.Items) {
 			back := this.Queue.Back()
-			delete(this.Items, key)
+			backKey := back.Value.(item).Key
+			delete(this.Items, backKey)
 			this.Queue.Remove(back)
 		}
 
 		// Insert new item into map and queue
 		newItem := item{Key: key, Value: val}
 		this.Items[key] = this.Queue.PushFront(newItem)
-	}
-}
-
-func main() {
-	cache := NewLRUCache(5)
-
-	rand.Seed(time.Now().Unix())
-
-	for i := 1; i < 10; i += 1 {
-		rnd := rand.Intn(10) + 1
-
-		key := strconv.Itoa(rnd)
-		cache.Put(key, "1")
 	}
 }
