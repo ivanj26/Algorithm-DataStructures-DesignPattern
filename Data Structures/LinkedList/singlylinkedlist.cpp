@@ -1133,6 +1133,63 @@ class SinglyLinkedList
 			SinglyLinkedList<T> ll3 = SinglyLinkedList(l3);
 			return ll3;
 		}
+
+		/**
+			 * @brief return linkedlist as a result of swapped nodes of kth node from beginning and
+			 * and the kth node from the end.
+			 * 
+			 * @param k index of LinkedList
+			 * @return SinglyLinkedList<T> LinkedList after swapping
+		*/
+		void swapNodesPosition(int k) {
+			SinglyNode<T> *fast = this->head;
+			SinglyNode<T> *slow = this->head;
+			SinglyNode<T> *curr = this->head;
+			SinglyNode<T> *prevC = nullptr;
+			SinglyNode<T> *prev = nullptr;
+
+			int i = 1;
+
+			while (fast->getNext()) {
+				fast = fast->getNext();
+
+				if (i >= k) {
+					prev = slow;
+					slow = slow->getNext();
+				}
+
+				if (i < k) {
+					prevC = curr;
+					curr = curr->getNext();
+				}
+
+				i++;
+			}
+
+			// Check if slow pointer is same as curr node pointer
+			if (slow == curr) {
+				return;
+			}
+
+			if (prevC) {
+				prevC->setNext(slow);
+			}
+
+			if (prev) {
+				prev->setNext(curr);
+			}
+
+			SinglyNode<T> *temp = slow->getNext();
+			slow->setNext(curr->getNext());
+			curr->setNext(temp);
+
+			if (slow == head) {
+				this->head = curr;
+				return;
+			}
+
+			this->head = curr == this->head ? slow : this->head;
+		}
 };
 
 int main(int argc, char const *argv[])
@@ -1142,8 +1199,10 @@ int main(int argc, char const *argv[])
 	list.push(3);
 	list.push(4);
 	
-	SinglyNode<int> *node = list.rotateLeft(5);
-	
+	cout << "Swapping nodes index-1 with index-2...\n" << endl;
+
+	list.swapNodesPosition(2);
+	SinglyNode<int> *node = list.front();
 	while (node)
 	{
 		cout << node->getData() << " ";
