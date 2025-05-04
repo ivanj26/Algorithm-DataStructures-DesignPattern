@@ -888,6 +888,11 @@ class SinglyLinkedList
 		 */
 		void deleteMiddle()
 		{
+			if (this->head && !this->head->next) {
+				head = nullptr;
+				return;
+			}
+
 			SinglyNode<T> *curr = this->front();
 			SinglyNode<T> *middle = this->front();
 			SinglyNode<T> *prev = nullptr;
