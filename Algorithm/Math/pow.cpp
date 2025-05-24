@@ -7,16 +7,21 @@ double pow(double x, int n) {
         return 1;
     }
 
-    if (n < 0) {
+    long nn = n; // INT_MIN <= n <= INT_MAX
+    if (nn < 0) {
         x = 1 / x;
-        n = abs(n);
+        nn = -nn;
     }
 
-    if (n & 1) {
-        return x * pow(x, n - 1);
-    } else {
-        return pow(x * x, n / 2);
+    if (nn & 1) { // n is odd
+        return x * myPow(x, nn - 1);
     }
+
+    // n is even
+    // 2^4 = 4^2
+    // make it more faster using this formula
+
+    return myPow(x * x, nn / 2);
 }
 
 bool isPowerOfTwo(int n) {
