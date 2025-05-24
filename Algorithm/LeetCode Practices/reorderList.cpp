@@ -14,147 +14,56 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-// - global variable to counting recursive steps.
-int counter = 1;
-
-class Solution
-{
+class Solution {
     private:
-        /**
-         * @brief Helper to count the linkedlist
-         * 
-         * @param curr 
-         * @return int 
-         */
-        int count(ListNode *curr)
-        {
-            int i = 0;
-
-            while (curr)
-            {
-                curr = curr->next;
-                i += 1;
-            }
-
-            return i;
+        int length(ListNode* head) {
+            return head == nullptr ? 0 : 1 + length(head->next);
         }
 
-        /**
-         * @brief reorderList helper.
-         * @param left the most left pointer.
-         * @param right the most right pointer.
-         * @param &q  the reference of queue object.
-         * @param count the length of linkedlist
-         * 
-         * @param bool
-         */
-        bool reorder(ListNode **left, ListNode *right, queue<ListNode *> &q, int count)
-        {
-            // - move the pointer until the most right of linkedlist
-            if (right == nullptr)
-            {
-                return true;
+        void reorder(ListNode** left, ListNode *right, queue<ListNode*> &q) {
+            if (right == nullptr) {
+                return;
             }
 
-            bool flag = reorder(left, right->next, q, count);
-            if (flag == false)
-            {
-                return false;
-            }
+            reorder(left, right->next, q);
 
-            // - push left and right pointer into queue.
-            // L0 -> Ln -> L1 -> Ln-1 ... continue
-            // We must do this step until (length of linkedlist) / 2
-            // to prevent un-unique element filled in queue
-            int c = count % 2 == 0 ? count / 2 : (count / 2) + 1;
-            if (counter == c)
-            {
-                q.push(*left);
-                q.push(right);
+            q.push(*left);
+            q.push(right);
 
-                // - if we reached the c variable, we will not move the left pointer anymore and do not increase the counter
-                return false;
-            }
-            else
-            {
-                q.push(*left);
-                q.push(right);
-
-                // - do a 1 step for the left pointer
-                (*left) = (*left)->next;
-                counter++;
-
-                return true;
-            }
+            (*left) = (*left)->next;
         }
-
     public:
-        /**
-         * @brief Reorder the list to be on the following form:
-         * from : L0 → L1 → … → Ln - 1 → Ln
-         * to   : L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
-         * 
-         * @param head 
-         */
-        void reorderList(ListNode *head)
-        {
-            ListNode *newHead = head;
-            int count = this->count(head);
-            queue<ListNode *> q;
+        void reorderList(ListNode* head) {
+            queue<ListNode*> q;
 
-            // call recursive reorder function
-            reorder(&newHead, head, q, count);
+            ListNode* left = head;
+            ListNode* right = head;
+            reorder(&left, right, q);
 
-            ListNode *res = nullptr;
+            int i = 0;
+            int len = this->length(head);
 
-            while (!q.empty())
-            {
-                ListNode *front = q.front();
+            ListNode *tail = nullptr;
+            ListNode *newList = nullptr;
+            while (!q.empty() && i++ < len) {
+                ListNode* front = q.front();
+                front->next = nullptr;
+
+                if (newList) {
+                    tail->next = front;
+                    tail = tail->next;
+                } else {
+                    newList = front;
+                    tail = newList;
+                }
+
                 q.pop();
-
-                if (res == nullptr)
-                {
-                    res = front;
-                    res->next = nullptr;
-                }
-                else
-                {
-                    ListNode *curr = res;
-
-                    while (curr->next)
-                    {
-                        curr = curr->next;
-                    }
-
-                    curr->next = front;
-                    curr->next->next = nullptr;
-                }
             }
 
-            head = res;
+            return newList;
         }
 };
 
-/**
- * @brief Push new ListNode into tail of linkedlist
- * 
- * @param head 
- * @param newNode 
- */
-void push(ListNode* head, ListNode* newNode) {
-    ListNode* curr = head;
-    while (curr->next) {
-        curr = curr->next;
-    }
-
-    curr->next = newNode;
-}
-
-/**
- * @brief Delete all list node in linkedlist.
- * 
- * @param curr 
- */
 void deleteMemory(ListNode *curr) {
     while (curr) {
         ListNode* next = curr->next;
