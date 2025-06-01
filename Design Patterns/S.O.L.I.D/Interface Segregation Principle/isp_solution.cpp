@@ -1,4 +1,4 @@
-// (L)iskov Subtitution Principle
+// (I)nterface Segregation Principle
 //
 // This principle suggests to keep the interface(s) to be smaller parts and specific rather the monolithic one.
 #include <stdexcept>
