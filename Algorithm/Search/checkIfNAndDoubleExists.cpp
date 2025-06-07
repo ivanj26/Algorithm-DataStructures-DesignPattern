@@ -36,11 +36,12 @@ class Solution {
             // 2. Iterate over the array:
             //     - Check if one of these conditions is met or not. If met, we can simply break the loop by returning true as a result.
             //       Formula:
-            //        1. if map[arr[i] / 2] is exists, it means we found the other element which has a half value from our curr value.
+            //        1. if map[arr[i] // 2] is exists, it means we found the other element which has a half value from our curr value.
             //        2. if map[2 * arr[i]] it means we found the other element with an exactly 2x bigger than our current element
             //
-            //     - Assign a new object (in this case Element) as a value to our hashmap
+            //     - Assign a new Element object as a value to our hashmap
             //       map[arr[i]] = Element(i, arr[i]);
+            // 3. If we getting out from the loop, means we cannot find any element N and its double.
 
             unordered_map<int, Element> map;
 
