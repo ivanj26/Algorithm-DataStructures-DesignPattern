@@ -6,41 +6,44 @@ import (
 	"strings"
 )
 
+type Pair struct {
+	first  int  // log the frequency of each character
+	second rune // character
+}
+
 func frequencySort(s string) string {
-	freqMp := make(map[rune]int)
+	freqMap := make(map[rune]int)
+
 	for _, ch := range s {
-		freqMp[ch]++
+		freqMap[ch]++
 	}
 
-	type pair struct {
-		ch    rune
-		count int
-	}
-	var freqVector []pair
-	for k, v := range freqMp {
-		freqVector = append(freqVector, pair{
-			ch:    k,
-			count: v,
-		})
+	var arr []Pair
+	for ch, freq := range freqMap {
+		arr = append(arr, Pair{first: freq, second: ch})
 	}
 
-	sort.Slice(freqVector, func(i, j int) bool {
-		if freqVector[i].count == freqVector[j].count { // if the frequency is same
-			return freqVector[i].ch < freqVector[j].ch // ascending by ascii characters
+	sort.Slice(arr, func(i, j int) bool {
+		if arr[i].first == arr[j].first {
+			return arr[i].second < arr[j].second // ascending by lexicographically if the frequency is same
 		}
 
-		return freqVector[i].count > freqVector[j].count // sort by frequency descending
+		return arr[i].first > arr[j].first // sorting by freq (descending)
 	})
 
+	// Current State, arr is sorted descending by freq
 	var sb strings.Builder
-	for _, p := range freqVector {
-		sb.WriteString(strings.Repeat(string(p.ch), p.count))
+	for i := 0; i < len(arr); i++ {
+		var p Pair = arr[i]
+
+		sb.WriteString(strings.Repeat(string(p.second), p.first))
 	}
 
 	return sb.String()
 }
 
 func main() {
-	fmt.Println(frequencySort("bbbaac123333")) // Output: 3333bbbaa12
-	fmt.Println(frequencySort("xyzxyzz"))      // Output: zzzxyyx
+	fmt.Println(frequencySort("tree"))
+	fmt.Println(frequencySort("cccaaa"))
+	fmt.Println(frequencySort("Aabb"))
 }
